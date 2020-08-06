@@ -9,8 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.kasai.stadium.tv.download.QueueController;
 import com.kasai.stadium.tv.utils.FileUtil;
 import com.kasai.stadium.tv.utils.MD5Util;
+import com.liulishuo.okdownload.DownloadContext;
+import com.liulishuo.okdownload.DownloadContextListener;
 import com.liulishuo.okdownload.DownloadTask;
 import com.liulishuo.okdownload.core.breakpoint.BlockInfo;
 import com.liulishuo.okdownload.core.breakpoint.BreakpointInfo;
@@ -28,7 +31,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tvDownloadProgress;
 
     private DownloadTask task;
-    private String url = "https://venue-saas.oss-cn-shenzhen.aliyuncs.com/test/upload_file/file/20200703/20200703153425055871.mp4";
+    //    private String url = "https://venue-saas.oss-cn-shenzhen.aliyuncs.com/test/upload_file/file/20200703/20200703153425055871.mp4";
+    private String url = "https://venue-saas.oss-cn-shenzhen.aliyuncs.com/prod/upload_file/file/20200717/20200717172117927716.mp4";
+    private String url2 = "https://venue-saas.oss-cn-shenzhen.aliyuncs.com/prod/upload_file/file/20200717/20200717173242162638.mp4";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,120 +52,83 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_download:
-                startTask();
+//                startTask();
+                startQueueTask();
                 break;
         }
     }
 
     private void startTask() {
         String fileName = MD5Util.getMD5(url) + ".mp4";
+        Log.e(TAG, "url : " + url);
         task = new DownloadTask.Builder(url, FileUtil.getVideoRootDirectory(this), fileName)
                 .setMinIntervalMillisCallbackProcess(30)
                 .setPassIfAlreadyCompleted(false)
                 .setFilenameFromResponse(false)
                 .build();
-//        task.enqueue(new DownloadListener() {
-//            @Override
-//            public void taskStart(@NonNull DownloadTask task) {
-//                Log.e(TAG, "taskStart .....");
-//            }
-//
-//            @Override
-//            public void connectTrialStart(@NonNull DownloadTask task, @NonNull Map<String, List<String>> requestHeaderFields) {
-//                Log.e(TAG, "connectTrialStart .....");
-//            }
-//
-//            @Override
-//            public void connectTrialEnd(@NonNull DownloadTask task, int responseCode, @NonNull Map<String, List<String>> responseHeaderFields) {
-//                Log.e(TAG, "connectTrialEnd .....");
-//            }
-//
-//            @Override
-//            public void downloadFromBeginning(@NonNull DownloadTask task, @NonNull BreakpointInfo info, @NonNull ResumeFailedCause cause) {
-//                Log.e(TAG, "downloadFromBeginning .....");
-//            }
-//
-//            @Override
-//            public void downloadFromBreakpoint(@NonNull DownloadTask task, @NonNull BreakpointInfo info) {
-//                Log.e(TAG, "downloadFromBreakpoint .....");
-//            }
-//
-//            @Override
-//            public void connectStart(@NonNull DownloadTask task, int blockIndex, @NonNull Map<String, List<String>> requestHeaderFields) {
-//                Log.e(TAG, "connectStart .....");
-//            }
-//
-//            @Override
-//            public void connectEnd(@NonNull DownloadTask task, int blockIndex, int responseCode, @NonNull Map<String, List<String>> responseHeaderFields) {
-//                Log.e(TAG, "connectEnd .....");
-//            }
-//
-//            @Override
-//            public void fetchStart(@NonNull DownloadTask task, int blockIndex, long contentLength) {
-//                Log.e(TAG, "fetchStart .....");
-//            }
-//
-//            @Override
-//            public void fetchProgress(@NonNull DownloadTask task, int blockIndex, long increaseBytes) {
-//                Log.e(TAG, "fetchProgress .....");
-//            }
-//
-//            @Override
-//            public void fetchEnd(@NonNull DownloadTask task, int blockIndex, long contentLength) {
-//                Log.e(TAG, "fetchEnd .....");
-//            }
-//
-//            @Override
-//            public void taskEnd(@NonNull DownloadTask task, @NonNull EndCause cause, @Nullable Exception realCause) {
-//                Log.e(TAG, "taskEnd  ....." + " EndCause : " + cause.toString() + "  realCause : " + (realCause != null ? realCause.getMessage() : ""));
-//            }
-//        });
-        task.enqueue(new DownloadListener4() {
-            long totalLength = 0;
-
-            @Override
-            public void taskStart(@NonNull DownloadTask task) {
-                Log.e(TAG, "taskStart .....");
-            }
-
-            @Override
-            public void connectStart(@NonNull DownloadTask task, int blockIndex, @NonNull Map<String, List<String>> requestHeaderFields) {
-                Log.e(TAG, "connectStart .....");
-            }
-
-            @Override
-            public void connectEnd(@NonNull DownloadTask task, int blockIndex, int responseCode, @NonNull Map<String, List<String>> responseHeaderFields) {
-                Log.e(TAG, "connectEnd .....");
-            }
-
-            @Override
-            public void infoReady(DownloadTask task, @NonNull BreakpointInfo info, boolean fromBreakpoint, @NonNull Listener4Assist.Listener4Model model) {
-                Log.e(TAG, "infoReady .....");
-                totalLength = info.getTotalLength();
-            }
-
-            @Override
-            public void progressBlock(DownloadTask task, int blockIndex, long currentBlockOffset) {
-                Log.e(TAG, "progressBlock .....");
-            }
-
-            @Override
-            public void progress(DownloadTask task, long currentOffset) {
-                Log.e(TAG, "progress ..... " + calcProgress(currentOffset, totalLength));
-            }
-
-            @Override
-            public void blockEnd(DownloadTask task, int blockIndex, BlockInfo info) {
-                Log.e(TAG, "blockEnd .....");
-            }
-
-            @Override
-            public void taskEnd(DownloadTask task, EndCause cause, @Nullable Exception realCause, @NonNull Listener4Assist.Listener4Model model) {
-                Log.e(TAG, "taskEnd  ....." + " EndCause : " + cause.toString() + "  realCause : " + (realCause != null ? realCause.getMessage() : ""));
-
-            }
-        });
+        task.enqueue(downloadListener4);
     }
+
+    private void startQueueTask() {
+        QueueController queueController = new QueueController();
+        queueController.initTasks(this, new DownloadContextListener() {
+            @Override
+            public void taskEnd(@NonNull DownloadContext context, @NonNull DownloadTask task, @NonNull EndCause cause, @Nullable Exception realCause, int remainCount) {
+                Log.e(TAG, "queue taskEnd ....." + " EndCause : " + cause.toString() + "  remainCount : " + remainCount);
+            }
+
+            @Override
+            public void queueEnd(@NonNull DownloadContext context) {
+                Log.e(TAG, "queueEnd .....");
+            }
+        }, downloadListener4);
+    }
+
+    private DownloadListener4 downloadListener4 = new DownloadListener4() {
+        long totalLength = 0;
+
+        @Override
+        public void taskStart(@NonNull DownloadTask task) {
+            Log.e(TAG, "taskStart .....");
+        }
+
+        @Override
+        public void connectStart(@NonNull DownloadTask task, int blockIndex, @NonNull Map<String, List<String>> requestHeaderFields) {
+            Log.e(TAG, "connectStart .....");
+        }
+
+        @Override
+        public void connectEnd(@NonNull DownloadTask task, int blockIndex, int responseCode, @NonNull Map<String, List<String>> responseHeaderFields) {
+            Log.e(TAG, "connectEnd .....");
+        }
+
+        @Override
+        public void infoReady(DownloadTask task, @NonNull BreakpointInfo info, boolean fromBreakpoint, @NonNull Listener4Assist.Listener4Model model) {
+            Log.e(TAG, "infoReady .....");
+            totalLength = info.getTotalLength();
+        }
+
+        @Override
+        public void progressBlock(DownloadTask task, int blockIndex, long currentBlockOffset) {
+            Log.e(TAG, "progressBlock .....");
+        }
+
+        @Override
+        public void progress(DownloadTask task, long currentOffset) {
+            Log.e(TAG, "progress ..... " + calcProgress(currentOffset, totalLength));
+        }
+
+        @Override
+        public void blockEnd(DownloadTask task, int blockIndex, BlockInfo info) {
+            Log.e(TAG, "blockEnd .....");
+        }
+
+        @Override
+        public void taskEnd(DownloadTask task, EndCause cause, @Nullable Exception realCause, @NonNull Listener4Assist.Listener4Model model) {
+            Log.e(TAG, "taskEnd  ....." + " EndCause : " + cause.toString() + "  realCause : " + (realCause != null ? realCause.getMessage() : ""));
+
+        }
+    };
 
     private String calcProgress(long offset, long total) {
         double progress = 0;
