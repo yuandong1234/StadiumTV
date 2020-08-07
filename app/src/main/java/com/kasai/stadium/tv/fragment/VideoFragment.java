@@ -2,12 +2,18 @@ package com.kasai.stadium.tv.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.kasai.stadium.tv.R;
+import com.kasai.stadium.tv.dao.VideoDao;
+import com.kasai.stadium.tv.dao.bean.VideoBean;
+import com.kasai.stadium.tv.utils.MD5Util;
 import com.yuong.media.player.IjkVideoView;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
@@ -19,12 +25,15 @@ public class VideoFragment extends BaseFragment {
 
     private IjkVideoView videoView;
     private FragmentChangeListener listener;
+    private Handler handler;
 
-    private String path = "https://venue-saas.oss-cn-shenzhen.aliyuncs.com/test/upload_file/file/20200703/20200703153425055871.mp4";
+    //    private String path = "https://venue-saas.oss-cn-shenzhen.aliyuncs.com/test/upload_file/file/20200703/20200703153425055871.mp4";
+    private String url;
 
-    public static VideoFragment newInstance() {
+    public static VideoFragment newInstance(String url) {
         VideoFragment fragment = new VideoFragment();
         Bundle args = new Bundle();
+        args.putString("url", url);
         fragment.setArguments(args);
         return fragment;
     }
@@ -33,6 +42,13 @@ public class VideoFragment extends BaseFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         listener = (FragmentChangeListener) activity;
+        url = getArguments().getString("url");
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -59,15 +75,14 @@ public class VideoFragment extends BaseFragment {
         videoView.setErrorListener(new IMediaPlayer.OnErrorListener() {
             @Override
             public boolean onError(IMediaPlayer iMediaPlayer, int i, int i1) {
+                nextPage();
                 return false;
             }
         });
         videoView.setCompletionListener(new IMediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(IMediaPlayer iMediaPlayer) {
-                if (listener != null) {
-                    listener.onNext();
-                }
+                nextPage();
             }
         });
     }
@@ -75,8 +90,7 @@ public class VideoFragment extends BaseFragment {
     @Override
     public void loadData() {
         super.loadData();
-        videoView.setVideoPath(path);
-        videoView.start();
+        loadVideo();
     }
 
     @Override
@@ -87,5 +101,38 @@ public class VideoFragment extends BaseFragment {
             videoView.destroyPlayer();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
+        }
+    }
+
+    public void bindHandler(Handler handler) {
+        this.handler = handler;
+    }
+
+    private void nextPage() {
+        if (listener != null) {
+            listener.onNext();
+        }
+    }
+
+    private void loadVideo() {
+        if (!TextUtils.isEmpty(url)) {
+            String fileName = MD5Util.getMD5(url) + ".mp4";
+            VideoBean video = VideoDao.getInstance(getActivity()).getVideo(fileName);
+            if (video != null && !TextUtils.isEmpty(video.path)) {
+                Log.e(TAG, "加载本地视频.....");
+                videoView.setVideoPath(video.path);
+            } else {
+                Log.e(TAG, "加载网络视频.....");
+                videoView.setVideoPath(url);
+            }
+            videoView.start();
+        }
     }
 }

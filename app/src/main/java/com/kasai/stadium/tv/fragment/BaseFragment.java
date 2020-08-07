@@ -1,7 +1,6 @@
 package com.kasai.stadium.tv.fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,11 +21,15 @@ public class BaseFragment extends Fragment {
         Log.e(TAG, "onAttach");
     }
 
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         Log.e(TAG, "setUserVisibleHint()-----> " + isVisibleToUser);
         isUserVisible = isVisibleToUser;
+        if (isUserVisible && isViewInitiated) {
+            onUserVisible();
+        }
         if (isUserVisible && isViewInitiated && isLazyLoad) {
             loadData();
         }
@@ -77,11 +80,14 @@ public class BaseFragment extends Fragment {
     public void loadData() {
     }
 
+    public void onUserVisible() {
+    }
+
     protected boolean isLaunchLazyMode() {
         return false;
     }
 
-    public  interface FragmentChangeListener {
+    public interface FragmentChangeListener {
         void onNext();
     }
 }
