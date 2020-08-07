@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.facebook.stetho.Stetho;
 import com.liulishuo.okdownload.OkDownload;
+import com.liulishuo.okdownload.core.Util;
 import com.liulishuo.okdownload.core.connection.DownloadOkHttp3Connection;
 
 import java.util.concurrent.TimeUnit;
@@ -28,5 +29,6 @@ public class App extends Application {
         OkDownload.Builder builder = new OkDownload.Builder(this)
                 .connectionFactory(factory);
         OkDownload.setSingletonInstance(builder.build());
+        Util.enableConsoleLog();
     }
 }
