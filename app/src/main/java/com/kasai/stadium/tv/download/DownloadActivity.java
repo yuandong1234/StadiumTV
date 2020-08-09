@@ -27,7 +27,8 @@ import java.util.Map;
 
 public class DownloadActivity extends AppCompatActivity implements View.OnClickListener {
     private final static String TAG = DownloadActivity.class.getSimpleName();
-    private Button btnDownload;
+    private Button btnStart;
+    private Button btnStop;
     private TextView tvDownloadProgress;
 
     private DownloadTask task;
@@ -43,17 +44,22 @@ public class DownloadActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initView() {
-        btnDownload = findViewById(R.id.btn_download);
+        btnStart = findViewById(R.id.btn_start);
+        btnStop = findViewById(R.id.btn_stop);
         tvDownloadProgress = findViewById(R.id.tv_download_progress);
-        btnDownload.setOnClickListener(this);
+        btnStart.setOnClickListener(this);
+        btnStop.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_download:
+            case R.id.btn_start:
                 startTask();
 //                startQueueTask();
+                break;
+            case R.id.btn_stop:
+                stopTask();
                 break;
         }
     }
@@ -67,6 +73,10 @@ public class DownloadActivity extends AppCompatActivity implements View.OnClickL
                 .setFilenameFromResponse(false)
                 .build();
         task.enqueue(downloadListener4);
+    }
+
+    private void stopTask() {
+        task.cancel();
     }
 
     private void startQueueTask() {
@@ -90,6 +100,7 @@ public class DownloadActivity extends AppCompatActivity implements View.OnClickL
         @Override
         public void taskStart(@NonNull DownloadTask task) {
             Log.e(TAG, "taskStart .....");
+            tvDownloadProgress.setText("开始下载");
         }
 
         @Override
@@ -115,7 +126,9 @@ public class DownloadActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         public void progress(DownloadTask task, long currentOffset) {
-            Log.e(TAG, "progress ..... " + calcProgress(currentOffset, totalLength));
+            String progress = calcProgress(currentOffset, totalLength);
+            Log.e(TAG, "progress ..... " + progress);
+            tvDownloadProgress.setText("下载进度： " + progress + "%");
         }
 
         @Override
@@ -126,6 +139,9 @@ public class DownloadActivity extends AppCompatActivity implements View.OnClickL
         @Override
         public void taskEnd(DownloadTask task, EndCause cause, @Nullable Exception realCause, @NonNull Listener4Assist.Listener4Model model) {
             Log.e(TAG, "taskEnd  ....." + " EndCause : " + cause.toString() + "  realCause : " + (realCause != null ? realCause.getMessage() : ""));
+            if (cause == EndCause.COMPLETED) {
+                tvDownloadProgress.setText("下载完成");
+            }
 
         }
     };

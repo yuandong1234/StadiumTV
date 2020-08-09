@@ -29,7 +29,10 @@
             android:name=".activity.MainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/FullScreenTheme" />
-        <activity android:name=".download.DownloadActivity" />
+        <activity
+            android:name=".download.DownloadActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/FullScreenTheme" />
     </application>
 
 </manifest>

@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.kasai.stadium.tv.R;
+import com.kasai.stadium.tv.download.DownloadActivity;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -25,6 +26,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void initView() {
         findViewById(R.id.btn_login).setOnClickListener(this);
+        findViewById(R.id.btn_download).setOnClickListener(this);
     }
 
     @Override
@@ -32,6 +34,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (view.getId()) {
             case R.id.btn_login:
                 startActivity(new Intent(this, MainActivity.class));
+                break;
+            case R.id.btn_download:
+                startActivity(new Intent(this, DownloadActivity.class));
                 break;
         }
     }
