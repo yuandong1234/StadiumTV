@@ -1,4 +1,4 @@
-package com.kasai.stadium.tv.download;
+package com.kasai.stadium.tv.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.kasai.stadium.tv.R;
+import com.kasai.stadium.tv.download.QueueController;
 import com.kasai.stadium.tv.utils.FileUtil;
 import com.kasai.stadium.tv.utils.MD5Util;
 import com.liulishuo.okdownload.DownloadContext;
@@ -25,8 +26,8 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
-public class DownloadActivity extends AppCompatActivity implements View.OnClickListener {
-    private final static String TAG = DownloadActivity.class.getSimpleName();
+public class TestActivity extends AppCompatActivity implements View.OnClickListener {
+    private final static String TAG = TestActivity.class.getSimpleName();
     private Button btnStart;
     private Button btnStop;
     private TextView tvDownloadProgress;
@@ -39,7 +40,7 @@ public class DownloadActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_download);
+        setContentView(R.layout.activity_test);
         initView();
     }
 
