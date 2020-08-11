@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_stadium_page"
     android:orientation="vertical">
+
+    <!--<com.kasai.stadium.tv.widget.LineChartView-->
+    <!--android:id="@+id/chartView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="200dp"-->
+    <!--android:background="#ffffff" />-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -87,7 +92,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="25dp"
-                        android:text="体育场"
+                        android:text="游泳馆"
                         android:textColor="#68BEFF"
                         android:textSize="30sp"
                         android:textStyle="bold" />
@@ -174,7 +179,6 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_people_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -185,6 +189,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_personal_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -208,7 +213,7 @@
                 android:paddingBottom="15dp">
 
                 <ImageView
-                    android:id="@+id/iv_temperature"
+                    android:id="@+id/iv_water_temperature"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -218,17 +223,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/iv_temperature"
+                    android:layout_toRightOf="@+id/iv_water_temperature"
                     android:gravity="center"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_temperature"
+                        android:id="@+id/tv_water_temperature"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="25dp"
-                        android:text="800"
+                        android:text="27"
                         android:textColor="#666666"
                         android:textSize="30sp"
                         android:textStyle="bold" />
@@ -239,314 +244,199 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="25dp"
                         android:layout_marginTop="10dp"
-                        android:text="场温(℃)"
+                        android:text="水温(℃)"
+                        android:textColor="#4D4D4D"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_border_top2"
+                android:gravity="center"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp">
+
+                <ImageView
+                    android:id="@+id/iv_ph"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/ic_temperature" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/iv_ph"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_ph"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="25dp"
+                        android:text="7.8"
+                        android:textColor="#666666"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="10dp"
+                        android:text="PH值"
+                        android:textColor="#4D4D4D"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_border_top2"
+                android:gravity="center"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp">
+
+                <ImageView
+                    android:id="@+id/iv_cl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/ic_temperature" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/iv_cl"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_cl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="25dp"
+                        android:text="0.03"
+                        android:textColor="#666666"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="10dp"
+                        android:text="残氯值(mg/L)"
                         android:textColor="#4D4D4D"
                         android:textSize="15sp" />
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="15dp"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:background="@drawable/bg_stadium_page4">
 
-            <RelativeLayout
-                android:id="@+id/rl_sport"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/bg_stadium_page4">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/iv_sport"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@mipmap/ic_football" />
-
-                    <TextView
-                        android:id="@+id/tv_sport_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:text="足球"
-                        android:textColor="#4DD177"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/ll_available_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginRight="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:text="当前可订场地数量:"
-                        android:textColor="#4D4D4D"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/tv_available_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:text="16"
-                        android:textColor="#4D4D4D"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/ll_available_number"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center">
-
-                    <com.kasai.stadium.tv.widget.ProgressView
-                        android:id="@+id/progress_view"
-                        android:layout_width="78dp"
-                        android:layout_height="78dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        app:progress_padding="0dp"
-                        app:progress_radius="35dp"
-                        app:progress_stroke_width="8dp"
-                        app:progress_title="满场率"
-                        app:progress_title_color="#4D4D4D"
-                        app:progress_title_text_size="12sp"
-                        app:progress_value_color="#4D4D4D"
-                        app:progress_value_text_size="24sp" />
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_available_space"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="16dp"
-                        android:layout_toRightOf="@+id/progress_view" />
-                </RelativeLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_sport2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <TextView
+                android:id="@+id/tv_locker_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_stadium_page4"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/iv_sport2"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@mipmap/ic_football" />
-
-                    <TextView
-                        android:id="@+id/tv_sport_name2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:text="足球"
-                        android:textColor="#4DD177"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/ll_available_number2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginRight="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:text="当前可订场地数量:"
-                        android:textColor="#4D4D4D"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/tv_available_number2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:text="16"
-                        android:textColor="#4D4D4D"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/ll_available_number2"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center">
-
-                    <com.kasai.stadium.tv.widget.ProgressView
-                        android:id="@+id/progress_view2"
-                        android:layout_width="78dp"
-                        android:layout_height="78dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        app:progress_padding="0dp"
-                        app:progress_radius="35dp"
-                        app:progress_stroke_width="8dp"
-                        app:progress_title="满场率"
-                        app:progress_title_color="#4D4D4D"
-                        app:progress_title_text_size="12sp"
-                        app:progress_value_color="#4D4D4D"
-                        app:progress_value_text_size="24sp" />
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_available_space2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="16dp"
-                        android:layout_toRightOf="@+id/progress_view2" />
-                </RelativeLayout>
-            </RelativeLayout>
+                android:layout_marginTop="15dp"
+                android:text="储物柜使用状态"
+                android:textColor="#4D4D4D"
+                android:textSize="18sp" />
 
             <RelativeLayout
-                android:id="@+id/rl_sport3"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_stadium_page4"
-                android:visibility="gone">
+                android:layout_below="@+id/tv_locker_state"
+                android:layout_marginTop="8dp">
 
                 <LinearLayout
+                    android:id="@+id/ll_locker_state"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal">
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/iv_sport3"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@mipmap/ic_football" />
-
-                    <TextView
-                        android:id="@+id/tv_sport_name3"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:text="足球"
-                        android:textColor="#4DD177"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="15dp"
+                            android:text="空闲中"
+                            android:textColor="#67BCFF"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:id="@+id/tv_locker_unused_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="15dp"
+                            android:text="286"
+                            android:textColor="#67BCFF"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="15dp"
+                            android:text="租赁中"
+                            android:textColor="#FEBF7C"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:id="@+id/tv_locker_used_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="15dp"
+                            android:text="286"
+                            android:textColor="#FEBF7C"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
                 </LinearLayout>
 
 
-                <LinearLayout
-                    android:id="@+id/ll_available_number3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginRight="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:text="当前可订场地数量:"
-                        android:textColor="#4D4D4D"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/tv_available_number3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:text="16"
-                        android:textColor="#4D4D4D"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <RelativeLayout
+                <com.kasai.stadium.tv.widget.LineChartView
+                    android:id="@+id/chartView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/ll_available_number3"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center">
-
-                    <com.kasai.stadium.tv.widget.ProgressView
-                        android:id="@+id/progress_view3"
-                        android:layout_width="78dp"
-                        android:layout_height="78dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        app:progress_padding="0dp"
-                        app:progress_radius="35dp"
-                        app:progress_stroke_width="8dp"
-                        app:progress_title="满场率"
-                        app:progress_title_color="#4D4D4D"
-                        app:progress_title_text_size="12sp"
-                        app:progress_value_color="#4D4D4D"
-                        app:progress_value_text_size="24sp" />
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_available_space3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="16dp"
-                        android:layout_toRightOf="@+id/progress_view3" />
-                </RelativeLayout>
+                    android:layout_toRightOf="@+id/ll_locker_state" />
             </RelativeLayout>
-        </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 </FrameLayout>

@@ -1,6 +1,7 @@
 package com.kasai.stadium.tv;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.facebook.stetho.Stetho;
 import com.liulishuo.okdownload.OkDownload;
@@ -12,9 +13,12 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 
 public class App extends Application {
+    private static Context context;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        context = getApplicationContext();
         Stetho.initializeWithDefaults(this);
         initDownload();
     }
@@ -30,5 +34,9 @@ public class App extends Application {
                 .connectionFactory(factory);
         OkDownload.setSingletonInstance(builder.build());
         Util.enableConsoleLog();
+    }
+
+    public static Context getContext() {
+        return context;
     }
 }

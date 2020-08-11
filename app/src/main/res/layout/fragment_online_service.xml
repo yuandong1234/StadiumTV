@@ -29,6 +29,7 @@
                 android:src="@mipmap/ic_kasai_company_logo" />
 
             <TextView
+                android:id="@+id/tv_stadium_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -38,6 +39,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_stadium_welcome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -54,6 +56,7 @@
             android:background="#ECDAD7" />
 
         <TextView
+            android:id="@+id/tv_online_service"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"

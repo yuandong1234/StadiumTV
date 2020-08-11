@@ -9,11 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
     protected final String TAG = this.getClass().getSimpleName();
     private boolean isUserVisible;
     private boolean isViewInitiated;
     protected boolean isLazyLoad;
+
+    protected View view;
 
     @Override
     public void onAttach(Activity activity) {
@@ -47,7 +49,9 @@ public class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.e(TAG, "onCreateView");
         isViewInitiated = true;
-        return super.onCreateView(inflater, container, savedInstanceState);
+        view = inflater.inflate(intLayoutId(), container, false);
+        intView();
+        return view;
     }
 
     @Override
@@ -76,6 +80,10 @@ public class BaseFragment extends Fragment {
         super.onDestroy();
         Log.e(TAG, "onDestroy");
     }
+
+    public abstract int intLayoutId();
+
+    public abstract void intView();
 
     public void loadData() {
     }

@@ -3,12 +3,8 @@ package com.kasai.stadium.tv.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.kasai.stadium.tv.R;
 import com.kasai.stadium.tv.dao.VideoDao;
@@ -46,29 +42,20 @@ public class VideoFragment extends BaseFragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
     protected boolean isLaunchLazyMode() {
         return true;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_video, container, false);
-        initView(view);
-        initListener();
-        return view;
+    public int intLayoutId() {
+        return R.layout.fragment_video;
     }
 
-    private void initView(View view) {
+    @Override
+    public void intView() {
         videoView = view.findViewById(R.id.video_view);
         videoView.initPlayer();
+        initListener();
     }
 
     private void initListener() {

@@ -20,7 +20,7 @@ android {
         abi {
             enable true
             reset()
-            include 'x86', 'armeabi-v7a','x86_64'
+            include 'x86', 'armeabi-v7a', 'x86_64'
             universalApk true
         }
     }
@@ -41,6 +41,9 @@ dependencies {
 
     //数据库查看
     implementation 'com.facebook.stetho:stetho:1.5.0'
+
+    //Gson
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     implementation project(':MediaPlayerLib')
 }

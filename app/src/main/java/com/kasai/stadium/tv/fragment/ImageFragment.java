@@ -3,11 +3,8 @@ package com.kasai.stadium.tv.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -44,13 +41,15 @@ public class ImageFragment extends BaseFragment {
         listener = (FragmentChangeListener) activity;
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_image, container, false);
-        initView(view);
-        return view;
+    public int intLayoutId() {
+        return R.layout.fragment_image;
+    }
+
+    @Override
+    public void intView() {
+        imageView = view.findViewById(R.id.image);
     }
 
     @Override
@@ -66,10 +65,6 @@ public class ImageFragment extends BaseFragment {
         super.onUserVisible();
         Log.e(TAG, "*****onUserVisible*****");
         nextPage();
-    }
-
-    private void initView(View view) {
-        imageView = view.findViewById(R.id.image);
     }
 
     private void loadImage(ImageView imageView, String url) {
