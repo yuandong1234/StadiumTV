@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.kasai.stadium.tv.R;
 import com.kasai.stadium.tv.adapter.SpaceNumberAdapter;
+import com.kasai.stadium.tv.bean.GymnasiumBean;
 import com.kasai.stadium.tv.utils.DensityUtil;
 import com.kasai.stadium.tv.widget.HorizontalGridSpaceItemDecoration;
 import com.kasai.stadium.tv.widget.ProgressView;
@@ -44,9 +45,10 @@ public class GymnasiumFragment extends BaseFragment {
 
     private SpaceNumberAdapter adapter;
 
-    public static GymnasiumFragment newInstance() {
+    public static GymnasiumFragment newInstance(GymnasiumBean gymnasiumBean) {
         GymnasiumFragment fragment = new GymnasiumFragment();
         Bundle args = new Bundle();
+        args.putSerializable("gymnasium", gymnasiumBean);
         fragment.setArguments(args);
         return fragment;
     }

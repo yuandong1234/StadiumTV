@@ -6,7 +6,15 @@ public class BaseBean implements Serializable {
     /**
      * code true string
      * msg true string
-      */
-    public  String code;
-    public  String msg;
+     */
+    public int code;
+    public String msg;
+
+    public boolean isSuccessful() {
+        return code == 200;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
 }

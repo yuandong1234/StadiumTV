@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.kasai.stadium.tv.R;
+import com.kasai.stadium.tv.bean.VideoInfoBean;
 import com.kasai.stadium.tv.dao.VideoDao;
 import com.kasai.stadium.tv.dao.bean.VideoBean;
 import com.kasai.stadium.tv.utils.MD5Util;
@@ -25,11 +26,12 @@ public class VideoFragment extends BaseFragment {
 
     //    private String path = "https://venue-saas.oss-cn-shenzhen.aliyuncs.com/test/upload_file/file/20200703/20200703153425055871.mp4";
     private String url;
+    private VideoInfoBean videoInfoBean;
 
-    public static VideoFragment newInstance(String url) {
+    public static VideoFragment newInstance(VideoInfoBean videoBean) {
         VideoFragment fragment = new VideoFragment();
         Bundle args = new Bundle();
-        args.putString("url", url);
+        args.putSerializable("video", videoBean);
         fragment.setArguments(args);
         return fragment;
     }
@@ -37,8 +39,11 @@ public class VideoFragment extends BaseFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        listener = (FragmentChangeListener) activity;
-        url = getArguments().getString("url");
+       // listener = (FragmentChangeListener) activity;
+        videoInfoBean = (VideoInfoBean) getArguments().getSerializable("video");
+        if (videoInfoBean != null) {
+            url = videoInfoBean.getVideo();
+        }
     }
 
     @Override
@@ -54,8 +59,8 @@ public class VideoFragment extends BaseFragment {
     @Override
     public void intView() {
         videoView = view.findViewById(R.id.video_view);
-        videoView.initPlayer();
-        initListener();
+       // videoView.initPlayer();
+        //initListener();
     }
 
     private void initListener() {
@@ -77,7 +82,7 @@ public class VideoFragment extends BaseFragment {
     @Override
     public void loadData() {
         super.loadData();
-        loadVideo();
+       // loadVideo();
     }
 
     @Override

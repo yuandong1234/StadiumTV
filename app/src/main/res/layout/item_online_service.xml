@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:includeFontPadding="false"
-                android:text="张三峰"
+                android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
@@ -44,7 +44,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 android:includeFontPadding="false"
-                android:text="在岗"
+                android:text=""
                 android:textColor="#FF9168"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -57,7 +57,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:text="客服主任客服主任客服主任客服主"
+            android:text=""
             android:textColor="#ffffff"
             android:textSize="15sp" />
     </LinearLayout>

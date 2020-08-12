@@ -33,6 +33,7 @@ public class HtmlView extends LinearLayout {
     private void init(Context context) {
         LayoutInflater.from(context).inflate(R.layout.layout_webview, this, true);
         webView = findViewById(R.id.webView);
+        webView.setBackgroundColor(0);
         initWebView();
     }
 

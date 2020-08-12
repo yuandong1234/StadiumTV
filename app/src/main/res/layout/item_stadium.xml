@@ -17,7 +17,7 @@
             android:id="@+id/tv_stadium_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="大运中心运动馆"
+            android:text=""
             android:textColor="#323232"
             android:textSize="12sp" />
 

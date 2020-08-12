@@ -27,7 +27,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/iv_stadium_image"
-            android:text="大运中心"
+            android:text=""
             android:textColor="#ffffff"
             android:textSize="8sp" />
     </RelativeLayout>

@@ -3,15 +3,15 @@ package com.kasai.stadium.tv.bean;
 import java.io.Serializable;
 import java.util.List;
 
-public class StadiumBean implements Serializable {
-
+public class GymnasiumBean implements Serializable {
     public String venueName;
     public String merchantName;
     public String date;
     public String week;
     public String chinaDate;
     public String peopleNumber;
-    public String temperature;
+    public String indoorTemperature;
+    public String outdoorTemperature;
     public List<Sport> sportList;
 
     public String getVenueName() {
@@ -62,12 +62,20 @@ public class StadiumBean implements Serializable {
         this.peopleNumber = peopleNumber;
     }
 
-    public String getTemperature() {
-        return temperature;
+    public String getIndoorTemperature() {
+        return indoorTemperature;
     }
 
-    public void setTemperature(String temperature) {
-        this.temperature = temperature;
+    public void setIndoorTemperature(String indoorTemperature) {
+        this.indoorTemperature = indoorTemperature;
+    }
+
+    public String getOutdoorTemperature() {
+        return outdoorTemperature;
+    }
+
+    public void setOutdoorTemperature(String outdoorTemperature) {
+        this.outdoorTemperature = outdoorTemperature;
     }
 
     public List<Sport> getSportList() {

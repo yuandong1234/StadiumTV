@@ -3,12 +3,13 @@ package com.kasai.stadium.tv.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.kasai.stadium.tv.R;
+import com.kasai.stadium.tv.bean.ImageBean;
 
 /**
  * 图片
@@ -18,6 +19,7 @@ public class ImageFragment extends BaseFragment {
     private String imageUrl = "http://saas-resources.52jiayundong.com/test/upload_file/file/20200624/20200624190917536451.jpg";
     private FragmentChangeListener listener;
     private Handler handler;
+    private ImageBean imageBean;
 
     private Runnable runnable = new Runnable() {
         @Override
@@ -28,9 +30,10 @@ public class ImageFragment extends BaseFragment {
         }
     };
 
-    public static ImageFragment newInstance() {
+    public static ImageFragment newInstance(ImageBean bean) {
         ImageFragment fragment = new ImageFragment();
         Bundle args = new Bundle();
+        args.putSerializable("image", bean);
         fragment.setArguments(args);
         return fragment;
     }
@@ -38,7 +41,8 @@ public class ImageFragment extends BaseFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        listener = (FragmentChangeListener) activity;
+        //listener = (FragmentChangeListener) activity;
+        imageBean = (ImageBean) getArguments().getSerializable("image");
     }
 
 
@@ -56,7 +60,9 @@ public class ImageFragment extends BaseFragment {
     public void loadData() {
         super.loadData();
         Log.e(TAG, "*****loadData*****");
-        loadImage(imageView, imageUrl);
+        if (imageBean != null && !TextUtils.isEmpty(imageBean.getImage())) {
+            loadImage(imageView, imageBean.getImage());
+        }
         nextPage();
     }
 

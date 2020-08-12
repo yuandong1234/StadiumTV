@@ -1,21 +1,32 @@
 package com.kasai.stadium.tv.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.kasai.stadium.tv.R;
+import com.kasai.stadium.tv.bean.StadiumNoticeBean;
 import com.kasai.stadium.tv.widget.HtmlView;
 
 public class StadiumNoticeFragment extends BaseFragment {
     private TextView tvStadiumName;
     private TextView tvStadiumWelcome;
     private HtmlView htmlView;
+    private StadiumNoticeBean noticeBean;
 
-    public static StadiumNoticeFragment newInstance() {
+    public static StadiumNoticeFragment newInstance(StadiumNoticeBean noticeBean) {
         StadiumNoticeFragment fragment = new StadiumNoticeFragment();
         Bundle args = new Bundle();
+        args.putSerializable("notice", noticeBean);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        noticeBean = (StadiumNoticeBean) getArguments().getSerializable("notice");
     }
 
     @Override
@@ -28,8 +39,12 @@ public class StadiumNoticeFragment extends BaseFragment {
         tvStadiumName = view.findViewById(R.id.tv_stadium_name);
         tvStadiumWelcome = view.findViewById(R.id.tv_stadium_welcome);
         htmlView = view.findViewById(R.id.htmlView);
-
-        String html = "<p style=\"color: #ff0000\">1、每票只限一人使用,不设门票退换和离馆再入馆服务,出馆后再进馆需要重新购票。</p>";
-        htmlView.loadHtml(htmlView.getHtmlData(html));
+        if (noticeBean != null) {
+            tvStadiumName.setText(noticeBean.getMerchantName());
+            tvStadiumWelcome.setText(noticeBean.getMerchantName() + "欢迎您!");
+            if (!TextUtils.isEmpty(noticeBean.content)) {
+                htmlView.loadHtml(htmlView.getHtmlData(noticeBean.content));
+            }
+        }
     }
 }

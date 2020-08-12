@@ -73,21 +73,21 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         viewPager.addOnPageChangeListener(this);
         tvLog.setOnClickListener(this);
 
-        ImageFragment imageFragment = ImageFragment.newInstance();
-        imageFragment.bindHandler(handler);
-        fragments.add(imageFragment);
-
-        VideoFragment videoFragment = VideoFragment.newInstance(urls[0]);
-        videoFragment.bindHandler(handler);
-        fragments.add(videoFragment);
-
-        VideoFragment videoFragment2 = VideoFragment.newInstance(urls[1]);
-        videoFragment2.bindHandler(handler);
-        fragments.add(videoFragment2);
-
-        SectionsPagerAdapter pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), fragments);
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setOffscreenPageLimit(fragments.size());
+//        ImageFragment imageFragment = ImageFragment.newInstance();
+//        imageFragment.bindHandler(handler);
+//        fragments.add(imageFragment);
+//
+//        VideoFragment videoFragment = VideoFragment.newInstance(urls[0]);
+//        videoFragment.bindHandler(handler);
+//        fragments.add(videoFragment);
+//
+//        VideoFragment videoFragment2 = VideoFragment.newInstance(urls[1]);
+//        videoFragment2.bindHandler(handler);
+//        fragments.add(videoFragment2);
+//
+//        SectionsPagerAdapter pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), fragments);
+//        viewPager.setAdapter(pagerAdapter);
+//        viewPager.setOffscreenPageLimit(fragments.size());
     }
 
     private void initData() {

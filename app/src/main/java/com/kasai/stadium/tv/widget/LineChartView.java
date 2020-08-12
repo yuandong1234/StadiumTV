@@ -198,4 +198,9 @@ public class LineChartView extends View {
         this.times = timeValues;
         invalidate();
     }
+
+    public void setLimitValue(int maxValue, int minValue) {
+        this.maxValue = maxValue;
+        this.minValue = minValue;
+    }
 }

@@ -35,7 +35,9 @@ public class RetryInterceptor implements Interceptor {
     private Response doRequest(Chain chain, Request request) {
         Response response = null;
         try {
-            response = chain.proceed(request);
+            if (chain != null) {
+                response = chain.proceed(request);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(TAG, "Exception ：  " + e.getMessage());

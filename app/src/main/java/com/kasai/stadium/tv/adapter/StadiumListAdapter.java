@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.kasai.stadium.tv.R;
-import com.kasai.stadium.tv.bean.StadiumBean;
+import com.kasai.stadium.tv.bean.VenueListBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +17,25 @@ import java.util.List;
 public class StadiumListAdapter extends RecyclerView.Adapter<StadiumListAdapter.ViewHolder> {
     private Context context;
     private LayoutInflater inflater;
+    private onStadiumSelectedListener listener;
 
-    private List<StadiumBean> dataList = new ArrayList<>();
+    public void setListener(onStadiumSelectedListener listener) {
+        this.listener = listener;
+    }
+
+    private List<VenueListBean.Data.Venue> dataList = new ArrayList<>();
 
     public StadiumListAdapter(Context context) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
+    }
+
+    public void setData(List<VenueListBean.Data.Venue> data) {
+        dataList.clear();
+        if (data != null && data.size() > 0) {
+            dataList.addAll(data);
+        }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -33,14 +46,21 @@ public class StadiumListAdapter extends RecyclerView.Adapter<StadiumListAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        //StadiumBean bean = dataList.get(position);
-
+        final VenueListBean.Data.Venue bean = dataList.get(position);
+        holder.tvStadiumName.setText(bean.venueName);
+        holder.llItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null) {
+                    listener.onSelected(bean.id);
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-//        return dataList.size();
-        return 5;
+        return dataList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -51,7 +71,10 @@ public class StadiumListAdapter extends RecyclerView.Adapter<StadiumListAdapter.
             super(itemView);
             llItem = itemView.findViewById(R.id.ll_item);
             tvStadiumName = itemView.findViewById(R.id.tv_stadium_name);
-
         }
+    }
+
+    public interface onStadiumSelectedListener {
+        void onSelected(String id);
     }
 }

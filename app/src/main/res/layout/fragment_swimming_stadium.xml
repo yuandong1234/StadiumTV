@@ -5,12 +5,6 @@
     android:background="@drawable/bg_stadium_page"
     android:orientation="vertical">
 
-    <!--<com.kasai.stadium.tv.widget.LineChartView-->
-    <!--android:id="@+id/chartView"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="200dp"-->
-    <!--android:background="#ffffff" />-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -45,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="大运中心"
+                    android:text=""
                     android:textColor="#4D4D4D"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -57,7 +51,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="12dp"
-                    android:text="大运中心欢迎您!"
+                    android:text=""
                     android:textColor="#666666"
                     android:textSize="12sp" />
             </RelativeLayout>
@@ -118,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="25dp"
-                        android:text="2020-06-22"
+                        android:text=""
                         android:textColor="#4D4D4D"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -129,7 +123,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="25dp"
-                        android:text="星期一"
+                        android:text=""
                         android:textColor="#666666"
                         android:textSize="15sp" />
 
@@ -139,7 +133,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="25dp"
-                        android:text="农历五月初二"
+                        android:text=""
                         android:textColor="#666666"
                         android:textSize="15sp" />
                 </LinearLayout>
@@ -179,17 +173,17 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_personal_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="25dp"
-                        android:text="800"
+                        android:text=""
                         android:textColor="#666666"
                         android:textSize="30sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tv_personal_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -217,7 +211,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/ic_temperature" />
+                    android:src="@mipmap/ic_water_temperature" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -233,7 +227,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="25dp"
-                        android:text="27"
+                        android:text=""
                         android:textColor="#666666"
                         android:textSize="30sp"
                         android:textStyle="bold" />
@@ -265,7 +259,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/ic_temperature" />
+                    android:src="@mipmap/ic_ph" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -281,7 +275,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="25dp"
-                        android:text="7.8"
+                        android:text=""
                         android:textColor="#666666"
                         android:textSize="30sp"
                         android:textStyle="bold" />
@@ -313,7 +307,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/ic_temperature" />
+                    android:src="@mipmap/ic_cl" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -329,7 +323,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="25dp"
-                        android:text="0.03"
+                        android:text=""
                         android:textColor="#666666"
                         android:textSize="30sp"
                         android:textStyle="bold" />
@@ -397,7 +391,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
                             android:layout_marginTop="15dp"
-                            android:text="286"
+                            android:text=""
                             android:textColor="#67BCFF"
                             android:textSize="30sp"
                             android:textStyle="bold" />
@@ -423,7 +417,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
                             android:layout_marginTop="15dp"
-                            android:text="286"
+                            android:text=""
                             android:textColor="#FEBF7C"
                             android:textSize="30sp"
                             android:textStyle="bold" />
