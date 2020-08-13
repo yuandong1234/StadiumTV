@@ -79,7 +79,7 @@ public class ImageFragment extends BaseFragment {
     public void onUserVisible() {
         super.onUserVisible();
         Log.e(TAG, "*****onUserVisible*****");
-        nextPage();
+        //nextPage();
     }
 
     private void loadImage(ImageView imageView, String url) {

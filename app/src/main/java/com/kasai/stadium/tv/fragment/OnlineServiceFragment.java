@@ -76,6 +76,7 @@ public class OnlineServiceFragment extends BaseFragment {
     @Override
     public void loadData() {
         super.loadData();
+        Log.e(TAG, "*****loadData*****");
         initData();
         nextPage();
     }
@@ -88,6 +89,7 @@ public class OnlineServiceFragment extends BaseFragment {
             if (serviceList != null && serviceList.size() > 0) {
                 adapter.setData(serviceList);
             }
+            setOnlyLoadOnce(true);
         }
     }
 

@@ -14,6 +14,7 @@ public abstract class BaseFragment extends Fragment {
     private boolean isUserVisible;
     private boolean isViewInitiated;
     protected boolean isLazyLoad;
+    private boolean isOnlyLoadOnce = false;
 
     protected View view;
 
@@ -32,7 +33,7 @@ public abstract class BaseFragment extends Fragment {
         if (isUserVisible && isViewInitiated) {
             onUserVisible();
         }
-        if (isUserVisible && isViewInitiated && isLazyLoad) {
+        if (isUserVisible && isViewInitiated && isLazyLoad && !isOnlyLoadOnce) {
             loadData();
         }
     }
@@ -93,6 +94,10 @@ public abstract class BaseFragment extends Fragment {
 
     protected boolean isLaunchLazyMode() {
         return false;
+    }
+
+    protected void setOnlyLoadOnce(boolean isOnlyLoadOnce) {
+        this.isOnlyLoadOnce = isOnlyLoadOnce;
     }
 
     public interface FragmentChangeListener {

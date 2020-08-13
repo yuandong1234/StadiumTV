@@ -93,13 +93,14 @@ public class VideoFragment extends BaseFragment {
     public void onUserVisible() {
         super.onUserVisible();
         Log.e(TAG, "*****onUserVisible*****");
-        nextPage();
+        //nextPage();
     }
 
 
     @Override
     public void loadData() {
         super.loadData();
+        Log.e(TAG, "*****loadData*****");
         // loadVideo();
         nextPage();
     }

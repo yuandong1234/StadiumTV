@@ -60,6 +60,7 @@ public class StadiumNoticeFragment extends BaseFragment {
     @Override
     public void loadData() {
         super.loadData();
+        Log.e(TAG, "*****loadData*****");
         initData();
         nextPage();
     }
@@ -71,6 +72,7 @@ public class StadiumNoticeFragment extends BaseFragment {
             if (!TextUtils.isEmpty(noticeBean.content)) {
                 htmlView.loadHtml(htmlView.getHtmlData(noticeBean.content));
             }
+            setOnlyLoadOnce(true);
         }
     }
 

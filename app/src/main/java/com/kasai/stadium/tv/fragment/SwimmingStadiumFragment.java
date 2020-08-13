@@ -137,6 +137,7 @@ public class SwimmingStadiumFragment extends BaseFragment {
     @Override
     public void loadData() {
         super.loadData();
+        Log.e(TAG, "*****loadData*****");
         initData();
         nextPage();
     }
@@ -158,6 +159,8 @@ public class SwimmingStadiumFragment extends BaseFragment {
             saveLockerData(swimmingStadiumBean.getAvailableNum(), swimmingStadiumBean.getPayReceiveNum());
 
             setLockerUseState();
+
+            setOnlyLoadOnce(true);
         }
     }
 

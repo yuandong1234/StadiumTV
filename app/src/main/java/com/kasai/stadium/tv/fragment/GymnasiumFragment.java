@@ -127,6 +127,7 @@ public class GymnasiumFragment extends BaseFragment {
     @Override
     public void loadData() {
         super.loadData();
+        Log.e(TAG, "*****loadData*****");
         initData();
         nextPage();
     }
@@ -157,6 +158,7 @@ public class GymnasiumFragment extends BaseFragment {
                     showSportThird(sports.get(2));
                 }
             }
+            setOnlyLoadOnce(true);
         }
     }
 

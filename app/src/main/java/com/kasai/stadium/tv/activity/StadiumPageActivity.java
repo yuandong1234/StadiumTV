@@ -92,7 +92,7 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
 
     @Override
     public void onPageSelected(int position) {
-        Log.e("******************", "position : " + position);
+//        Log.e("******************", "position : " + position + "  : " + System.currentTimeMillis());
         index = position;
     }
 
@@ -318,7 +318,7 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
 
     @Override
     public void onNext() {
-        Log.e("******************", "切换下一页。。。。");
+        Log.e("******************", "切换下一页: " + System.currentTimeMillis());
         //getWindow().setFormat(PixelFormat.TRANSLUCENT);
         index++;
         if (index > fragments.size() - 1) {

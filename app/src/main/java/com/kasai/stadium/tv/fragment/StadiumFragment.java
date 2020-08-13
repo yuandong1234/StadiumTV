@@ -223,6 +223,7 @@ public class StadiumFragment extends BaseFragment {
     @Override
     public void loadData() {
         super.loadData();
+        Log.e(TAG, "*****loadData*****");
         initData();
         nextPage();
     }
@@ -252,6 +253,7 @@ public class StadiumFragment extends BaseFragment {
                     showSportThird(sports.get(2));
                 }
             }
+            setOnlyLoadOnce(true);
         }
     }
 
