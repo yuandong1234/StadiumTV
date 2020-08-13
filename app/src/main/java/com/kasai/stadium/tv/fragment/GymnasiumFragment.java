@@ -76,6 +76,11 @@ public class GymnasiumFragment extends BaseFragment {
     }
 
     @Override
+    protected boolean isLaunchLazyMode() {
+        return true;
+    }
+
+    @Override
     public void intView() {
         tvGymnasiumName = view.findViewById(R.id.tv_gymnasium_name);
         tvGymnasiumWelcome = view.findViewById(R.id.tv_gymnasium_welcome);
@@ -108,7 +113,25 @@ public class GymnasiumFragment extends BaseFragment {
         rlSport1.setVisibility(View.GONE);
         rlSport2.setVisibility(View.GONE);
         rlSport3.setVisibility(View.GONE);
+//        test();
+    }
 
+    @Override
+    public void onUserVisible() {
+        super.onUserVisible();
+        Log.e(TAG, "*****onUserVisible*****");
+        nextPage();
+    }
+
+
+    @Override
+    public void loadData() {
+        super.loadData();
+        initData();
+        nextPage();
+    }
+
+    private void initData() {
         if (gymnasiumBean != null) {
             tvGymnasiumName.setText(gymnasiumBean.getMerchantName());
             tvGymnasiumWelcome.setText(gymnasiumBean.getMerchantName() + "欢迎您!");
@@ -135,22 +158,6 @@ public class GymnasiumFragment extends BaseFragment {
                 }
             }
         }
-
-//        test();
-    }
-
-    @Override
-    public void onUserVisible() {
-        super.onUserVisible();
-        Log.e(TAG, "*****onUserVisible*****");
-        nextPage();
-    }
-
-
-    @Override
-    public void loadData() {
-        super.loadData();
-        nextPage();
     }
 
     private void showSportOne(GymnasiumBean.Sport data) {
@@ -162,13 +169,15 @@ public class GymnasiumFragment extends BaseFragment {
         }
         List<String> list = getFiledNumberList(data.fieldName);
         int spanCount = getSpanCount(list.size());
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
-        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        rvAvailableSpace1.setLayoutManager(layoutManager);
-        rvAvailableSpace1.addItemDecoration(new HorizontalGridSpaceItemDecoration(spanCount, DensityUtil.dip2px(getActivity(), 5)));
-        SpaceNumberAdapter adapter = new SpaceNumberAdapter(getActivity(), disPlayNumber);
-        rvAvailableSpace1.setAdapter(adapter);
-        adapter.setData(list);
+        if (spanCount > 0) {
+            GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
+            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+            rvAvailableSpace1.setLayoutManager(layoutManager);
+            rvAvailableSpace1.addItemDecoration(new HorizontalGridSpaceItemDecoration(spanCount, DensityUtil.dip2px(getActivity(), 5)));
+            SpaceNumberAdapter adapter = new SpaceNumberAdapter(getActivity(), disPlayNumber);
+            rvAvailableSpace1.setAdapter(adapter);
+            adapter.setData(list);
+        }
     }
 
     private void showSportSecond(GymnasiumBean.Sport data) {
@@ -200,13 +209,15 @@ public class GymnasiumFragment extends BaseFragment {
         }
         List<String> list = getFiledNumberList(data.fieldName);
         int spanCount = getSpanCount(list.size());
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
-        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        rvAvailableSpace3.setLayoutManager(layoutManager);
-        rvAvailableSpace3.addItemDecoration(new HorizontalGridSpaceItemDecoration(spanCount, DensityUtil.dip2px(getActivity(), 5)));
-        SpaceNumberAdapter adapter = new SpaceNumberAdapter(getActivity(), disPlayNumber);
-        rvAvailableSpace3.setAdapter(adapter);
-        adapter.setData(list);
+        if (spanCount > 0) {
+            GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
+            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+            rvAvailableSpace3.setLayoutManager(layoutManager);
+            rvAvailableSpace3.addItemDecoration(new HorizontalGridSpaceItemDecoration(spanCount, DensityUtil.dip2px(getActivity(), 5)));
+            SpaceNumberAdapter adapter = new SpaceNumberAdapter(getActivity(), disPlayNumber);
+            rvAvailableSpace3.setAdapter(adapter);
+            adapter.setData(list);
+        }
     }
 
 //    private void test() {

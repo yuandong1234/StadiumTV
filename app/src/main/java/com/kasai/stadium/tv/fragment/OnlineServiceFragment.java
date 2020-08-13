@@ -21,6 +21,7 @@ public class OnlineServiceFragment extends BaseFragment {
     private TextView tvStadiumWelcome;
     private TextView tvOnlineService;
     private RecyclerView rvService;
+    private OnlineServiceAdapter adapter;
 
     private OnlineServiceBean serviceBean;
 
@@ -45,6 +46,11 @@ public class OnlineServiceFragment extends BaseFragment {
     }
 
     @Override
+    protected boolean isLaunchLazyMode() {
+        return true;
+    }
+
+    @Override
     public void intView() {
         tvStadiumName = view.findViewById(R.id.tv_stadium_name);
         tvStadiumWelcome = view.findViewById(R.id.tv_stadium_welcome);
@@ -55,17 +61,8 @@ public class OnlineServiceFragment extends BaseFragment {
         rvService.setLayoutManager(layoutManager);
         rvService.addItemDecoration(new VerticalGridSpaceItemDecoration(3, DensityUtil.dip2px(getActivity(), 40),
                 DensityUtil.dip2px(getActivity(), 20), false));
-        OnlineServiceAdapter adapter = new OnlineServiceAdapter(getActivity());
+        adapter = new OnlineServiceAdapter(getActivity());
         rvService.setAdapter(adapter);
-
-        if (serviceBean != null) {
-            tvStadiumName.setText(serviceBean.getMerchantName());
-            tvStadiumWelcome.setText(serviceBean.getMerchantName() + "欢迎您!");
-            List<OnlineServiceBean.Service> serviceList = serviceBean.getServiceList();
-            if (serviceList != null && serviceList.size() > 0) {
-                adapter.setData(serviceList);
-            }
-        }
     }
 
     @Override
@@ -79,7 +76,19 @@ public class OnlineServiceFragment extends BaseFragment {
     @Override
     public void loadData() {
         super.loadData();
+        initData();
         nextPage();
+    }
+
+    private void initData() {
+        if (serviceBean != null) {
+            tvStadiumName.setText(serviceBean.getMerchantName());
+            tvStadiumWelcome.setText(serviceBean.getMerchantName() + "欢迎您!");
+            List<OnlineServiceBean.Service> serviceList = serviceBean.getServiceList();
+            if (serviceList != null && serviceList.size() > 0) {
+                adapter.setData(serviceList);
+            }
+        }
     }
 
     public void bindHandler(Handler handler) {

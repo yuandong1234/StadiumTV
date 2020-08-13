@@ -38,17 +38,15 @@ public class StadiumNoticeFragment extends BaseFragment {
     }
 
     @Override
+    protected boolean isLaunchLazyMode() {
+        return true;
+    }
+
+    @Override
     public void intView() {
         tvStadiumName = view.findViewById(R.id.tv_stadium_name);
         tvStadiumWelcome = view.findViewById(R.id.tv_stadium_welcome);
         htmlView = view.findViewById(R.id.htmlView);
-        if (noticeBean != null) {
-            tvStadiumName.setText(noticeBean.getMerchantName());
-            tvStadiumWelcome.setText(noticeBean.getMerchantName() + "欢迎您!");
-            if (!TextUtils.isEmpty(noticeBean.content)) {
-                htmlView.loadHtml(htmlView.getHtmlData(noticeBean.content));
-            }
-        }
     }
 
     @Override
@@ -59,11 +57,21 @@ public class StadiumNoticeFragment extends BaseFragment {
     }
 
 
-
     @Override
     public void loadData() {
         super.loadData();
+        initData();
         nextPage();
+    }
+
+    private void initData() {
+        if (noticeBean != null) {
+            tvStadiumName.setText(noticeBean.getMerchantName());
+            tvStadiumWelcome.setText(noticeBean.getMerchantName() + "欢迎您!");
+            if (!TextUtils.isEmpty(noticeBean.content)) {
+                htmlView.loadHtml(htmlView.getHtmlData(noticeBean.content));
+            }
+        }
     }
 
     public void bindHandler(Handler handler) {

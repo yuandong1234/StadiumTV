@@ -1,6 +1,5 @@
 package com.kasai.stadium.tv.activity;
 
-import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,6 +17,7 @@ import com.kasai.stadium.tv.bean.OnlineServiceBean;
 import com.kasai.stadium.tv.bean.StadiumBean;
 import com.kasai.stadium.tv.bean.StadiumNoticeBean;
 import com.kasai.stadium.tv.bean.SwimmingStadiumBean;
+import com.kasai.stadium.tv.bean.VideoInfoBean;
 import com.kasai.stadium.tv.constants.Api;
 import com.kasai.stadium.tv.fragment.BaseFragment;
 import com.kasai.stadium.tv.fragment.GymnasiumFragment;
@@ -26,6 +26,7 @@ import com.kasai.stadium.tv.fragment.OnlineServiceFragment;
 import com.kasai.stadium.tv.fragment.StadiumFragment;
 import com.kasai.stadium.tv.fragment.StadiumNoticeFragment;
 import com.kasai.stadium.tv.fragment.SwimmingStadiumFragment;
+import com.kasai.stadium.tv.fragment.VideoFragment;
 import com.kasai.stadium.tv.http.HttpCallback;
 import com.kasai.stadium.tv.http.HttpHelper;
 import com.kasai.stadium.tv.utils.ToastUtil;
@@ -91,6 +92,7 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
 
     @Override
     public void onPageSelected(int position) {
+        Log.e("******************", "position : " + position);
         index = position;
     }
 
@@ -126,13 +128,13 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
                 fragments.add(imageFragment);
                 break;
             case 2:
-//                VideoInfoBean videoBean = new VideoInfoBean();
-//                videoBean.setVideo(data.video);
-//                videoBean.setVenueName(data.venueName);
-//                videoBean.setMerchantName(data.merchantName);
-//                VideoFragment videoFragment = VideoFragment.newInstance(videoBean);
-//                videoFragment.bindHandler(handler);
-//                fragments.add(videoFragment);
+                VideoInfoBean videoBean = new VideoInfoBean();
+                videoBean.setVideo(data.video);
+                videoBean.setVenueName(data.venueName);
+                videoBean.setMerchantName(data.merchantName);
+                VideoFragment videoFragment = VideoFragment.newInstance(videoBean);
+                videoFragment.bindHandler(handler);
+                fragments.add(videoFragment);
                 break;
             case 4:
                 StadiumNoticeBean noticeBean = new StadiumNoticeBean();
@@ -316,7 +318,7 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
 
     @Override
     public void onNext() {
-        Log.e("88888888888888888", "切换下一页。。。。");
+        Log.e("******************", "切换下一页。。。。");
         //getWindow().setFormat(PixelFormat.TRANSLUCENT);
         index++;
         if (index > fragments.size() - 1) {

@@ -52,6 +52,11 @@ public class ImageFragment extends BaseFragment {
     }
 
     @Override
+    protected boolean isLaunchLazyMode() {
+        return true;
+    }
+
+    @Override
     public void intView() {
         imageView = view.findViewById(R.id.image);
     }
@@ -60,10 +65,14 @@ public class ImageFragment extends BaseFragment {
     public void loadData() {
         super.loadData();
         Log.e(TAG, "*****loadData*****");
+        initData();
+        nextPage();
+    }
+
+    private void initData() {
         if (imageBean != null && !TextUtils.isEmpty(imageBean.getImage())) {
             loadImage(imageView, imageBean.getImage());
         }
-        nextPage();
     }
 
     @Override

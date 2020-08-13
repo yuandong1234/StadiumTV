@@ -80,6 +80,11 @@ public class StadiumFragment extends BaseFragment {
     }
 
     @Override
+    protected boolean isLaunchLazyMode() {
+        return true;
+    }
+
+    @Override
     public void intView() {
         tvStadiumName = view.findViewById(R.id.tv_stadium_name);
         tvStadiumWelcome = view.findViewById(R.id.tv_stadium_welcome);
@@ -112,32 +117,6 @@ public class StadiumFragment extends BaseFragment {
         rlSport.setVisibility(View.GONE);
         rlSport2.setVisibility(View.GONE);
         rlSport3.setVisibility(View.GONE);
-
-        if (stadiumBean != null) {
-            tvStadiumName.setText(stadiumBean.getMerchantName());
-            tvStadiumWelcome.setText(stadiumBean.getMerchantName() + "欢迎您!");
-            tvDate.setText(stadiumBean.getDate());
-            tvWeek.setText(stadiumBean.getWeek());
-            tvLunarCalendar.setText(stadiumBean.getChinaDate());
-            tvPeopleNumber.setText(stadiumBean.getPeopleNumber());
-            tvTemperature.setText(stadiumBean.getTemperature());
-            List<StadiumBean.Sport> sports = stadiumBean.getSportList();
-            if (sports != null) {
-                if (sports.size() == 1) {
-                    disPlayNumber = 1;
-                    showSportOne(sports.get(0));
-                } else if (sports.size() == 2) {
-                    disPlayNumber = 2;
-                    showSportOne(sports.get(0));
-                    showSportSecond(sports.get(1));
-                } else if (sports.size() >= 3) {
-                    disPlayNumber = 3;
-                    showSportOne(sports.get(0));
-                    showSportSecond(sports.get(1));
-                    showSportThird(sports.get(2));
-                }
-            }
-        }
     }
 
     private void showSportOne(StadiumBean.Sport data) {
@@ -149,13 +128,15 @@ public class StadiumFragment extends BaseFragment {
         }
         List<String> list = getFiledNumberList(data.fieldName);
         int spanCount = getSpanCount(list.size());
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
-        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        rvAvailableSpace.setLayoutManager(layoutManager);
-        rvAvailableSpace.addItemDecoration(new HorizontalGridSpaceItemDecoration(spanCount, DensityUtil.dip2px(getActivity(), 5)));
-        SpaceNumberAdapter adapter = new SpaceNumberAdapter(getActivity(), disPlayNumber);
-        rvAvailableSpace.setAdapter(adapter);
-        adapter.setData(list);
+        if (spanCount > 0) {
+            GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
+            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+            rvAvailableSpace.setLayoutManager(layoutManager);
+            rvAvailableSpace.addItemDecoration(new HorizontalGridSpaceItemDecoration(spanCount, DensityUtil.dip2px(getActivity(), 5)));
+            SpaceNumberAdapter adapter = new SpaceNumberAdapter(getActivity(), disPlayNumber);
+            rvAvailableSpace.setAdapter(adapter);
+            adapter.setData(list);
+        }
     }
 
     private void showSportSecond(StadiumBean.Sport data) {
@@ -167,13 +148,15 @@ public class StadiumFragment extends BaseFragment {
         }
         List<String> list = getFiledNumberList(data.fieldName);
         int spanCount = getSpanCount(list.size());
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
-        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        rvAvailableSpace2.setLayoutManager(layoutManager);
-        rvAvailableSpace2.addItemDecoration(new HorizontalGridSpaceItemDecoration(spanCount, DensityUtil.dip2px(getActivity(), 5)));
-        SpaceNumberAdapter adapter = new SpaceNumberAdapter(getActivity(), disPlayNumber);
-        rvAvailableSpace2.setAdapter(adapter);
-        adapter.setData(list);
+        if (spanCount > 0) {
+            GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
+            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+            rvAvailableSpace2.setLayoutManager(layoutManager);
+            rvAvailableSpace2.addItemDecoration(new HorizontalGridSpaceItemDecoration(spanCount, DensityUtil.dip2px(getActivity(), 5)));
+            SpaceNumberAdapter adapter = new SpaceNumberAdapter(getActivity(), disPlayNumber);
+            rvAvailableSpace2.setAdapter(adapter);
+            adapter.setData(list);
+        }
     }
 
     private void showSportThird(StadiumBean.Sport data) {
@@ -185,13 +168,15 @@ public class StadiumFragment extends BaseFragment {
         }
         List<String> list = getFiledNumberList(data.fieldName);
         int spanCount = getSpanCount(list.size());
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
-        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        rvAvailableSpace3.setLayoutManager(layoutManager);
-        rvAvailableSpace3.addItemDecoration(new HorizontalGridSpaceItemDecoration(spanCount, DensityUtil.dip2px(getActivity(), 5)));
-        SpaceNumberAdapter adapter = new SpaceNumberAdapter(getActivity(), disPlayNumber);
-        rvAvailableSpace3.setAdapter(adapter);
-        adapter.setData(list);
+        if (spanCount > 0) {
+            GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
+            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+            rvAvailableSpace3.setLayoutManager(layoutManager);
+            rvAvailableSpace3.addItemDecoration(new HorizontalGridSpaceItemDecoration(spanCount, DensityUtil.dip2px(getActivity(), 5)));
+            SpaceNumberAdapter adapter = new SpaceNumberAdapter(getActivity(), disPlayNumber);
+            rvAvailableSpace3.setAdapter(adapter);
+            adapter.setData(list);
+        }
     }
 
     private List<String> getFiledNumberList(String filedNumber) {
@@ -238,7 +223,36 @@ public class StadiumFragment extends BaseFragment {
     @Override
     public void loadData() {
         super.loadData();
+        initData();
         nextPage();
+    }
+
+    private void initData(){
+        if (stadiumBean != null) {
+            tvStadiumName.setText(stadiumBean.getMerchantName());
+            tvStadiumWelcome.setText(stadiumBean.getMerchantName() + "欢迎您!");
+            tvDate.setText(stadiumBean.getDate());
+            tvWeek.setText(stadiumBean.getWeek());
+            tvLunarCalendar.setText(stadiumBean.getChinaDate());
+            tvPeopleNumber.setText(stadiumBean.getPeopleNumber());
+            tvTemperature.setText(stadiumBean.getTemperature());
+            List<StadiumBean.Sport> sports = stadiumBean.getSportList();
+            if (sports != null) {
+                if (sports.size() == 1) {
+                    disPlayNumber = 1;
+                    showSportOne(sports.get(0));
+                } else if (sports.size() == 2) {
+                    disPlayNumber = 2;
+                    showSportOne(sports.get(0));
+                    showSportSecond(sports.get(1));
+                } else if (sports.size() >= 3) {
+                    disPlayNumber = 3;
+                    showSportOne(sports.get(0));
+                    showSportSecond(sports.get(1));
+                    showSportThird(sports.get(2));
+                }
+            }
+        }
     }
 
     public void bindHandler(Handler handler) {

@@ -54,6 +54,11 @@ public class SwimmingStadiumFragment extends BaseFragment {
     }
 
     @Override
+    protected boolean isLaunchLazyMode() {
+        return true;
+    }
+
+    @Override
     public void intView() {
         tvStadiumName = view.findViewById(R.id.tv_stadium_name);
         tvStadiumWelcome = view.findViewById(R.id.tv_stadium_welcome);
@@ -68,24 +73,6 @@ public class SwimmingStadiumFragment extends BaseFragment {
         tvLockerUnusedNumber = view.findViewById(R.id.tv_locker_unused_number);
         tvLockerUsedNumber = view.findViewById(R.id.tv_locker_used_number);
         chartView = view.findViewById(R.id.chartView);
-
-        if (swimmingStadiumBean != null) {
-            tvStadiumName.setText(swimmingStadiumBean.getMerchantName());
-            tvStadiumWelcome.setText(swimmingStadiumBean.getMerchantName() + "欢迎您!");
-            tvDate.setText(swimmingStadiumBean.getDate());
-            tvWeek.setText(swimmingStadiumBean.getWeek());
-            tvLunarCalendar.setText(swimmingStadiumBean.getChinaDate());
-            tvPersonalNum.setText(swimmingStadiumBean.getPeopleNumber());
-            tvWaterTemperature.setText(swimmingStadiumBean.getWaterTemperature());
-            tvPh.setText(swimmingStadiumBean.getPhValue());
-            tvCl.setText(swimmingStadiumBean.getChlorineValue());
-            tvLockerUnusedNumber.setText(swimmingStadiumBean.getAvailableNum() + "");
-            tvLockerUsedNumber.setText(swimmingStadiumBean.getPayReceiveNum() + "");
-
-            saveLockerData(swimmingStadiumBean.getAvailableNum(), swimmingStadiumBean.getPayReceiveNum());
-
-            setLockerUseState();
-        }
 
 
 //        int[] values = {400, 500, 600, 300, 200, 100, 800};
@@ -150,7 +137,28 @@ public class SwimmingStadiumFragment extends BaseFragment {
     @Override
     public void loadData() {
         super.loadData();
+        initData();
         nextPage();
+    }
+
+    private void initData() {
+        if (swimmingStadiumBean != null) {
+            tvStadiumName.setText(swimmingStadiumBean.getMerchantName());
+            tvStadiumWelcome.setText(swimmingStadiumBean.getMerchantName() + "欢迎您!");
+            tvDate.setText(swimmingStadiumBean.getDate());
+            tvWeek.setText(swimmingStadiumBean.getWeek());
+            tvLunarCalendar.setText(swimmingStadiumBean.getChinaDate());
+            tvPersonalNum.setText(swimmingStadiumBean.getPeopleNumber());
+            tvWaterTemperature.setText(swimmingStadiumBean.getWaterTemperature());
+            tvPh.setText(swimmingStadiumBean.getPhValue());
+            tvCl.setText(swimmingStadiumBean.getChlorineValue());
+            tvLockerUnusedNumber.setText(swimmingStadiumBean.getAvailableNum() + "");
+            tvLockerUsedNumber.setText(swimmingStadiumBean.getPayReceiveNum() + "");
+
+            saveLockerData(swimmingStadiumBean.getAvailableNum(), swimmingStadiumBean.getPayReceiveNum());
+
+            setLockerUseState();
+        }
     }
 
     public void bindHandler(Handler handler) {
