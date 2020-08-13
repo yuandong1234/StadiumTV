@@ -28,7 +28,6 @@ public class HttpFactory {
             builder.connectTimeout(connectTime, TimeUnit.SECONDS);
             builder.readTimeout(readTime, TimeUnit.SECONDS);
             builder.writeTimeout(writeTime, TimeUnit.SECONDS);
-            builder.addInterceptor(new RetryInterceptor(3));
             client = builder.build();
         }
         return client;

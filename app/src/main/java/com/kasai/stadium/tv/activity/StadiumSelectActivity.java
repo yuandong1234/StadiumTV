@@ -3,7 +3,6 @@ package com.kasai.stadium.tv.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StadiumSelectActivity extends AppCompatActivity implements StadiumListAdapter.onStadiumSelectedListener {
+public class StadiumSelectActivity extends BaseActivity implements StadiumListAdapter.onStadiumSelectedListener {
     private TextView tvStadiumName;
     private RecyclerView rvStadium;
 
@@ -55,11 +54,12 @@ public class StadiumSelectActivity extends AppCompatActivity implements StadiumL
     }
 
     private void loadData() {
+        showLoadingDialog();
         Map<String, String> body = new HashMap<>();
         HttpHelper.get(Api.HOST + Api.API_VENUE_LIST, body, new HttpCallback<VenueListBean>() {
             @Override
             protected void onSuccess(VenueListBean data) {
-                //hideLoadingDialog();
+                hideLoadingDialog();
                 Log.e("StadiumSelectActivity", " data : " + data.toString());
                 if (data.isSuccessful() && data.getData() != null) {
                     setStadiumList(data.getData().getVenueList());
@@ -70,7 +70,7 @@ public class StadiumSelectActivity extends AppCompatActivity implements StadiumL
 
             @Override
             protected void onFailure(String error) {
-                //hideLoadingDialog();
+                hideLoadingDialog();
                 ToastUtil.showShortCenter(error);
             }
         });
@@ -89,12 +89,13 @@ public class StadiumSelectActivity extends AppCompatActivity implements StadiumL
     }
 
     private void getVenueData(String id) {
+        showLoadingDialog();
         Map<String, String> body = new HashMap<>();
         body.put("venueId", id);
         HttpHelper.post(Api.HOST + Api.API_VENUE_SELECT, body, new HttpCallback<VenueBean>() {
             @Override
             protected void onSuccess(VenueBean data) {
-                //hideLoadingDialog();
+                hideLoadingDialog();
                 Log.e("StadiumSelectActivity", " data : " + data.toString());
                 if (data.isSuccessful() && data.getData() != null) {
                     UserInfoUtil.getInstance().putValue(Constants.SP_KEY_USER_TOKEN, data.getData().token);
@@ -107,7 +108,7 @@ public class StadiumSelectActivity extends AppCompatActivity implements StadiumL
 
             @Override
             protected void onFailure(String error) {
-                //hideLoadingDialog();
+                hideLoadingDialog();
                 ToastUtil.showShortCenter(error);
             }
         });

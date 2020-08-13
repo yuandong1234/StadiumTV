@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.kasai.stadium.tv.R;
@@ -48,7 +47,8 @@ public class StadiumListAdapter extends RecyclerView.Adapter<StadiumListAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         final VenueListBean.Data.Venue bean = dataList.get(position);
         holder.tvStadiumName.setText(bean.venueName);
-        holder.llItem.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setFocusable(true);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (listener != null) {
@@ -64,12 +64,10 @@ public class StadiumListAdapter extends RecyclerView.Adapter<StadiumListAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private LinearLayout llItem;
         private TextView tvStadiumName;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            llItem = itemView.findViewById(R.id.ll_item);
             tvStadiumName = itemView.findViewById(R.id.tv_stadium_name);
         }
     }

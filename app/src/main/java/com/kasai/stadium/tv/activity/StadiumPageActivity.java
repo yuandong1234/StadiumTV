@@ -1,15 +1,16 @@
 package com.kasai.stadium.tv.activity;
 
+import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.kasai.stadium.tv.R;
 import com.kasai.stadium.tv.adapter.SectionsPagerAdapter;
-import com.kasai.stadium.tv.adapter.SpaceNumberAdapter;
 import com.kasai.stadium.tv.bean.AdvertInfoBean;
 import com.kasai.stadium.tv.bean.GymnasiumBean;
 import com.kasai.stadium.tv.bean.ImageBean;
@@ -17,18 +18,16 @@ import com.kasai.stadium.tv.bean.OnlineServiceBean;
 import com.kasai.stadium.tv.bean.StadiumBean;
 import com.kasai.stadium.tv.bean.StadiumNoticeBean;
 import com.kasai.stadium.tv.bean.SwimmingStadiumBean;
-import com.kasai.stadium.tv.bean.VideoInfoBean;
 import com.kasai.stadium.tv.constants.Api;
+import com.kasai.stadium.tv.fragment.BaseFragment;
 import com.kasai.stadium.tv.fragment.GymnasiumFragment;
 import com.kasai.stadium.tv.fragment.ImageFragment;
 import com.kasai.stadium.tv.fragment.OnlineServiceFragment;
 import com.kasai.stadium.tv.fragment.StadiumFragment;
 import com.kasai.stadium.tv.fragment.StadiumNoticeFragment;
 import com.kasai.stadium.tv.fragment.SwimmingStadiumFragment;
-import com.kasai.stadium.tv.fragment.VideoFragment;
 import com.kasai.stadium.tv.http.HttpCallback;
 import com.kasai.stadium.tv.http.HttpHelper;
-import com.kasai.stadium.tv.utils.DateUtil;
 import com.kasai.stadium.tv.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -36,15 +35,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
-
-    private RecyclerView rvAvailableSpace;
-    private RecyclerView rvService;
-    private SpaceNumberAdapter adapter;
+public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPageChangeListener, BaseFragment.FragmentChangeListener {
 
     private ViewPager viewPager;
     private List<Fragment> fragments = new ArrayList<>();
 
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    };
+    private int index;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,42 +59,15 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
     private void initView() {
         viewPager = findViewById(R.id.view_pager);
         viewPager.addOnPageChangeListener(this);
-
-//        ImageFragment imageFragment = ImageFragment.newInstance();
-//        imageFragment.bindHandler(handler);
-//        fragments.add(imageFragment);
-//
-//        VideoFragment videoFragment = VideoFragment.newInstance(urls[0]);
-//        videoFragment.bindHandler(handler);
-//        fragments.add(videoFragment);
-//
-//        VideoFragment videoFragment2 = VideoFragment.newInstance(urls[1]);
-//        videoFragment2.bindHandler(handler);
-//        fragments.add(videoFragment2);
-
-//        StadiumFragment stadiumFragment = StadiumFragment.newInstance();
-//        GymnasiumFragment gymnasiumFragment = GymnasiumFragment.newInstance();
-//        OnlineServiceFragment onlineServiceFragment = OnlineServiceFragment.newInstance();
-//        StadiumNoticeFragment noticeFragment = StadiumNoticeFragment.newInstance();
-//        SwimmingStadiumFragment swimmingFragment = SwimmingStadiumFragment.newInstance();
-//
-//        fragments.add(stadiumFragment);
-//        fragments.add(gymnasiumFragment);
-//        fragments.add(onlineServiceFragment);
-//        fragments.add(noticeFragment);
-//        fragments.add(swimmingFragment);
-//
-//        SectionsPagerAdapter pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), fragments);
-//        viewPager.setAdapter(pagerAdapter);
-//        viewPager.setOffscreenPageLimit(fragments.size());
     }
 
     private void loadData() {
         Map<String, String> body = new HashMap<>();
+        showLoadingDialog();
         HttpHelper.get(Api.HOST + Api.API_ADVERT_INFO, body, new HttpCallback<AdvertInfoBean>() {
             @Override
             protected void onSuccess(AdvertInfoBean data) {
-                //hideLoadingDialog();
+                hideLoadingDialog();
                 Log.e("StadiumPageActivity", " data : " + data.toString());
                 if (data.isSuccessful() && data.getData() != null) {
                     setPages(data.getData());
@@ -103,7 +78,7 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
 
             @Override
             protected void onFailure(String error) {
-                //hideLoadingDialog();
+                hideLoadingDialog();
                 ToastUtil.showShortCenter(error);
             }
         });
@@ -116,7 +91,7 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
 
     @Override
     public void onPageSelected(int position) {
-
+        index = position;
     }
 
     @Override
@@ -147,15 +122,17 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
                 imageBean.setVenueName(data.venueName);
                 imageBean.setMerchantName(data.merchantName);
                 ImageFragment imageFragment = ImageFragment.newInstance(imageBean);
+                imageFragment.bindHandler(handler);
                 fragments.add(imageFragment);
                 break;
             case 2:
-                VideoInfoBean videoBean = new VideoInfoBean();
-                videoBean.setVideo(data.video);
-                videoBean.setVenueName(data.venueName);
-                videoBean.setMerchantName(data.merchantName);
-                VideoFragment videoFragment = VideoFragment.newInstance(videoBean);
-                fragments.add(videoFragment);
+//                VideoInfoBean videoBean = new VideoInfoBean();
+//                videoBean.setVideo(data.video);
+//                videoBean.setVenueName(data.venueName);
+//                videoBean.setMerchantName(data.merchantName);
+//                VideoFragment videoFragment = VideoFragment.newInstance(videoBean);
+//                videoFragment.bindHandler(handler);
+//                fragments.add(videoFragment);
                 break;
             case 4:
                 StadiumNoticeBean noticeBean = new StadiumNoticeBean();
@@ -163,6 +140,7 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
                 noticeBean.setVenueName(data.venueName);
                 noticeBean.setMerchantName(data.merchantName);
                 StadiumNoticeFragment noticeFragment = StadiumNoticeFragment.newInstance(noticeBean);
+                noticeFragment.bindHandler(handler);
                 fragments.add(noticeFragment);
                 break;
             case 5:
@@ -170,6 +148,7 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
                 if (serviceBeans != null && serviceBeans.size() > 0) {
                     for (OnlineServiceBean temp : serviceBeans) {
                         OnlineServiceFragment serviceFragment = OnlineServiceFragment.newInstance(temp);
+                        serviceFragment.bindHandler(handler);
                         fragments.add(serviceFragment);
                     }
                 }
@@ -184,16 +163,19 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
                     case 1://游泳馆
                         SwimmingStadiumBean swimmingStadiumBean = convertSwimmingStadium(data);
                         SwimmingStadiumFragment swimmingStadiumFragment = SwimmingStadiumFragment.newInstance(swimmingStadiumBean);
+                        swimmingStadiumFragment.bindHandler(handler);
                         fragments.add(swimmingStadiumFragment);
                         break;
                     case 2://体育馆
                         GymnasiumBean gymnasiumBean = convertGymnasium(data);
                         GymnasiumFragment gymnasiumFragment = GymnasiumFragment.newInstance(gymnasiumBean);
+                        gymnasiumFragment.bindHandler(handler);
                         fragments.add(gymnasiumFragment);
                         break;
                     case 3://体育场
                         StadiumBean stadiumBean = convertStadium(data);
                         StadiumFragment stadiumFragment = StadiumFragment.newInstance(stadiumBean);
+                        stadiumFragment.bindHandler(handler);
                         fragments.add(stadiumFragment);
                         break;
                 }
@@ -260,66 +242,94 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
 
     private StadiumBean convertStadium(AdvertInfoBean.Data data) {
         List<AdvertInfoBean.Data.Stadium> stadiums = data.getAdvertFieldList();
-        if (stadiums == null || stadiums.size() == 0) return null;
-        int size = stadiums.size();
-        List<AdvertInfoBean.Data.Stadium> list = null;
-        if (size > 3) {
-            list = stadiums.subList(0, 3);
-        } else {
-            list = stadiums;
-        }
+
         StadiumBean stadiumBean = new StadiumBean();
-        List<StadiumBean.Sport> sports = new ArrayList<>();
-        for (AdvertInfoBean.Data.Stadium temp : list) {
-            StadiumBean.Sport sport = new StadiumBean.Sport();
-            sport.setFieldName(temp.fieldName);
-            sport.setPercent(temp.percent);
-            sport.setFieldNum(temp.fieldNum);
-            sport.setSportId(temp.sportId);
-            sport.setSportName(temp.sportName);
-            sports.add(sport);
-        }
-        stadiumBean.setSportList(sports);
         stadiumBean.setVenueName(data.venueName);
+        stadiumBean.setMerchantName(data.merchantName);
         stadiumBean.setDate(data.time);
         stadiumBean.setWeek(data.week);
         stadiumBean.setChinaDate(data.chineseDate);
         stadiumBean.setPeopleNumber(data.peopleNumber);
         stadiumBean.setTemperature(data.outdoorTemperature);
         stadiumBean.setMerchantName(data.merchantName);
+
+        if (stadiums != null && stadiums.size() > 0) {
+            int size = stadiums.size();
+            List<AdvertInfoBean.Data.Stadium> list = null;
+            if (size > 3) {
+                list = stadiums.subList(0, 3);
+            } else {
+                list = stadiums;
+            }
+
+            List<StadiumBean.Sport> sports = new ArrayList<>();
+            for (AdvertInfoBean.Data.Stadium temp : list) {
+                StadiumBean.Sport sport = new StadiumBean.Sport();
+                sport.setFieldName(temp.fieldName);
+                sport.setPercent(temp.percent);
+                sport.setFieldNum(temp.fieldNum);
+                sport.setSportId(temp.sportId);
+                sport.setSportName(temp.sportName);
+                sports.add(sport);
+            }
+            stadiumBean.setSportList(sports);
+        }
         return stadiumBean;
     }
 
 
     private GymnasiumBean convertGymnasium(AdvertInfoBean.Data data) {
-        List<AdvertInfoBean.Data.Stadium> stadiums = data.getAdvertFieldList();
-        if (stadiums == null || stadiums.size() == 0) return null;
-        int size = stadiums.size();
-        List<AdvertInfoBean.Data.Stadium> list = null;
-        if (size > 3) {
-            list = stadiums.subList(0, 3);
-        } else {
-            list = stadiums;
-        }
         GymnasiumBean gymnasiumBean = new GymnasiumBean();
-        List<GymnasiumBean.Sport> sports = new ArrayList<>();
-        for (AdvertInfoBean.Data.Stadium temp : list) {
-            GymnasiumBean.Sport sport = new GymnasiumBean.Sport();
-            sport.setFieldName(temp.fieldName);
-            sport.setPercent(temp.percent);
-            sport.setFieldNum(temp.fieldNum);
-            sport.setSportId(temp.sportId);
-            sport.setSportName(temp.sportName);
-            sports.add(sport);
-        }
-        gymnasiumBean.setSportList(sports);
         gymnasiumBean.setVenueName(data.venueName);
+        gymnasiumBean.setMerchantName(data.merchantName);
         gymnasiumBean.setDate(data.time);
         gymnasiumBean.setWeek(data.week);
         gymnasiumBean.setChinaDate(data.chineseDate);
         gymnasiumBean.setPeopleNumber(data.peopleNumber);
         gymnasiumBean.setOutdoorTemperature(data.outdoorTemperature);
         gymnasiumBean.setIndoorTemperature(data.indoorTemperature);
+
+        List<AdvertInfoBean.Data.Stadium> stadiums = data.getAdvertFieldList();
+        if (stadiums != null && stadiums.size() > 0) {
+            int size = stadiums.size();
+            List<AdvertInfoBean.Data.Stadium> list = null;
+            if (size > 3) {
+                list = stadiums.subList(0, 3);
+            } else {
+                list = stadiums;
+            }
+
+            List<GymnasiumBean.Sport> sports = new ArrayList<>();
+            for (AdvertInfoBean.Data.Stadium temp : list) {
+                GymnasiumBean.Sport sport = new GymnasiumBean.Sport();
+                sport.setFieldName(temp.fieldName);
+                sport.setPercent(temp.percent);
+                sport.setFieldNum(temp.fieldNum);
+                sport.setSportId(temp.sportId);
+                sport.setSportName(temp.sportName);
+                sports.add(sport);
+            }
+            gymnasiumBean.setSportList(sports);
+        }
         return gymnasiumBean;
+    }
+
+    @Override
+    public void onNext() {
+        Log.e("88888888888888888", "切换下一页。。。。");
+        //getWindow().setFormat(PixelFormat.TRANSLUCENT);
+        index++;
+        if (index > fragments.size() - 1) {
+            index = 0;
+        }
+        viewPager.setCurrentItem(index, false);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
+        }
     }
 }

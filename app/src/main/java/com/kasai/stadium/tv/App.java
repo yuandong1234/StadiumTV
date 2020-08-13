@@ -4,9 +4,11 @@ import android.app.Application;
 import android.content.Context;
 
 import com.facebook.stetho.Stetho;
+import com.kasai.stadium.tv.crash.CrashHandler;
 import com.liulishuo.okdownload.OkDownload;
 import com.liulishuo.okdownload.core.Util;
 import com.liulishuo.okdownload.core.connection.DownloadOkHttp3Connection;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.concurrent.TimeUnit;
 
@@ -21,6 +23,8 @@ public class App extends Application {
         context = getApplicationContext();
         Stetho.initializeWithDefaults(this);
         initDownload();
+//        initBugly();
+        CrashHandler.getInstance().init(this);
     }
 
     private void initDownload() {
@@ -34,6 +38,10 @@ public class App extends Application {
                 .connectionFactory(factory);
         OkDownload.setSingletonInstance(builder.build());
         Util.enableConsoleLog();
+    }
+
+    private void initBugly() {
+        CrashReport.initCrashReport(getApplicationContext(), "3efa8cdf42", true);
     }
 
     public static Context getContext() {

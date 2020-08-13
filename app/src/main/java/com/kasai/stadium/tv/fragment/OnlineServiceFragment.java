@@ -2,8 +2,10 @@ package com.kasai.stadium.tv.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.kasai.stadium.tv.R;
@@ -33,6 +35,7 @@ public class OnlineServiceFragment extends BaseFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        listener = (FragmentChangeListener) activity;
         serviceBean = (OnlineServiceBean) getArguments().getSerializable("service");
     }
 
@@ -62,6 +65,50 @@ public class OnlineServiceFragment extends BaseFragment {
             if (serviceList != null && serviceList.size() > 0) {
                 adapter.setData(serviceList);
             }
+        }
+    }
+
+    @Override
+    public void onUserVisible() {
+        super.onUserVisible();
+        Log.e(TAG, "*****onUserVisible*****");
+        nextPage();
+    }
+
+
+    @Override
+    public void loadData() {
+        super.loadData();
+        nextPage();
+    }
+
+    public void bindHandler(Handler handler) {
+        this.handler = handler;
+    }
+
+    private void nextPage() {
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
+            handler.postDelayed(runnable, 8000);
+        }
+    }
+
+    private FragmentChangeListener listener;
+    private Handler handler;
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (listener != null) {
+                listener.onNext();
+            }
+        }
+    };
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
         }
     }
 }

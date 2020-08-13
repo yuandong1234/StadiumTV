@@ -188,7 +188,7 @@ public class LineChartView extends View {
         if (values > 0) {
             point.y = yOrigin - (values - minValue) * height / (maxValue - minValue);
         } else {
-            point.y = -1;//这个值随便取，只要小于0就可以
+            point.y = yOrigin;
         }
         return point;
     }

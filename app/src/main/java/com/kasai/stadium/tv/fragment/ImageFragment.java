@@ -17,10 +17,10 @@ import com.kasai.stadium.tv.bean.ImageBean;
 public class ImageFragment extends BaseFragment {
     private ImageView imageView;
     private String imageUrl = "http://saas-resources.52jiayundong.com/test/upload_file/file/20200624/20200624190917536451.jpg";
-    private FragmentChangeListener listener;
-    private Handler handler;
     private ImageBean imageBean;
 
+    private FragmentChangeListener listener;
+    private Handler handler;
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -41,7 +41,7 @@ public class ImageFragment extends BaseFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        //listener = (FragmentChangeListener) activity;
+        listener = (FragmentChangeListener) activity;
         imageBean = (ImageBean) getArguments().getSerializable("image");
     }
 
@@ -74,6 +74,7 @@ public class ImageFragment extends BaseFragment {
     }
 
     private void loadImage(ImageView imageView, String url) {
+        Log.e(TAG, "*****loadImage*****");
         Glide.with(this).load(url).into(imageView);
     }
 

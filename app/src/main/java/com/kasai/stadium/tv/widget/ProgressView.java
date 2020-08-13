@@ -15,6 +15,8 @@ import android.view.View;
 
 import com.kasai.stadium.tv.R;
 
+import java.text.DecimalFormat;
+
 
 public class ProgressView extends View {
 
@@ -36,7 +38,9 @@ public class ProgressView extends View {
     private float mProgressPadding;
     private String mProgressTitle;
     private int mWidth, mHeight;
-    private int mMaxAngle, mAngle, mTotalValue;
+    private float mMaxAngle, mAngle;
+    private double mValue, mTotalValue;
+    private DecimalFormat df = new DecimalFormat("0.0");
 
     public ProgressView(Context context) {
         this(context, null);
@@ -122,7 +126,7 @@ public class ProgressView extends View {
     private void drawTxt(Canvas canvas) {
         mTextPaint.setTextSize(mProgressValueTextSize);
         mTextPaint.setFakeBoldText(true);
-        String text = String.valueOf(mTotalValue);
+        String text = df.format(mValue) + "%";
         mTextPaint.getTextBounds(text, 0, text.length(), mBounds);
         mTextPaint.setColor(mProgressValueColor);
         canvas.drawText(text, mCenterX, mCenterY, mTextPaint);
@@ -136,12 +140,12 @@ public class ProgressView extends View {
     }
 
     private void startAnimation() {
-        ValueAnimator anim = ValueAnimator.ofInt(mAngle, mMaxAngle);
+        ValueAnimator anim = ValueAnimator.ofFloat(mAngle, mMaxAngle);
         anim.setDuration(800);
         anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                mAngle = (int) animation.getAnimatedValue();
+                mAngle = (float) animation.getAnimatedValue();
                 postInvalidate();
             }
         });
@@ -149,13 +153,15 @@ public class ProgressView extends View {
     }
 
     //设置数据
-    public void setValue(int value, int totalValue) {
+    public void setValue(double value, double totalValue) {
+        this.mValue = value;
         this.mTotalValue = totalValue;
         if (totalValue != 0) {
-            this.mMaxAngle = value * 360 / totalValue;
+            this.mMaxAngle = (float) (value * 360 / totalValue);
             startAnimation();
         }
     }
+
 
     /**
      * dp转化为px

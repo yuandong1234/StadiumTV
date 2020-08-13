@@ -24,6 +24,10 @@ android {
             universalApk true
         }
     }
+
+    sourceSets {
+        main.jniLibs.srcDirs = ['libs']
+    }
 }
 
 dependencies {
@@ -36,8 +40,9 @@ dependencies {
     implementation 'com.liulishuo.okdownload:okdownload:1.0.7'
     implementation 'com.liulishuo.okdownload:sqlite:1.0.7'
     implementation 'com.liulishuo.okdownload:okhttp:1.0.7'
-    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
-    implementation 'com.android.support:support-v4:26.1.0'
+
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+
 
     //数据库查看
     implementation 'com.facebook.stetho:stetho:1.5.0'

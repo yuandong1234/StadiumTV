@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.kasai.stadium.tv.R;
 import com.kasai.stadium.tv.adapter.SectionsPagerAdapter;
+import com.kasai.stadium.tv.bean.ImageBean;
+import com.kasai.stadium.tv.bean.VideoInfoBean;
 import com.kasai.stadium.tv.dao.VideoDao;
 import com.kasai.stadium.tv.dao.bean.VideoBean;
 import com.kasai.stadium.tv.download.QueueController;
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             "https://venue-saas.oss-cn-shenzhen.aliyuncs.com/prod/upload_file/file/20200717/20200717173242162638.mp4"
     };
 
+    private String imageUrl = "http://saas-resources.52jiayundong.com/test/upload_file/file/20200706/20200706162559930556.jpg";
+
     private ViewPager viewPager;
     private TextView tvDownloadStatus;
     private TextView tvLog;
@@ -63,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        initData();
+        // initData();
     }
 
     private void initView() {
@@ -73,21 +77,27 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         viewPager.addOnPageChangeListener(this);
         tvLog.setOnClickListener(this);
 
-//        ImageFragment imageFragment = ImageFragment.newInstance();
-//        imageFragment.bindHandler(handler);
-//        fragments.add(imageFragment);
-//
-//        VideoFragment videoFragment = VideoFragment.newInstance(urls[0]);
-//        videoFragment.bindHandler(handler);
-//        fragments.add(videoFragment);
-//
-//        VideoFragment videoFragment2 = VideoFragment.newInstance(urls[1]);
-//        videoFragment2.bindHandler(handler);
-//        fragments.add(videoFragment2);
-//
-//        SectionsPagerAdapter pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), fragments);
-//        viewPager.setAdapter(pagerAdapter);
-//        viewPager.setOffscreenPageLimit(fragments.size());
+        ImageBean imageBean = new ImageBean();
+        imageBean.setImage(imageUrl);
+        ImageFragment imageFragment = ImageFragment.newInstance(imageBean);
+        imageFragment.bindHandler(handler);
+        fragments.add(imageFragment);
+
+        VideoInfoBean videoInfoBean = new VideoInfoBean();
+        videoInfoBean.setVideo(urls[0]);
+        VideoFragment videoFragment = VideoFragment.newInstance(videoInfoBean);
+        videoFragment.bindHandler(handler);
+        fragments.add(videoFragment);
+
+        VideoInfoBean videoInfoBean2 = new VideoInfoBean();
+        videoInfoBean2.setVideo(urls[1]);
+        VideoFragment videoFragment2 = VideoFragment.newInstance(videoInfoBean2);
+        videoFragment2.bindHandler(handler);
+        fragments.add(videoFragment2);
+
+        SectionsPagerAdapter pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), fragments);
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.setOffscreenPageLimit(fragments.size());
     }
 
     private void initData() {

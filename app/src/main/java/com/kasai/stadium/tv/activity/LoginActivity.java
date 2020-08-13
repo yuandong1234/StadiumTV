@@ -72,19 +72,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             ToastUtil.showShortCenter("请输入密码");
             return;
         }
-        //showLoadingDialog();
+        showLoadingDialog();
         Map<String, String> body = new HashMap<>();
         body.put("username", "screen01");
         body.put("password", "a12345678");
+//        body.put("username", "ping01");
+//        body.put("password", "a12345678");
         HttpHelper.post(Api.HOST + Api.API_LOGIN, body, new HttpCallback<LoginBean>() {
             @Override
             protected void onSuccess(LoginBean data) {
-                //hideLoadingDialog();
+                hideLoadingDialog();
                 Log.e("LoginActivity", " data : " + data.toString());
                 if (data.isSuccessful() && data.getData() != null) {
                     UserInfoUtil.getInstance().putValue(Constants.SP_KEY_USER_TOKEN, data.getData().token);
                     if (data.getData().isShowVenueList) {
                         startActivity(new Intent(LoginActivity.this, StadiumSelectActivity.class));
+//                        ToastUtil.showShortCenter("将进入场馆列表界面。。。。");
+                    } else {
+                        startActivity(new Intent(LoginActivity.this, StadiumPageActivity.class));
                     }
                 } else {
                     ToastUtil.showShortCenter(data.getMsg());
@@ -93,7 +98,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
             @Override
             protected void onFailure(String error) {
-                //hideLoadingDialog();
+                hideLoadingDialog();
                 ToastUtil.showShortCenter(error);
             }
         });

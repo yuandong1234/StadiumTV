@@ -46,13 +46,13 @@ public class HttpWrapperCallback {
         e.printStackTrace();
         String msg = "";
         if (e instanceof UnknownHostException) {
-            msg = "连接失败";
+            msg = "连接失败 :" + e.getMessage();
         } else if (e instanceof ConnectTimeoutException) {
-            msg = "连接超时";
+            msg = "连接超时 :" + e.getMessage();
         } else if (e instanceof SocketTimeoutException) {
-            msg = "连接超时";
+            msg = "连接超时 :" + e.getMessage();
         } else {
-            msg = "请求失败";
+            msg = "请求失败 :" + e.getMessage();
         }
         final String error = msg;
         if (callBack != null) {

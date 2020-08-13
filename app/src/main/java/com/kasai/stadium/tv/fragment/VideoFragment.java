@@ -28,6 +28,15 @@ public class VideoFragment extends BaseFragment {
     private String url;
     private VideoInfoBean videoInfoBean;
 
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (listener != null) {
+                listener.onNext();
+            }
+        }
+    };
+
     public static VideoFragment newInstance(VideoInfoBean videoBean) {
         VideoFragment fragment = new VideoFragment();
         Bundle args = new Bundle();
@@ -39,7 +48,7 @@ public class VideoFragment extends BaseFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-       // listener = (FragmentChangeListener) activity;
+        listener = (FragmentChangeListener) activity;
         videoInfoBean = (VideoInfoBean) getArguments().getSerializable("video");
         if (videoInfoBean != null) {
             url = videoInfoBean.getVideo();
@@ -59,7 +68,7 @@ public class VideoFragment extends BaseFragment {
     @Override
     public void intView() {
         videoView = view.findViewById(R.id.video_view);
-       // videoView.initPlayer();
+        // videoView.initPlayer();
         //initListener();
     }
 
@@ -79,18 +88,28 @@ public class VideoFragment extends BaseFragment {
         });
     }
 
+    //TODO
+    @Override
+    public void onUserVisible() {
+        super.onUserVisible();
+        Log.e(TAG, "*****onUserVisible*****");
+        nextPage();
+    }
+
+
     @Override
     public void loadData() {
         super.loadData();
-       // loadVideo();
+        // loadVideo();
+        nextPage();
     }
 
     @Override
     public void onDestroy() {
         if (videoView != null) {
-            videoView.stop();
-            videoView.release();
-            videoView.destroyPlayer();
+//            videoView.stop();
+//            videoView.release();
+//            videoView.destroyPlayer();
         }
         super.onDestroy();
     }
@@ -107,9 +126,16 @@ public class VideoFragment extends BaseFragment {
         this.handler = handler;
     }
 
+//    private void nextPage() {
+//        if (listener != null) {
+//            listener.onNext();
+//        }
+//    }
+
     private void nextPage() {
-        if (listener != null) {
-            listener.onNext();
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
+            handler.postDelayed(runnable, 8000);
         }
     }
 
