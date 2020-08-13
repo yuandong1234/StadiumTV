@@ -19,6 +19,7 @@ import com.kasai.stadium.tv.bean.StadiumNoticeBean;
 import com.kasai.stadium.tv.bean.SwimmingStadiumBean;
 import com.kasai.stadium.tv.bean.VideoInfoBean;
 import com.kasai.stadium.tv.constants.Api;
+import com.kasai.stadium.tv.constants.Constants;
 import com.kasai.stadium.tv.fragment.BaseFragment;
 import com.kasai.stadium.tv.fragment.GymnasiumFragment;
 import com.kasai.stadium.tv.fragment.ImageFragment;
@@ -48,6 +49,7 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
         }
     };
     private int index;
+    private List<AdvertInfoBean.Data> dataList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +65,15 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
     }
 
     private void loadData() {
+        dataList = (List<AdvertInfoBean.Data>) getIntent().getSerializableExtra(Constants.STADIUM_DATA);
+        if (dataList != null) {
+            setPages(dataList);
+        } else {
+            getData();
+        }
+    }
+
+    private void getData() {
         Map<String, String> body = new HashMap<>();
         showLoadingDialog();
         HttpHelper.get(Api.HOST + Api.API_ADVERT_INFO, body, new HttpCallback<AdvertInfoBean>() {

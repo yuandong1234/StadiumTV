@@ -1,5 +1,6 @@
 package com.kasai.stadium.tv.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class AdvertInfoBean extends BaseBean {
@@ -16,7 +17,7 @@ public class AdvertInfoBean extends BaseBean {
                 '}';
     }
 
-    public static class Data {
+    public static class Data implements Serializable {
         public int id;
         public int advertType;//1:图片，2：视频，3：场馆信息，4：文字 ，5：客服信息',
         public int venueType;//1:游泳，2：体育馆，3：体育场 */
@@ -110,7 +111,7 @@ public class AdvertInfoBean extends BaseBean {
                     '}';
         }
 
-        public static class OnlineService {
+        public static class OnlineService implements Serializable{
             /**
              * customerServiceName true string 客服名字
              * image true string 图片
@@ -134,7 +135,7 @@ public class AdvertInfoBean extends BaseBean {
         }
 
 
-        public static class Stadium {
+        public static class Stadium implements Serializable{
             /**
              * percent true number 百分比
              * fieldName true string 场地名，逗号隔开

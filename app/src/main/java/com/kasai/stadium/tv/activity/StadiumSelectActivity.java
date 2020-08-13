@@ -100,7 +100,9 @@ public class StadiumSelectActivity extends BaseActivity implements StadiumListAd
                 if (data.isSuccessful() && data.getData() != null) {
                     UserInfoUtil.getInstance().putValue(Constants.SP_KEY_USER_TOKEN, data.getData().token);
 
-                    startActivity(new Intent(StadiumSelectActivity.this, StadiumPageActivity.class));
+//                    startActivity(new Intent(StadiumSelectActivity.this, StadiumPageActivity.class));
+                    startActivity(new Intent(StadiumSelectActivity.this, ResourceDownloadActivity.class));
+                    finish();
                 } else {
                     ToastUtil.showShortCenter(data.getMsg());
                 }

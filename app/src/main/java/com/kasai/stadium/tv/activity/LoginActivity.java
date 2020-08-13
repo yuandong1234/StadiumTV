@@ -87,9 +87,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     UserInfoUtil.getInstance().putValue(Constants.SP_KEY_USER_TOKEN, data.getData().token);
                     if (data.getData().isShowVenueList) {
                         startActivity(new Intent(LoginActivity.this, StadiumSelectActivity.class));
+                        finish();
 //                        ToastUtil.showShortCenter("将进入场馆列表界面。。。。");
                     } else {
-                        startActivity(new Intent(LoginActivity.this, StadiumPageActivity.class));
+//                        startActivity(new Intent(LoginActivity.this, StadiumPageActivity.class));
+                        startActivity(new Intent(LoginActivity.this, ResourceDownloadActivity.class));
                     }
                 } else {
                     ToastUtil.showShortCenter(data.getMsg());
