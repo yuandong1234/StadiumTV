@@ -1,5 +1,6 @@
 package com.kasai.stadium.tv.activity;
 
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -330,7 +331,7 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
     @Override
     public void onNext() {
         Log.e("******************", "切换下一页: " + System.currentTimeMillis());
-        //getWindow().setFormat(PixelFormat.TRANSLUCENT);
+        getWindow().setFormat(PixelFormat.TRANSLUCENT);
         index++;
         if (index > fragments.size() - 1) {
             index = 0;
