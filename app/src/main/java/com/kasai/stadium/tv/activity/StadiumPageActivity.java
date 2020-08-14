@@ -147,6 +147,15 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
                 VideoFragment videoFragment = VideoFragment.newInstance(videoBean);
                 videoFragment.bindHandler(handler);
                 fragments.add(videoFragment);
+
+                //TODO
+//                VideoInfoBean videoBean2 = new VideoInfoBean();
+//                videoBean2.setVideo(data.video);
+//                videoBean2.setVenueName(data.venueName);
+//                videoBean2.setMerchantName(data.merchantName);
+//                VideoFragment videoFragment2 = VideoFragment.newInstance(videoBean2);
+//                videoFragment2.bindHandler(handler);
+//                fragments.add(videoFragment2);
                 break;
             case 4:
                 StadiumNoticeBean noticeBean = new StadiumNoticeBean();
