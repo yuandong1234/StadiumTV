@@ -121,7 +121,7 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
         }
         SectionsPagerAdapter pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setOffscreenPageLimit(fragments.size());
+        viewPager.setOffscreenPageLimit(1);
     }
 
     private void convertData(AdvertInfoBean.Data data) {
@@ -331,12 +331,12 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
     @Override
     public void onNext() {
         Log.e("******************", "切换下一页: " + System.currentTimeMillis());
-        getWindow().setFormat(PixelFormat.TRANSLUCENT);
         index++;
         if (index > fragments.size() - 1) {
             index = 0;
         }
         viewPager.setCurrentItem(index, false);
+        getWindow().setFormat(PixelFormat.TRANSLUCENT);
     }
 
     @Override

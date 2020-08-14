@@ -1,6 +1,7 @@
 package com.kasai.stadium.tv.fragment;
 
 import android.app.Activity;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
@@ -69,6 +70,7 @@ public class OnlineServiceFragment extends BaseFragment {
     public void onUserVisible() {
         super.onUserVisible();
         Log.e(TAG, "*****onUserVisible*****");
+        getActivity().getWindow().setFormat(PixelFormat.TRANSLUCENT);
         nextPage();
     }
 
@@ -77,6 +79,7 @@ public class OnlineServiceFragment extends BaseFragment {
     public void loadData() {
         super.loadData();
         Log.e(TAG, "*****loadData*****");
+        getActivity().getWindow().setFormat(PixelFormat.TRANSLUCENT);
         initData();
         nextPage();
     }
@@ -118,8 +121,9 @@ public class OnlineServiceFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (handler != null) {
-            handler.removeCallbacksAndMessages(null);
-        }
+        setOnlyLoadOnce(false);
+//        if (handler != null) {
+//            handler.removeCallbacksAndMessages(null);
+//        }
     }
 }

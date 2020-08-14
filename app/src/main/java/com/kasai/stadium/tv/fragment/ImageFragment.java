@@ -1,6 +1,7 @@
 package com.kasai.stadium.tv.fragment;
 
 import android.app.Activity;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -65,6 +66,7 @@ public class ImageFragment extends BaseFragment {
     public void loadData() {
         super.loadData();
         Log.e(TAG, "*****loadData*****");
+        getActivity().getWindow().setFormat(PixelFormat.TRANSLUCENT);
         initData();
         nextPage();
     }
@@ -101,8 +103,9 @@ public class ImageFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (handler != null) {
-            handler.removeCallbacksAndMessages(null);
-        }
+        setOnlyLoadOnce(false);
+//        if (handler != null) {
+//            handler.removeCallbacksAndMessages(null);
+//        }
     }
 }
