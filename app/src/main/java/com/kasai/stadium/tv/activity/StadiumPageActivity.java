@@ -1,9 +1,9 @@
 package com.kasai.stadium.tv.activity;
 
+import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -43,15 +43,19 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
     private ViewPager viewPager;
     private List<Fragment> fragments = new ArrayList<>();
 
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-        }
-    };
+    private Handler handler = new Handler();
     private int index;
     private List<AdvertInfoBean.Data> dataList;
     public final static boolean IS_AUTO_PLAY = true;
+
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            startActivity(new Intent(StadiumPageActivity.this, ResourceDownloadActivity.class));
+            finish();
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -123,6 +127,8 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
         SectionsPagerAdapter pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(1);
+
+        startUpdateCountDown();
     }
 
     private void convertData(AdvertInfoBean.Data data) {
@@ -148,15 +154,6 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
                 VideoFragment videoFragment = VideoFragment.newInstance(videoBean);
                 videoFragment.bindHandler(handler);
                 fragments.add(videoFragment);
-
-                //TODO
-//                VideoInfoBean videoBean2 = new VideoInfoBean();
-//                videoBean2.setVideo(data.video);
-//                videoBean2.setVenueName(data.venueName);
-//                videoBean2.setMerchantName(data.merchantName);
-//                VideoFragment videoFragment2 = VideoFragment.newInstance(videoBean2);
-//                videoFragment2.bindHandler(handler);
-//                fragments.add(videoFragment2);
                 break;
             case 4:
                 StadiumNoticeBean noticeBean = new StadiumNoticeBean();
@@ -345,8 +342,12 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
         if (index > fragments.size() - 1) {
             index = 0;
         }
-        viewPager.setCurrentItem(index, false);
-        getWindow().setFormat(PixelFormat.TRANSLUCENT);
+        try {
+            viewPager.setCurrentItem(index, false);
+            getWindow().setFormat(PixelFormat.TRANSLUCENT);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -355,5 +356,9 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
         if (handler != null) {
             handler.removeCallbacksAndMessages(null);
         }
+    }
+
+    private void startUpdateCountDown() {
+        handler.postDelayed(runnable, 15 * 60 * 1000);
     }
 }

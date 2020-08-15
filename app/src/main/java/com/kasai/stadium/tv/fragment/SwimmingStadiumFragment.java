@@ -182,7 +182,7 @@ public class SwimmingStadiumFragment extends BaseFragment {
 
     private void nextPage() {
         if (handler != null && StadiumPageActivity.IS_AUTO_PLAY) {
-            handler.removeCallbacksAndMessages(null);
+            handler.removeCallbacks(runnable);
             handler.postDelayed(runnable, 8000);
         }
     }
