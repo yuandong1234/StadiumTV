@@ -26,7 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     private void createVideo(SQLiteDatabase db) {
-        String sql = "create table if not exists " + VideoDao.TABLE_VIDEO + "(" +
+        String sql = "create table if not exists " + FileDao.TABLE_VIDEO + "(" +
                 "id Integer primary key autoincrement," +
                 "name varchar," +
                 "path varchar," +

@@ -11,8 +11,8 @@ import android.view.View;
 import com.kasai.stadium.tv.R;
 import com.kasai.stadium.tv.activity.StadiumPageActivity;
 import com.kasai.stadium.tv.bean.VideoInfoBean;
-import com.kasai.stadium.tv.dao.VideoDao;
-import com.kasai.stadium.tv.dao.bean.VideoBean;
+import com.kasai.stadium.tv.dao.FileDao;
+import com.kasai.stadium.tv.dao.bean.FileBean;
 import com.kasai.stadium.tv.utils.MD5Util;
 import com.yuong.media.player.IjkVideoView;
 
@@ -143,11 +143,11 @@ public class VideoFragment extends BaseFragment {
         if (!TextUtils.isEmpty(url)) {
             String newUrl = convertVideoUrl(url);
             String fileName = MD5Util.getMD5(newUrl) + ".mp4";
-            VideoBean video = VideoDao.getInstance(getActivity()).getVideo(fileName);
-            if (video != null && !TextUtils.isEmpty(video.path)) {
-                Log.e(TAG, "加载本地视频..... : " + video.name);
-                Log.e(TAG, "加载本地视频..... : " + video.path);
-                videoView.setVideoPath(video.path);
+            FileBean file = FileDao.getInstance(getActivity()).getFile(fileName);
+            if (file != null && !TextUtils.isEmpty(file.path)) {
+                Log.e(TAG, "加载本地视频..... : " + file.name);
+                Log.e(TAG, "加载本地视频..... : " + file.path);
+                videoView.setVideoPath(file.path);
             } else {
                 Log.e(TAG, "加载网络视频.....");
                 videoView.setVideoPath(newUrl);

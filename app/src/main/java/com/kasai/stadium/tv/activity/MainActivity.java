@@ -18,8 +18,8 @@ import com.kasai.stadium.tv.R;
 import com.kasai.stadium.tv.adapter.SectionsPagerAdapter;
 import com.kasai.stadium.tv.bean.ImageBean;
 import com.kasai.stadium.tv.bean.VideoInfoBean;
-import com.kasai.stadium.tv.dao.VideoDao;
-import com.kasai.stadium.tv.dao.bean.VideoBean;
+import com.kasai.stadium.tv.dao.FileDao;
+import com.kasai.stadium.tv.dao.bean.FileBean;
 import com.kasai.stadium.tv.download.QueueController;
 import com.kasai.stadium.tv.fragment.BaseFragment;
 import com.kasai.stadium.tv.fragment.ImageFragment;
@@ -194,18 +194,18 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
     private void saveVideo(String name, String path) {
-        VideoBean bean = new VideoBean();
+        FileBean bean = new FileBean();
         bean.setStatus(1);
         bean.setName(name);
         bean.setPath(path);
-        VideoDao.getInstance(MainActivity.this).saveVideo(bean);
+        FileDao.getInstance(MainActivity.this).saveVideo(bean);
     }
 
     private List<String> checkLocalVideo(Context context, List<String> urls) {
         List<String> downloadUrls = new ArrayList<>();
         for (String url : urls) {
             String fileName = MD5Util.getMD5(url) + ".mp4";
-            VideoBean video = VideoDao.getInstance(context).getVideo(fileName);
+            FileBean video = FileDao.getInstance(context).getFile(fileName);
             if (video == null) {
                 downloadUrls.add(url);
             }

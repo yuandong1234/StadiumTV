@@ -18,8 +18,8 @@ import com.kasai.stadium.tv.R;
 import com.kasai.stadium.tv.bean.AdvertInfoBean;
 import com.kasai.stadium.tv.constants.Api;
 import com.kasai.stadium.tv.constants.Constants;
-import com.kasai.stadium.tv.dao.VideoDao;
-import com.kasai.stadium.tv.dao.bean.VideoBean;
+import com.kasai.stadium.tv.dao.FileDao;
+import com.kasai.stadium.tv.dao.bean.FileBean;
 import com.kasai.stadium.tv.download.DownloadAdapter;
 import com.kasai.stadium.tv.download.DownloadBean;
 import com.kasai.stadium.tv.download.QueueController;
@@ -56,9 +56,11 @@ public class ResourceDownloadActivity extends BaseActivity {
     private RecyclerView rvDowning;
     private LinearLayout llDownloadNone;
 
-    private List<String> videoUrls = new ArrayList<>();
+    private List<String> downLoadUrls = new ArrayList<>();
     private Handler handler = new Handler();
     private List<AdvertInfoBean.Data> dataList;
+    private boolean isExistFailure;
+    private int retryCount;
 
     private Runnable runnable = new Runnable() {
         @Override
@@ -66,6 +68,9 @@ public class ResourceDownloadActivity extends BaseActivity {
             enterHomePage();
         }
     };
+
+    private List<AdvertInfoBean.Data> advertInfoData;
+
 
     private DownloadAdapter adapter;
     private QueueController queueController;
@@ -99,6 +104,7 @@ public class ResourceDownloadActivity extends BaseActivity {
                 hideLoadingDialog();
                 Log.e(TAG, " data : " + data.toString());
                 if (data.isSuccessful() && data.getData() != null) {
+                    advertInfoData = data.getData();
                     checkNeedDownloadData(data.getData());
                 } else {
                     ToastUtil.showShortCenter(data.getMsg());
@@ -114,7 +120,7 @@ public class ResourceDownloadActivity extends BaseActivity {
     }
 
     private void checkNeedDownloadData(List<AdvertInfoBean.Data> data) {
-        videoUrls.clear();
+        downLoadUrls.clear();
         if (data == null || data.size() == 0) return;
         this.dataList = data;
         AdvertInfoBean.Data firstData = data.get(0);
@@ -124,23 +130,27 @@ public class ResourceDownloadActivity extends BaseActivity {
 
 
         for (AdvertInfoBean.Data temp : dataList) {
-            if (temp.advertType == 2) {
+            if (temp.advertType == 2) {//视频
                 String url = convertVideoUrl(temp.video);
                 if (!TextUtils.isEmpty(url)) {
-                    videoUrls.add(url);
+                    downLoadUrls.add(url);
+                }
+            } else if (temp.advertType == 1) {//图片
+                if (!TextUtils.isEmpty(temp.image)) {
+                    downLoadUrls.add(temp.image);
                 }
             }
         }
 
-        if (videoUrls.size() == 0) {
+        if (downLoadUrls.size() == 0) {
             showDownloadNone();
             return;
         }
 
         showLoadingDialog();
         List<String> needDownloadUrls = new ArrayList<>();
-        for (String temp : videoUrls) {
-            boolean isExist = checkLocalVideo(temp);
+        for (String temp : downLoadUrls) {
+            boolean isExist = checkLocalFile(temp);
             if (!isExist) {
                 needDownloadUrls.add(temp);
             }
@@ -179,15 +189,21 @@ public class ResourceDownloadActivity extends BaseActivity {
         return null;
     }
 
-    private boolean checkLocalVideo(String url) {
+    private boolean checkLocalFile(String url) {
         if (TextUtils.isEmpty(url)) return false;
-        String fileName = MD5Util.getMD5(url) + ".mp4";
-        VideoBean video = VideoDao.getInstance(this).getVideo(fileName);
+        String fileType = getFileType(url);
+        String fileName = MD5Util.getMD5(url) + "." + fileType;
+        FileBean video = FileDao.getInstance(this).getFile(fileName);
         if (video == null) {
             return false;
         }
         File file = new File(video.path);
         return file.exists();
+    }
+
+
+    private String getFileType(String url) {
+        return url.substring(url.lastIndexOf(".") + 1);
     }
 
     private void showDownloadNone() {
@@ -205,6 +221,7 @@ public class ResourceDownloadActivity extends BaseActivity {
     }
 
     private void initDownload(List<String> urls) {
+        isExistFailure = false;
         List<DownloadBean> downloadList = new ArrayList<>();
         for (String temp : urls) {
             DownloadBean bean = new DownloadBean();
@@ -276,14 +293,23 @@ public class ResourceDownloadActivity extends BaseActivity {
         @Override
         public void taskEnd(@NonNull DownloadContext context, @NonNull DownloadTask task, @NonNull EndCause cause, @Nullable Exception realCause, int remainCount) {
             if (cause == EndCause.COMPLETED) {
-                saveVideo(task.getFile().getName(), task.getFile().getAbsolutePath());
+                saveFile(task.getFile().getName(), task.getFile().getAbsolutePath());
+            } else {
+                isExistFailure = true;
             }
         }
 
         @Override
         public void queueEnd(@NonNull DownloadContext context) {
             Log.e(TAG, "下载结束.....");
-
+            if (!isExistFailure) {
+                enterHomePage();
+            } else {
+                if (retryCount <= 3) {
+                    retryCount++;
+                    checkNeedDownloadData(advertInfoData);
+                }
+            }
         }
     };
 
@@ -296,11 +322,11 @@ public class ResourceDownloadActivity extends BaseActivity {
         return progress == 100 ? "100%" : df.format(progress) + "%";
     }
 
-    private void saveVideo(String name, String path) {
-        VideoBean bean = new VideoBean();
+    private void saveFile(String name, String path) {
+        FileBean bean = new FileBean();
         bean.setStatus(1);
         bean.setName(name);
         bean.setPath(path);
-        VideoDao.getInstance(this).saveVideo(bean);
+        FileDao.getInstance(this).saveVideo(bean);
     }
 }

@@ -1,6 +1,6 @@
 package com.kasai.stadium.tv.dao.bean;
 
-public class VideoBean {
+public class FileBean {
     public long id;
     public String name;
     public String path;

@@ -12,6 +12,11 @@ import com.bumptech.glide.Glide;
 import com.kasai.stadium.tv.R;
 import com.kasai.stadium.tv.activity.StadiumPageActivity;
 import com.kasai.stadium.tv.bean.ImageBean;
+import com.kasai.stadium.tv.dao.FileDao;
+import com.kasai.stadium.tv.dao.bean.FileBean;
+import com.kasai.stadium.tv.utils.MD5Util;
+
+import java.io.File;
 
 /**
  * 图片
@@ -87,7 +92,23 @@ public class ImageFragment extends BaseFragment {
 
     private void loadImage(ImageView imageView, String url) {
         Log.e(TAG, "*****loadImage*****");
-        Glide.with(this).load(url).into(imageView);
+        String fileType = getFileType(url);
+        String fileName = MD5Util.getMD5(url) + "." + fileType;
+        FileBean fileBean = FileDao.getInstance(getActivity()).getFile(fileName);
+        if (fileBean != null) {
+            File file = new File(fileBean.path);
+            if (file.exists()) {
+                Log.e(TAG, "加载本地图片..... : " + fileBean.name);
+                Log.e(TAG, "加载本地图片..... : " + fileBean.path);
+                Glide.with(this).load(file).into(imageView);
+            } else {
+                Log.e(TAG, "加载网络图片..... ");
+                Glide.with(this).load(url).into(imageView);
+            }
+        } else {
+            Log.e(TAG, "加载网络图片..... ");
+            Glide.with(this).load(url).into(imageView);
+        }
     }
 
     public void bindHandler(Handler handler) {
@@ -105,5 +126,9 @@ public class ImageFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         setOnlyLoadOnce(false);
+    }
+
+    private String getFileType(String url) {
+        return url.substring(url.lastIndexOf(".") + 1);
     }
 }

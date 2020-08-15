@@ -66,7 +66,7 @@ public class QueueController {
         downloadContext.start(downloadListener, true);
     }
 
-    public void initTasks(Context context, List<String> urls, DownloadContextListener listener,DownloadListener3 downloadListener) {
+    public void initTasks(Context context, List<String> urls, DownloadContextListener listener, DownloadListener3 downloadListener) {
         String parentPath = FileUtil.getVideoRootDirectory(context);
         DownloadContext.QueueSet queueSet = new DownloadContext.QueueSet();
         queueSet.setParentPath(parentPath);
@@ -85,13 +85,18 @@ public class QueueController {
 
 
     private DownloadTask createDownTask(String url, String parentPath) {
-        String fileName = MD5Util.getMD5(url) + ".mp4";
+        String fileType = getFileType(url);
+        String fileName = MD5Util.getMD5(url) + "." + fileType;
         DownloadTask task = new DownloadTask.Builder(url, parentPath, fileName)
                 .setMinIntervalMillisCallbackProcess(30)
                 .setPassIfAlreadyCompleted(false)
                 .setFilenameFromResponse(false)
                 .build();
         return task;
+    }
+
+    private String getFileType(String url) {
+        return url.substring(url.lastIndexOf(".") + 1);
     }
 
     private DownloadListener3 downloadListener = new DownloadListener3() {
