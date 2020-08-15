@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.SurfaceHolder;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.yuong.media.player.network.NetSpeed;
@@ -115,7 +116,7 @@ public class IjkVideoView extends FrameLayout implements IRenderCallback {
     @Override
     public void onSurfaceCreated(SurfaceHolder holder) {
         mSurfaceHolder = holder;
-        Log.i(TAG, "############# onSurfaceCreated ##################");
+        Log.e(TAG, "############# onSurfaceCreated ##################");
         if (mMediaPlayer != null)
             bindSurfaceHolder(mMediaPlayer, holder);
         else
@@ -124,7 +125,7 @@ public class IjkVideoView extends FrameLayout implements IRenderCallback {
 
     @Override
     public void onSurfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        Log.i(TAG, "############# onSurfaceChanged ################## width : " + width + " height : " + height);
+        Log.e(TAG, "############# onSurfaceChanged ################## width : " + width + " height : " + height);
         mSurfaceWidth = width;
         mSurfaceHeight = height;
         boolean isValidState = (mTargetState == STATE_PLAYING);
@@ -136,7 +137,7 @@ public class IjkVideoView extends FrameLayout implements IRenderCallback {
 
     @Override
     public void onSurfaceDestroyed(SurfaceHolder holder) {
-        Log.i(TAG, "############# onSurfaceDestroyed ##################");
+        Log.e(TAG, "############# onSurfaceDestroyed ##################");
         mSurfaceHolder = null;
         if (mMediaPlayer != null)
             mMediaPlayer.setDisplay(null);
@@ -434,7 +435,8 @@ public class IjkVideoView extends FrameLayout implements IRenderCallback {
 
     IMediaPlayer.OnPreparedListener mPreparedListener = new IMediaPlayer.OnPreparedListener() {
         public void onPrepared(IMediaPlayer mp) {
-            Log.i(TAG, "############# onPrepared ##################");
+            Log.e(TAG, "############# onPrepared ##################");
+            Log.e(TAG, " onPrepared  mTargetState : " + mTargetState);
             mCurrentState = STATE_PREPARED;
             mLoadingView.dismiss();
 
@@ -567,5 +569,9 @@ public class IjkVideoView extends FrameLayout implements IRenderCallback {
 
     public void setCompletionListener(IMediaPlayer.OnCompletionListener mCompletionListener) {
         this.mCompletionListener = mCompletionListener;
+    }
+
+    public void setRenderViewVisible(boolean visible) {
+        mRenderView.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 }

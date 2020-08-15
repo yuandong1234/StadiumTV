@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.kasai.stadium.tv.R;
+import com.kasai.stadium.tv.activity.StadiumPageActivity;
 import com.kasai.stadium.tv.bean.ImageBean;
 
 /**
@@ -94,7 +95,7 @@ public class ImageFragment extends BaseFragment {
     }
 
     private void nextPage() {
-        if (handler != null) {
+        if (handler != null && StadiumPageActivity.IS_AUTO_PLAY) {
             handler.removeCallbacksAndMessages(null);
             handler.postDelayed(runnable, 8000);
         }
@@ -104,8 +105,5 @@ public class ImageFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         setOnlyLoadOnce(false);
-//        if (handler != null) {
-//            handler.removeCallbacksAndMessages(null);
-//        }
     }
 }

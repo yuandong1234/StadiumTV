@@ -66,6 +66,24 @@ public class QueueController {
         downloadContext.start(downloadListener, true);
     }
 
+    public void initTasks(Context context, List<String> urls, DownloadContextListener listener,DownloadListener3 downloadListener) {
+        String parentPath = FileUtil.getVideoRootDirectory(context);
+        DownloadContext.QueueSet queueSet = new DownloadContext.QueueSet();
+        queueSet.setParentPath(parentPath);
+        queueSet.setMinIntervalMillisCallbackProcess(200);
+        DownloadContext.Builder builder = queueSet.commit();
+
+        for (String url : urls) {
+            DownloadTask task = createDownTask(url, parentPath);
+            builder.bindSetTask(task);
+        }
+
+        builder.setListener(listener);
+        DownloadContext downloadContext = builder.build();
+        downloadContext.start(downloadListener, true);
+    }
+
+
     private DownloadTask createDownTask(String url, String parentPath) {
         String fileName = MD5Util.getMD5(url) + ".mp4";
         DownloadTask task = new DownloadTask.Builder(url, parentPath, fileName)

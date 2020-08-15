@@ -3,8 +3,11 @@ package com.kasai.stadium.tv.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,11 +18,25 @@ import com.kasai.stadium.tv.R;
 import com.kasai.stadium.tv.bean.AdvertInfoBean;
 import com.kasai.stadium.tv.constants.Api;
 import com.kasai.stadium.tv.constants.Constants;
+import com.kasai.stadium.tv.dao.VideoDao;
+import com.kasai.stadium.tv.dao.bean.VideoBean;
+import com.kasai.stadium.tv.download.DownloadAdapter;
+import com.kasai.stadium.tv.download.DownloadBean;
+import com.kasai.stadium.tv.download.QueueController;
 import com.kasai.stadium.tv.http.HttpCallback;
 import com.kasai.stadium.tv.http.HttpHelper;
+import com.kasai.stadium.tv.utils.MD5Util;
 import com.kasai.stadium.tv.utils.ToastUtil;
+import com.liulishuo.okdownload.DownloadContext;
+import com.liulishuo.okdownload.DownloadContextListener;
+import com.liulishuo.okdownload.DownloadTask;
+import com.liulishuo.okdownload.core.cause.EndCause;
+import com.liulishuo.okdownload.core.cause.ResumeFailedCause;
+import com.liulishuo.okdownload.core.listener.DownloadListener3;
 
+import java.io.File;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +46,7 @@ import java.util.Map;
  * 资源下载
  */
 public class ResourceDownloadActivity extends BaseActivity {
+    private static final String TAG = ResourceDownloadActivity.class.getSimpleName();
     private TextView tvStadiumName;
     private TextView tvStadiumWelcome;
     private TextView tvStadiumName2;
@@ -48,6 +66,9 @@ public class ResourceDownloadActivity extends BaseActivity {
             enterHomePage();
         }
     };
+
+    private DownloadAdapter adapter;
+    private QueueController queueController;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,9 +97,9 @@ public class ResourceDownloadActivity extends BaseActivity {
             @Override
             protected void onSuccess(AdvertInfoBean data) {
                 hideLoadingDialog();
-                Log.e("ResourceDownloadActivity", " data : " + data.toString());
+                Log.e(TAG, " data : " + data.toString());
                 if (data.isSuccessful() && data.getData() != null) {
-                    checkData(data.getData());
+                    checkNeedDownloadData(data.getData());
                 } else {
                     ToastUtil.showShortCenter(data.getMsg());
                 }
@@ -92,31 +113,43 @@ public class ResourceDownloadActivity extends BaseActivity {
         });
     }
 
-    private void checkData(List<AdvertInfoBean.Data> data) {
+    private void checkNeedDownloadData(List<AdvertInfoBean.Data> data) {
         videoUrls.clear();
         if (data == null || data.size() == 0) return;
         this.dataList = data;
-        AdvertInfoBean.Data temp = data.get(0);
-        tvStadiumName.setText(temp.merchantName);
-        tvStadiumName2.setText(temp.merchantName);
-        tvStadiumWelcome.setText(temp.merchantName + "欢迎您!");
+        AdvertInfoBean.Data firstData = data.get(0);
+        tvStadiumName.setText(firstData.merchantName);
+        tvStadiumName2.setText(firstData.merchantName);
+        tvStadiumWelcome.setText(firstData.merchantName + "欢迎您!");
 
 
-//        for (AdvertInfoBean.Data temp : dataList) {
-//            if (temp.advertType == 2) {
-//                videoUrls.add(temp.video);
-//            }
-//        }
+        for (AdvertInfoBean.Data temp : dataList) {
+            if (temp.advertType == 2) {
+                String url = convertVideoUrl(temp.video);
+                if (!TextUtils.isEmpty(url)) {
+                    videoUrls.add(url);
+                }
+            }
+        }
 
-        if (videoUrls.size() > 0) {
-            llDownload.setVisibility(View.VISIBLE);
-            llDownloading.setVisibility(View.GONE);
-            llDownloadNone.setVisibility(View.GONE);
+        if (videoUrls.size() == 0) {
+            showDownloadNone();
+            return;
+        }
+
+        showLoadingDialog();
+        List<String> needDownloadUrls = new ArrayList<>();
+        for (String temp : videoUrls) {
+            boolean isExist = checkLocalVideo(temp);
+            if (!isExist) {
+                needDownloadUrls.add(temp);
+            }
+        }
+        hideLoadingDialog();
+        if (needDownloadUrls.size() > 0) {
+            showDownloading(needDownloadUrls);
         } else {
-            llDownload.setVisibility(View.GONE);
-            llDownloading.setVisibility(View.GONE);
-            llDownloadNone.setVisibility(View.VISIBLE);
-            handler.postDelayed(runnable, 3000);
+            showDownloadNone();
         }
     }
 
@@ -135,5 +168,139 @@ public class ResourceDownloadActivity extends BaseActivity {
         }
         startActivity(intent);
         finish();
+    }
+
+    private String convertVideoUrl(String url) {
+        if (TextUtils.isEmpty(url)) return null;
+        String flag = "http://saas-resources.52jiayundong.com";
+        if (url.startsWith(flag)) {
+            return url.replace(flag, "https://venue-saas.oss-cn-shenzhen.aliyuncs.com");
+        }
+        return null;
+    }
+
+    private boolean checkLocalVideo(String url) {
+        if (TextUtils.isEmpty(url)) return false;
+        String fileName = MD5Util.getMD5(url) + ".mp4";
+        VideoBean video = VideoDao.getInstance(this).getVideo(fileName);
+        if (video == null) {
+            return false;
+        }
+        File file = new File(video.path);
+        return file.exists();
+    }
+
+    private void showDownloadNone() {
+        llDownload.setVisibility(View.GONE);
+        llDownloading.setVisibility(View.GONE);
+        llDownloadNone.setVisibility(View.VISIBLE);
+        handler.postDelayed(runnable, 3000);
+    }
+
+    private void showDownloading(List<String> urls) {
+        llDownload.setVisibility(View.GONE);
+        llDownloading.setVisibility(View.VISIBLE);
+        llDownloadNone.setVisibility(View.GONE);
+        initDownload(urls);
+    }
+
+    private void initDownload(List<String> urls) {
+        List<DownloadBean> downloadList = new ArrayList<>();
+        for (String temp : urls) {
+            DownloadBean bean = new DownloadBean();
+            bean.setUrl(temp);
+            downloadList.add(bean);
+        }
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        rvDowning.setLayoutManager(layoutManager);
+        adapter = new DownloadAdapter(this);
+        rvDowning.setAdapter(adapter);
+        adapter.setData(downloadList);
+
+        startDownload(urls);
+    }
+
+    private void startDownload(List<String> urls) {
+        queueController = new QueueController();
+        queueController.initTasks(this, urls, downloadListener, downloadTaskListener);
+    }
+
+    private DownloadListener3 downloadTaskListener = new DownloadListener3() {
+        @Override
+        protected void started(@NonNull DownloadTask task) {
+            Log.e(TAG, "started .....");
+            adapter.setProgress(task.getUrl(), "开始下载");
+        }
+
+        @Override
+        public void connected(@NonNull DownloadTask task, int blockCount, long currentOffset, long totalLength) {
+            Log.e(TAG, "connected .....");
+        }
+
+        @Override
+        protected void warn(@NonNull DownloadTask task) {
+            Log.e(TAG, "warn .....");
+        }
+
+        @Override
+        public void retry(@NonNull DownloadTask task, @NonNull ResumeFailedCause cause) {
+            Log.e(TAG, "retry .....");
+        }
+
+        @Override
+        protected void canceled(@NonNull DownloadTask task) {
+            Log.e(TAG, "canceled .....");
+        }
+
+        @Override
+        protected void error(@NonNull DownloadTask task, @NonNull Exception e) {
+            Log.e(TAG, "error .....");
+            adapter.setProgress(task.getUrl(), "下载失败");
+        }
+
+        @Override
+        public void progress(@NonNull DownloadTask task, long currentOffset, long totalLength) {
+            Log.e(TAG, "progress .....");
+            adapter.setProgress(task.getUrl(), calcProgress(currentOffset, totalLength));
+        }
+
+        @Override
+        protected void completed(@NonNull DownloadTask task) {
+            Log.e(TAG, "completed .....");
+            adapter.setProgress(task.getUrl(), "已下载");
+        }
+    };
+
+    private DownloadContextListener downloadListener = new DownloadContextListener() {
+        @Override
+        public void taskEnd(@NonNull DownloadContext context, @NonNull DownloadTask task, @NonNull EndCause cause, @Nullable Exception realCause, int remainCount) {
+            if (cause == EndCause.COMPLETED) {
+                saveVideo(task.getFile().getName(), task.getFile().getAbsolutePath());
+            }
+        }
+
+        @Override
+        public void queueEnd(@NonNull DownloadContext context) {
+            Log.e(TAG, "下载结束.....");
+
+        }
+    };
+
+    private String calcProgress(long offset, long total) {
+        double progress = 0;
+        if (total > 0) {
+            progress = offset * 100d / total;
+        }
+        DecimalFormat df = new DecimalFormat("#.0");
+        return progress == 100 ? "100%" : df.format(progress) + "%";
+    }
+
+    private void saveVideo(String name, String path) {
+        VideoBean bean = new VideoBean();
+        bean.setStatus(1);
+        bean.setName(name);
+        bean.setPath(path);
+        VideoDao.getInstance(this).saveVideo(bean);
     }
 }

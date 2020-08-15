@@ -4,11 +4,16 @@ import android.app.Activity;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
 import com.kasai.stadium.tv.R;
+import com.kasai.stadium.tv.activity.StadiumPageActivity;
 import com.kasai.stadium.tv.bean.VideoInfoBean;
+import com.kasai.stadium.tv.dao.VideoDao;
+import com.kasai.stadium.tv.dao.bean.VideoBean;
+import com.kasai.stadium.tv.utils.MD5Util;
 import com.yuong.media.player.IjkVideoView;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
@@ -21,8 +26,6 @@ public class VideoFragment extends BaseFragment {
     private IjkVideoView videoView;
     private FragmentChangeListener listener;
     private Handler handler;
-
-    //    private String path = "https://venue-saas.oss-cn-shenzhen.aliyuncs.com/test/upload_file/file/20200703/20200703153425055871.mp4";
     private String url;
     private VideoInfoBean videoInfoBean;
 
@@ -74,6 +77,7 @@ public class VideoFragment extends BaseFragment {
         videoView.setErrorListener(new IMediaPlayer.OnErrorListener() {
             @Override
             public boolean onError(IMediaPlayer iMediaPlayer, int i, int i1) {
+                destroyPlayView();
                 nextPage();
                 return false;
             }
@@ -81,18 +85,16 @@ public class VideoFragment extends BaseFragment {
         videoView.setCompletionListener(new IMediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(IMediaPlayer iMediaPlayer) {
+                destroyPlayView();
                 nextPage();
-                Log.e(TAG, "视频播放完成....");
             }
         });
     }
 
-    //TODO
     @Override
     public void onUserVisible() {
         super.onUserVisible();
         Log.e(TAG, "*****onUserVisible*****");
-        //nextPage();
         getActivity().getWindow().setFormat(PixelFormat.TRANSLUCENT);
     }
 
@@ -103,7 +105,6 @@ public class VideoFragment extends BaseFragment {
         Log.e(TAG, "*****loadData*****");
         getActivity().getWindow().setFormat(PixelFormat.TRANSLUCENT);
         loadVideo();
-        //nextPage();
     }
 
     @Override
@@ -120,9 +121,6 @@ public class VideoFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         setOnlyLoadOnce(false);
-//        if (handler != null) {
-//            handler.removeCallbacksAndMessages(null);
-//        }
     }
 
     public void bindHandler(Handler handler) {
@@ -130,38 +128,49 @@ public class VideoFragment extends BaseFragment {
     }
 
     private void nextPage() {
-        if (listener != null) {
-            videoView.setVisibility(View.GONE);
+        if (listener != null && StadiumPageActivity.IS_AUTO_PLAY) {
             listener.onNext();
         }
     }
 
-//    private void nextPage() {
-//        if (handler != null) {
-//            handler.removeCallbacksAndMessages(null);
-//            handler.postDelayed(runnable, 8000);
-//        }
-//    }
+    private void destroyPlayView() {
+        videoView.setVisibility(View.GONE);
+        videoView.setRenderViewVisible(false);
+    }
+
 
     private void loadVideo() {
-//        if (!TextUtils.isEmpty(url)) {
-//            String fileName = MD5Util.getMD5(url) + ".mp4";
-//            VideoBean video = VideoDao.getInstance(getActivity()).getVideo(fileName);
-//            if (video != null && !TextUtils.isEmpty(video.path)) {
-//                Log.e(TAG, "加载本地视频.....");
-//                videoView.setVideoPath(video.path);
-//            } else {
-//                Log.e(TAG, "加载网络视频.....");
-//                videoView.setVideoPath(url);
-//            }
-//            videoView.start();
-//        }
+        if (!TextUtils.isEmpty(url)) {
+            String newUrl = convertVideoUrl(url);
+            String fileName = MD5Util.getMD5(newUrl) + ".mp4";
+            VideoBean video = VideoDao.getInstance(getActivity()).getVideo(fileName);
+            if (video != null && !TextUtils.isEmpty(video.path)) {
+                Log.e(TAG, "加载本地视频..... : " + video.name);
+                Log.e(TAG, "加载本地视频..... : " + video.path);
+                videoView.setVideoPath(video.path);
+            } else {
+                Log.e(TAG, "加载网络视频.....");
+                videoView.setVideoPath(newUrl);
+            }
+            videoView.setVisibility(View.VISIBLE);
+            videoView.setRenderViewVisible(true);
+            videoView.start();
+        }
 
-        //TODO
-//        String url = "android.resource://com.kasai.stadium.tv/" + R.raw.s20200717173242162638;
-        videoView.setVisibility(View.VISIBLE);
-        String url = "https://venue-saas.oss-cn-shenzhen.aliyuncs.com/prod/upload_file/file/20200717/20200717173242162638.mp4";
-        videoView.setVideoPath(url);
-        videoView.start();
+        //TODO 测试
+//        videoView.setVisibility(View.VISIBLE);
+//        String url = "https://venue-saas.oss-cn-shenzhen.aliyuncs.com/prod/upload_file/file/20200717/20200717173242162638.mp4";
+//        videoView.setVideoPath(url);
+//        videoView.start();
     }
+
+    private String convertVideoUrl(String url) {
+        if (TextUtils.isEmpty(url)) return null;
+        String flag = "http://saas-resources.52jiayundong.com";
+        if (url.startsWith(flag)) {
+            return url.replace(flag, "https://venue-saas.oss-cn-shenzhen.aliyuncs.com");
+        }
+        return null;
+    }
+
 }

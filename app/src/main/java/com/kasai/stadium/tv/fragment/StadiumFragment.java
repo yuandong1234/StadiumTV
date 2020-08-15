@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kasai.stadium.tv.R;
+import com.kasai.stadium.tv.activity.StadiumPageActivity;
 import com.kasai.stadium.tv.adapter.SpaceNumberAdapter;
 import com.kasai.stadium.tv.bean.StadiumBean;
 import com.kasai.stadium.tv.utils.DensityUtil;
@@ -265,7 +266,7 @@ public class StadiumFragment extends BaseFragment {
     }
 
     private void nextPage() {
-        if (handler != null) {
+        if (handler != null && StadiumPageActivity.IS_AUTO_PLAY) {
             handler.removeCallbacksAndMessages(null);
             handler.postDelayed(runnable, 8000);
         }
@@ -286,8 +287,5 @@ public class StadiumFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         setOnlyLoadOnce(false);
-//        if (handler != null) {
-//            handler.removeCallbacksAndMessages(null);
-//        }
     }
 }

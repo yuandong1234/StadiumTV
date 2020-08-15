@@ -51,6 +51,7 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
     };
     private int index;
     private List<AdvertInfoBean.Data> dataList;
+    public final static boolean IS_AUTO_PLAY = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

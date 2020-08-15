@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kasai.stadium.tv.R;
+import com.kasai.stadium.tv.activity.StadiumPageActivity;
 import com.kasai.stadium.tv.bean.SwimmingStadiumBean;
 import com.kasai.stadium.tv.dao.LockerDao;
 import com.kasai.stadium.tv.dao.bean.LockerBean;
@@ -172,7 +173,7 @@ public class SwimmingStadiumFragment extends BaseFragment {
     }
 
     private void nextPage() {
-        if (handler != null) {
+        if (handler != null && StadiumPageActivity.IS_AUTO_PLAY) {
             handler.removeCallbacksAndMessages(null);
             handler.postDelayed(runnable, 8000);
         }
@@ -193,8 +194,5 @@ public class SwimmingStadiumFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         setOnlyLoadOnce(false);
-//        if (handler != null) {
-//            handler.removeCallbacksAndMessages(null);
-//        }
     }
 }

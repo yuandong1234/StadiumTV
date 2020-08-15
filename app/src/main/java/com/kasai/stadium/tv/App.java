@@ -23,8 +23,8 @@ public class App extends Application {
         context = getApplicationContext();
         Stetho.initializeWithDefaults(this);
         initDownload();
-//        initBugly();
-        CrashHandler.getInstance().init(this);
+        initBugly();
+//        CrashHandler.getInstance().init(this);
     }
 
     private void initDownload() {

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.kasai.stadium.tv.R;
+import com.kasai.stadium.tv.activity.StadiumPageActivity;
 import com.kasai.stadium.tv.adapter.OnlineServiceAdapter;
 import com.kasai.stadium.tv.bean.OnlineServiceBean;
 import com.kasai.stadium.tv.utils.DensityUtil;
@@ -101,7 +102,7 @@ public class OnlineServiceFragment extends BaseFragment {
     }
 
     private void nextPage() {
-        if (handler != null) {
+        if (handler != null && StadiumPageActivity.IS_AUTO_PLAY) {
             handler.removeCallbacksAndMessages(null);
             handler.postDelayed(runnable, 8000);
         }
@@ -122,8 +123,5 @@ public class OnlineServiceFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         setOnlyLoadOnce(false);
-//        if (handler != null) {
-//            handler.removeCallbacksAndMessages(null);
-//        }
     }
 }
