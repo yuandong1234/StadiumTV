@@ -51,7 +51,7 @@ public class OnlineServiceAdapter extends RecyclerView.Adapter<OnlineServiceAdap
         if (!TextUtils.isEmpty(bean.image)) {
             loadImage(holder.ivServicePhoto, bean.image);
         } else {
-            holder.ivServicePhoto.setImageResource(R.mipmap.ic_stadium_image);
+            holder.ivServicePhoto.setImageResource(R.mipmap.img_online_service);
         }
     }
 

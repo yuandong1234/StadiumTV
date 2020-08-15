@@ -123,6 +123,7 @@ public class StadiumFragment extends BaseFragment {
 
     private void showSportOne(StadiumBean.Sport data) {
         rlSport.setVisibility(View.VISIBLE);
+        setSportImage(ivSport, data.sportId);
         tvSportName.setText(data.sportName);
         tvAvailableNumber.setText(data.fieldNum);
         if (!TextUtils.isEmpty(data.percent)) {
@@ -143,6 +144,7 @@ public class StadiumFragment extends BaseFragment {
 
     private void showSportSecond(StadiumBean.Sport data) {
         rlSport2.setVisibility(View.VISIBLE);
+        setSportImage(ivSport2, data.sportId);
         tvSportName2.setText(data.sportName);
         tvAvailableNumber2.setText(data.fieldNum);
         if (!TextUtils.isEmpty(data.percent)) {
@@ -163,6 +165,7 @@ public class StadiumFragment extends BaseFragment {
 
     private void showSportThird(StadiumBean.Sport data) {
         rlSport3.setVisibility(View.VISIBLE);
+        setSportImage(ivSport3, data.sportId);
         tvSportName3.setText(data.sportName);
         tvAvailableNumber3.setText(data.fieldNum);
         if (!TextUtils.isEmpty(data.percent)) {
@@ -214,6 +217,65 @@ public class StadiumFragment extends BaseFragment {
         return spanCount;
     }
 
+    private void setSportImage(ImageView imageView, String id) {
+        if (TextUtils.isEmpty(id)) {
+            imageView.setBackgroundResource(R.mipmap.ic_swim);
+            return;
+        }
+        switch (id.trim()) {
+            case "4028f0a2556c04b401556c07d52b0007"://排球
+                imageView.setBackgroundResource(R.mipmap.ic_volleyball);
+                break;
+            case "4028f0ce5551abf3015551b0aae50001"://羽毛球
+                imageView.setBackgroundResource(R.mipmap.ic_badminton);
+                break;
+            case "4028f0ce5551abf3015551b42ebd0004"://篮球
+                imageView.setBackgroundResource(R.mipmap.ic_basketball);
+                break;
+            case "4028f0ce5551abf3015551b476920006"://足球
+                imageView.setBackgroundResource(R.mipmap.ic_football);
+                break;
+            case "4028f0ce5551abf3015551b4a7820008"://乒乓球
+                imageView.setBackgroundResource(R.mipmap.ic_pingpong);
+                break;
+            case "4028f0ce5551abf3015551b4dfc3000a"://网球
+                imageView.setBackgroundResource(R.mipmap.ic_tennis);
+                break;
+            case "4028f0ce5551abf3015551b53b48000c"://游泳
+                imageView.setBackgroundResource(R.mipmap.ic_swim);
+                break;
+            case "2c9180835cae7231015d10860674384b"://气排球
+                imageView.setBackgroundResource(R.mipmap.ic_gas_volleyball);
+                break;
+            case "2c9180835d4a9711015d63aae8795047"://门球
+                imageView.setBackgroundResource(R.mipmap.ic_gete_ball);
+                break;
+            case "2c918083613fbf870161400c222800b7"://跑步
+                imageView.setBackgroundResource(R.mipmap.ic_running);
+                break;
+            case "2c9180845fdca8f1015fe190b96d004d"://健身
+                imageView.setBackgroundResource(R.mipmap.ic_fitness);
+                break;
+            case "2c9180845fdca8f1015fe190fb82004e"://瑜伽
+                imageView.setBackgroundResource(R.mipmap.ic_yoga);
+                break;
+            case "4028f0ce5551abf3015561b53b48001f"://高尔夫
+                imageView.setBackgroundResource(R.mipmap.ic_golf);
+                break;
+            case "2c91808263d9db2f0163edd7f5950007"://潜水 TODO 图片暂时未提供
+                imageView.setBackgroundResource(R.mipmap.ic_swim);
+                break;
+            case "2c9180835b60be34015b610f798801e7"://水上乐园 TODO 图片暂时未提供
+                imageView.setBackgroundResource(R.mipmap.ic_swim);
+                break;
+//            case "297edff8565431fc01566801fdc40047"://全场通用 TODO 图片暂时未提供
+//                break;
+            default://默认 TODO 图片暂时未提供
+                imageView.setBackgroundResource(R.mipmap.ic_swim);
+                break;
+        }
+    }
+
     @Override
     public void onUserVisible() {
         super.onUserVisible();
@@ -232,7 +294,7 @@ public class StadiumFragment extends BaseFragment {
         nextPage();
     }
 
-    private void initData(){
+    private void initData() {
         if (stadiumBean != null) {
             tvStadiumName.setText(stadiumBean.getMerchantName());
             tvStadiumWelcome.setText(stadiumBean.getMerchantName() + "欢迎您!");
