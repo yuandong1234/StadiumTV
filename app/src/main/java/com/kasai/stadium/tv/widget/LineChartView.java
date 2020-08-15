@@ -203,4 +203,10 @@ public class LineChartView extends View {
         this.maxValue = maxValue;
         this.minValue = minValue;
     }
+
+    public void setYtitle(String[] titles) {
+        if (titles != null && titles.length > 0) {
+            this.yTitles = titles;
+        }
+    }
 }

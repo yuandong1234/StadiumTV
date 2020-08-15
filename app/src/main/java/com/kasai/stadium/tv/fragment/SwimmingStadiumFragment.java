@@ -87,7 +87,7 @@ public class SwimmingStadiumFragment extends BaseFragment {
         String currentDate = DateUtil.getCurrentDate(DateUtil.DATE);
         List<LockerBean> lockers = LockerDao.getInstance(getActivity()).getLocker(currentDate);
         if (lockers == null || lockers.size() == 0) return;
-        Log.e("****************", lockers.toString());
+//        Log.e("****************", lockers.toString());
         int[] times = new int[lockers.size()];
         int[] unUseValues = new int[lockers.size()];
 //        int[] useValues = new int[lockers.size()];
@@ -99,8 +99,16 @@ public class SwimmingStadiumFragment extends BaseFragment {
 //            useValues[i] = bean.getUserNumber();
             totalValues[i] = bean.getUnUserNumber() + bean.getUserNumber();
         }
+
         int maxValue = getMax(totalValues);
-        chartView.setLimitValue(maxValue, 0);
+        int maxLimit = String.valueOf(maxValue).length() * 10;
+        int space = maxLimit / 5;
+        String[] yTitles = new String[6];
+        for (int i = 0; i < 6; i++) {
+            yTitles[i] = String.valueOf(maxLimit - i * space);
+        }
+        chartView.setLimitValue(maxLimit, 0);
+        chartView.setYtitle(yTitles);
         chartView.setData(unUseValues, times);
     }
 

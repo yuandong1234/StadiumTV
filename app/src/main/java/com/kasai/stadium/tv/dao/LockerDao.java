@@ -63,6 +63,20 @@ public class LockerDao {
         }
     }
 
+    public void saveLocker2(LockerBean bean) {
+        SQLiteDatabase db = openDatabase();
+        db.beginTransaction();
+        try {
+            insert(db, bean);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.endTransaction();
+            closeDatabase();
+        }
+    }
+
     private void insert(SQLiteDatabase db, LockerBean bean) {
         Log.e(TAG, "insert********************");
         String sql = "INSERT INTO " + TABLE_LOCKER + " (date,time,userNumber,unUserNumber) VALUES(?,?,?,?)";

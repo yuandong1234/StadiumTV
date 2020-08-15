@@ -202,7 +202,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_border_top2"
+                android:background="@drawable/bg_border_top3"
                 android:gravity="center"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp">
@@ -212,7 +212,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/ic_temperature" />
+                    android:src="@mipmap/ic_indoor_temperature" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
