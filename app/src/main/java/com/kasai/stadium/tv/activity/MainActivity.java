@@ -24,7 +24,10 @@ import com.kasai.stadium.tv.download.QueueController;
 import com.kasai.stadium.tv.fragment.BaseFragment;
 import com.kasai.stadium.tv.fragment.ImageFragment;
 import com.kasai.stadium.tv.fragment.VideoFragment;
+import com.kasai.stadium.tv.utils.DensityUtil;
 import com.kasai.stadium.tv.utils.MD5Util;
+import com.kasai.stadium.tv.utils.ScreenUtil;
+import com.kasai.stadium.tv.utils.ToastUtil;
 import com.liulishuo.okdownload.DownloadContext;
 import com.liulishuo.okdownload.DownloadContextListener;
 import com.liulishuo.okdownload.DownloadTask;
@@ -66,8 +69,9 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initView();
+        // initView();
         // initData();
+        getScreenConfig();
     }
 
     private void initView() {
@@ -211,5 +215,13 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             }
         }
         return downloadUrls;
+    }
+
+    private void getScreenConfig() {
+        float density = DensityUtil.getDensity(this);
+        int screenWidth = ScreenUtil.getScreenWidth(this);
+        int screenHeight = ScreenUtil.getScreenHeight(this);
+        String config = "density : " + density + "  screenWidth : " + screenWidth + "  screenHeight : " + screenHeight;
+        ToastUtil.showShortCenter(config);
     }
 }

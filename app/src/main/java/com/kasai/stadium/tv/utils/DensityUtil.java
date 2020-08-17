@@ -1,11 +1,14 @@
 package com.kasai.stadium.tv.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.util.DisplayMetrics;
 
 public class DensityUtil {
 
     /**
      * 屏幕的高度（px）
+     *
      * @param context
      * @return
      */
@@ -16,6 +19,7 @@ public class DensityUtil {
 
     /**
      * 屏幕的宽度（px）
+     *
      * @param context
      * @return
      */
@@ -26,6 +30,7 @@ public class DensityUtil {
 
     /**
      * 屏幕的高度（dp）
+     *
      * @param context
      * @return
      */
@@ -37,6 +42,7 @@ public class DensityUtil {
 
     /**
      * 屏幕的宽度（dp）
+     *
      * @param context
      * @return
      */
@@ -48,6 +54,7 @@ public class DensityUtil {
 
     /**
      * dp to px
+     *
      * @param context
      * @param dpValue
      * @return
@@ -59,6 +66,7 @@ public class DensityUtil {
 
     /**
      * px to dp
+     *
      * @param context
      * @param pxValue
      * @return
@@ -70,6 +78,7 @@ public class DensityUtil {
 
     /**
      * px to sp
+     *
      * @param context
      * @param pxValue
      * @return
@@ -81,6 +90,7 @@ public class DensityUtil {
 
     /**
      * sp to px
+     *
      * @param context
      * @param spValue
      * @return
@@ -90,4 +100,9 @@ public class DensityUtil {
         return (int) (spValue * scale + 0.5f);
     }
 
+    public static float getDensity(Activity context) {
+        DisplayMetrics dm = new DisplayMetrics();
+        context.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        return dm.density;
+    }
 }
