@@ -70,17 +70,17 @@ public class LineChartView extends View {
         pathPaint.setStyle(Paint.Style.STROKE);
         pathPaint.setStrokeJoin(Paint.Join.ROUND);
         pathPaint.setStrokeCap(Paint.Cap.ROUND);
-        pathPaint.setStrokeWidth(DensityUtil.dip2px(context, 1));
+        pathPaint.setStrokeWidth(DensityUtil.dip2px(context, 2));
 
         textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         textPaint.setTextAlign(Paint.Align.CENTER);
-        textPaint.setTextSize(DensityUtil.sp2px(context, 10));
+        textPaint.setTextSize(DensityUtil.sp2px(context, 14));
         textPaint.setStrokeWidth(1);
         textPaint.setColor(Color.parseColor("#666666"));
 
         dashPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         dashPaint.setStyle(Paint.Style.STROKE);
-        dashPaint.setStrokeWidth(DensityUtil.dip2px(getContext(), 0.5f));
+        dashPaint.setStrokeWidth(DensityUtil.dip2px(getContext(), 1));
         dashPaint.setColor(Color.parseColor("#FE9C71"));
         DashPathEffect pathEffect = new DashPathEffect(new float[]{5, 5}, 0);
         dashPaint.setPathEffect(pathEffect);
@@ -114,7 +114,7 @@ public class LineChartView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         //绘制坐标线
-        linePaint.setStrokeWidth(DensityUtil.dip2px(getContext(), 1));
+        linePaint.setStrokeWidth(DensityUtil.dip2px(getContext(), 2));
         canvas.drawLine(xOrigin, padding, xOrigin, yOrigin, linePaint);
         canvas.drawLine(xOrigin + 0.5f * padding, yOrigin, xOrigin + xWidth, yOrigin - 0.5f * padding, linePaint);
 

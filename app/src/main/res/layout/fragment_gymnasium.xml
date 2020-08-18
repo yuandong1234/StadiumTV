@@ -9,10 +9,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="14dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="18dp"
         android:background="@drawable/bg_stadium_page2"
         android:orientation="vertical">
 
@@ -25,14 +25,15 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp">
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="20dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:adjustViewBounds="true"
                     android:src="@mipmap/ic_kasai_company_logo" />
 
                 <TextView
@@ -42,7 +43,7 @@
                     android:layout_centerInParent="true"
                     android:text=""
                     android:textColor="#4D4D4D"
-                    android:textSize="18sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -51,10 +52,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="12dp"
+                    android:layout_marginRight="20dp"
                     android:text=""
                     android:textColor="#666666"
-                    android:textSize="12sp" />
+                    android:textSize="16sp" />
             </RelativeLayout>
 
             <View
@@ -77,8 +78,8 @@
 
                     <ImageView
                         android:id="@+id/iv_gymnasium_image"
-                        android:layout_width="63dp"
-                        android:layout_height="63dp"
+                        android:layout_width="84dp"
+                        android:layout_height="84dp"
                         android:layout_gravity="center_vertical"
                         android:src="@mipmap/ic_gymnasium" />
 
@@ -89,7 +90,7 @@
                         android:layout_marginLeft="25dp"
                         android:text="体育馆"
                         android:textColor="#68BEFF"
-                        android:textSize="30sp"
+                        android:textSize="40sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -115,7 +116,7 @@
                         android:layout_marginLeft="25dp"
                         android:text=""
                         android:textColor="#4D4D4D"
-                        android:textSize="24sp"
+                        android:textSize="32sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -126,7 +127,7 @@
                         android:layout_marginLeft="25dp"
                         android:text=""
                         android:textColor="#666666"
-                        android:textSize="15sp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/tv_lunar_calendar"
@@ -136,7 +137,7 @@
                         android:layout_marginLeft="25dp"
                         android:text=""
                         android:textColor="#666666"
-                        android:textSize="15sp" />
+                        android:textSize="20sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -144,7 +145,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="28dp"
             android:orientation="horizontal">
 
             <RelativeLayout
@@ -160,8 +161,8 @@
 
                 <ImageView
                     android:id="@+id/iv_personal_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="96dp"
+                    android:layout_height="84dp"
                     android:layout_centerVertical="true"
                     android:src="@mipmap/ic_person_number" />
 
@@ -181,7 +182,7 @@
                         android:layout_marginLeft="25dp"
                         android:text=""
                         android:textColor="#666666"
-                        android:textSize="30sp"
+                        android:textSize="40dp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -192,7 +193,7 @@
                         android:layout_marginTop="10dp"
                         android:text="场内人数"
                         android:textColor="#4D4D4D"
-                        android:textSize="15sp" />
+                        android:textSize="20sp" />
 
                 </LinearLayout>
             </RelativeLayout>
@@ -209,8 +210,8 @@
 
                 <ImageView
                     android:id="@+id/iv_indoor_temperature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="96dp"
+                    android:layout_height="84dp"
                     android:layout_centerVertical="true"
                     android:src="@mipmap/ic_indoor_temperature" />
 
@@ -230,7 +231,7 @@
                         android:layout_marginLeft="25dp"
                         android:text=""
                         android:textColor="#666666"
-                        android:textSize="30sp"
+                        android:textSize="40sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -241,7 +242,7 @@
                         android:layout_marginTop="10dp"
                         android:text="室温(℃)"
                         android:textColor="#4D4D4D"
-                        android:textSize="15sp" />
+                        android:textSize="20sp" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -257,8 +258,8 @@
 
                 <ImageView
                     android:id="@+id/iv_temperature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="96dp"
+                    android:layout_height="84dp"
                     android:layout_centerVertical="true"
                     android:src="@mipmap/ic_temperature" />
 
@@ -278,7 +279,7 @@
                         android:layout_marginLeft="25dp"
                         android:text=""
                         android:textColor="#666666"
-                        android:textSize="30sp"
+                        android:textSize="40sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -289,7 +290,7 @@
                         android:layout_marginTop="10dp"
                         android:text="场温(℃)"
                         android:textColor="#4D4D4D"
-                        android:textSize="15sp" />
+                        android:textSize="20sp" />
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
@@ -297,7 +298,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="15dp"
+            android:layout_margin="20dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -312,14 +313,14 @@
                     android:id="@+id/ll_sport1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/iv_sport1"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
                         android:layout_gravity="center_vertical"
                         android:src="@mipmap/ic_football" />
 
@@ -328,10 +329,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="12dp"
                         android:text=""
                         android:textColor="#4DD177"
-                        android:textSize="18sp"
+                        android:textSize="24sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -340,9 +341,9 @@
                     android:id="@+id/ll_available_number1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_toRightOf="@+id/ll_sport1"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="12dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -352,7 +353,7 @@
                         android:layout_marginLeft="10dp"
                         android:text="当前可订场地数量:"
                         android:textColor="#4D4D4D"
-                        android:textSize="12sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/tv_available_number"
@@ -362,7 +363,7 @@
                         android:layout_marginLeft="10dp"
                         android:text=""
                         android:textColor="#4D4D4D"
-                        android:textSize="30sp"
+                        android:textSize="40sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -376,25 +377,25 @@
 
                     <com.kasai.stadium.tv.widget.ProgressView
                         android:id="@+id/progress_view1"
-                        android:layout_width="78dp"
-                        android:layout_height="78dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         app:progress_padding="0dp"
-                        app:progress_radius="35dp"
-                        app:progress_stroke_width="8dp"
+                        app:progress_radius="45dp"
+                        app:progress_stroke_width="10dp"
                         app:progress_title="满场率"
                         app:progress_title_color="#4D4D4D"
-                        app:progress_title_text_size="12sp"
+                        app:progress_title_text_size="16sp"
                         app:progress_value_color="#4D4D4D"
-                        app:progress_value_text_size="20sp" />
+                        app:progress_value_text_size="24sp" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rv_available_space1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_toRightOf="@+id/progress_view1" />
                 </RelativeLayout>
             </RelativeLayout>
@@ -403,7 +404,7 @@
                 android:id="@+id/rl_sport2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_stadium_page4"
                 android:visibility="visible">
@@ -412,14 +413,14 @@
                     android:id="@+id/ll_sport2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/iv_sport2"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
                         android:layout_gravity="center_vertical"
                         android:src="@mipmap/ic_football" />
 
@@ -428,10 +429,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="12dp"
                         android:text=""
                         android:textColor="#4DD177"
-                        android:textSize="18sp"
+                        android:textSize="24sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -440,9 +441,9 @@
                     android:id="@+id/ll_available_number2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_toRightOf="@+id/ll_sport2"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="12dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -452,7 +453,7 @@
                         android:layout_marginLeft="10dp"
                         android:text="当前可订场地数量:"
                         android:textColor="#4D4D4D"
-                        android:textSize="12sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/tv_available_number2"
@@ -462,7 +463,7 @@
                         android:layout_marginLeft="10dp"
                         android:text=""
                         android:textColor="#4D4D4D"
-                        android:textSize="30sp"
+                        android:textSize="40sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -476,25 +477,25 @@
 
                     <com.kasai.stadium.tv.widget.ProgressView
                         android:id="@+id/progress_view2"
-                        android:layout_width="78dp"
-                        android:layout_height="78dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         app:progress_padding="0dp"
-                        app:progress_radius="35dp"
-                        app:progress_stroke_width="8dp"
+                        app:progress_radius="45dp"
+                        app:progress_stroke_width="10dp"
                         app:progress_title="满场率"
                         app:progress_title_color="#4D4D4D"
-                        app:progress_title_text_size="12sp"
+                        app:progress_title_text_size="16sp"
                         app:progress_value_color="#4D4D4D"
-                        app:progress_value_text_size="20sp" />
+                        app:progress_value_text_size="24sp" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rv_available_space2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_toRightOf="@+id/progress_view2" />
                 </RelativeLayout>
             </RelativeLayout>
@@ -503,7 +504,7 @@
                 android:id="@+id/rl_sport3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_stadium_page4"
                 android:visibility="visible">
@@ -512,14 +513,14 @@
                     android:id="@+id/ll_sport3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/iv_sport3"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
                         android:layout_gravity="center_vertical"
                         android:src="@mipmap/ic_football" />
 
@@ -528,7 +529,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="12dp"
                         android:text=""
                         android:textColor="#4DD177"
                         android:textSize="18sp"
@@ -540,8 +541,9 @@
                     android:id="@+id/ll_available_number3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="12dp"
                     android:layout_toRightOf="@+id/ll_sport3"
                     android:orientation="horizontal">
 
@@ -549,10 +551,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="12dp"
                         android:text="当前可订场地数量:"
                         android:textColor="#4D4D4D"
-                        android:textSize="12sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/tv_available_number3"
@@ -562,7 +564,7 @@
                         android:layout_marginLeft="10dp"
                         android:text=""
                         android:textColor="#4D4D4D"
-                        android:textSize="30sp"
+                        android:textSize="40sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -576,25 +578,25 @@
 
                     <com.kasai.stadium.tv.widget.ProgressView
                         android:id="@+id/progress_view3"
-                        android:layout_width="78dp"
-                        android:layout_height="78dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         app:progress_padding="0dp"
-                        app:progress_radius="35dp"
-                        app:progress_stroke_width="8dp"
+                        app:progress_radius="45dp"
+                        app:progress_stroke_width="10dp"
                         app:progress_title="满场率"
                         app:progress_title_color="#4D4D4D"
-                        app:progress_title_text_size="12sp"
+                        app:progress_title_text_size="16sp"
                         app:progress_value_color="#4D4D4D"
-                        app:progress_value_text_size="20sp" />
+                        app:progress_value_text_size="24sp" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rv_available_space3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_toRightOf="@+id/progress_view3" />
                 </RelativeLayout>
             </RelativeLayout>

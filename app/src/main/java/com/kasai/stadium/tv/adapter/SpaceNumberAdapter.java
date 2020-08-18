@@ -73,27 +73,27 @@ public class SpaceNumberAdapter extends RecyclerView.Adapter<SpaceNumberAdapter.
         int count = getItemCount();
         if (sportNum == 1) {
             if (count > 8) {
-                itemWidth = DensityUtil.dip2px(context, 85);
+                itemWidth = DensityUtil.dip2px(context, 114);
             } else if (count > 5) {
-                itemWidth = DensityUtil.dip2px(context, 220);
+                itemWidth = DensityUtil.dip2px(context, 294);
             } else {
-                itemWidth = DensityUtil.dip2px(context, 445);
+                itemWidth = DensityUtil.dip2px(context, 594);
             }
         } else if (sportNum == 2) {
             if (count > 8) {
-                itemWidth = DensityUtil.dip2px(context, 60);
+                itemWidth = DensityUtil.dip2px(context, 80);
             } else if (count > 5) {
-                itemWidth = DensityUtil.dip2px(context, 120);
+                itemWidth = DensityUtil.dip2px(context, 204);
             } else {
-                itemWidth = DensityUtil.dip2px(context, 310);
+                itemWidth = DensityUtil.dip2px(context, 414);
             }
         } else if (sportNum == 3) {
             if (count > 8) {
-                itemWidth = DensityUtil.dip2px(context, 40);
+                itemWidth = DensityUtil.dip2px(context, 54);
             } else if (count > 5) {
-                itemWidth = DensityUtil.dip2px(context, 85);
+                itemWidth = DensityUtil.dip2px(context, 114);
             } else {
-                itemWidth = DensityUtil.dip2px(context, 175);
+                itemWidth = DensityUtil.dip2px(context, 234);
             }
         }
         return itemWidth;

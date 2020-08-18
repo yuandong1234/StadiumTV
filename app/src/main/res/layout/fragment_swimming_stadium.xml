@@ -8,10 +8,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="14dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="18dp"
         android:background="@drawable/bg_stadium_page2"
         android:orientation="vertical">
 
@@ -24,14 +24,15 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp">
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="20dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:adjustViewBounds="true"
                     android:src="@mipmap/ic_kasai_company_logo" />
 
                 <TextView
@@ -41,7 +42,7 @@
                     android:layout_centerInParent="true"
                     android:text=""
                     android:textColor="#4D4D4D"
-                    android:textSize="18sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -53,7 +54,7 @@
                     android:layout_marginRight="12dp"
                     android:text=""
                     android:textColor="#666666"
-                    android:textSize="12sp" />
+                    android:textSize="16sp" />
             </RelativeLayout>
 
             <View
@@ -76,8 +77,8 @@
 
                     <ImageView
                         android:id="@+id/iv_stadium_image"
-                        android:layout_width="63dp"
-                        android:layout_height="63dp"
+                        android:layout_width="84dp"
+                        android:layout_height="84dp"
                         android:layout_gravity="center_vertical"
                         android:src="@mipmap/ic_swimming_stadium" />
 
@@ -88,7 +89,7 @@
                         android:layout_marginLeft="25dp"
                         android:text="游泳馆"
                         android:textColor="#68BEFF"
-                        android:textSize="30sp"
+                        android:textSize="40sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -114,7 +115,7 @@
                         android:layout_marginLeft="25dp"
                         android:text=""
                         android:textColor="#4D4D4D"
-                        android:textSize="24sp"
+                        android:textSize="32sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -125,7 +126,7 @@
                         android:layout_marginLeft="25dp"
                         android:text=""
                         android:textColor="#666666"
-                        android:textSize="15sp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/tv_lunar_calendar"
@@ -135,7 +136,7 @@
                         android:layout_marginLeft="25dp"
                         android:text=""
                         android:textColor="#666666"
-                        android:textSize="15sp" />
+                        android:textSize="20sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -143,24 +144,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="28dp"
             android:orientation="horizontal">
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_border_top"
                 android:gravity="center"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp">
+                android:paddingTop="22dp"
+                android:paddingBottom="22dp">
 
                 <ImageView
                     android:id="@+id/iv_personal_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="96dp"
+                    android:layout_height="84dp"
                     android:layout_centerVertical="true"
                     android:src="@mipmap/ic_person_number" />
 
@@ -180,7 +181,7 @@
                         android:layout_marginLeft="25dp"
                         android:text=""
                         android:textColor="#666666"
-                        android:textSize="30sp"
+                        android:textSize="40sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -191,7 +192,7 @@
                         android:layout_marginTop="10dp"
                         android:text="场内人数"
                         android:textColor="#4D4D4D"
-                        android:textSize="15sp" />
+                        android:textSize="20sp" />
 
                 </LinearLayout>
             </RelativeLayout>
@@ -199,17 +200,17 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_border_top3"
                 android:gravity="center"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp">
+                android:paddingTop="22dp"
+                android:paddingBottom="22dp">
 
                 <ImageView
                     android:id="@+id/iv_water_temperature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="96dp"
+                    android:layout_height="84dp"
                     android:layout_centerVertical="true"
                     android:src="@mipmap/ic_water_temperature" />
 
@@ -229,7 +230,7 @@
                         android:layout_marginLeft="25dp"
                         android:text=""
                         android:textColor="#666666"
-                        android:textSize="30sp"
+                        android:textSize="40sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -240,24 +241,24 @@
                         android:layout_marginTop="10dp"
                         android:text="水温(℃)"
                         android:textColor="#4D4D4D"
-                        android:textSize="15sp" />
+                        android:textSize="20sp" />
                 </LinearLayout>
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_border_top2"
                 android:gravity="center"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp">
+                android:paddingTop="22dp"
+                android:paddingBottom="22dp">
 
                 <ImageView
                     android:id="@+id/iv_ph"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="96dp"
+                    android:layout_height="84dp"
                     android:layout_centerVertical="true"
                     android:src="@mipmap/ic_ph" />
 
@@ -277,7 +278,7 @@
                         android:layout_marginLeft="25dp"
                         android:text=""
                         android:textColor="#666666"
-                        android:textSize="30sp"
+                        android:textSize="40sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -288,24 +289,24 @@
                         android:layout_marginTop="10dp"
                         android:text="PH值"
                         android:textColor="#4D4D4D"
-                        android:textSize="15sp" />
+                        android:textSize="20sp" />
                 </LinearLayout>
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_border_top4"
                 android:gravity="center"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp">
+                android:paddingTop="22dp"
+                android:paddingBottom="22dp">
 
                 <ImageView
                     android:id="@+id/iv_cl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="96dp"
+                    android:layout_height="84dp"
                     android:layout_centerVertical="true"
                     android:src="@mipmap/ic_cl" />
 
@@ -325,7 +326,7 @@
                         android:layout_marginLeft="25dp"
                         android:text=""
                         android:textColor="#666666"
-                        android:textSize="30sp"
+                        android:textSize="40sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -336,7 +337,7 @@
                         android:layout_marginTop="10dp"
                         android:text="残氯值(mg/L)"
                         android:textColor="#4D4D4D"
-                        android:textSize="15sp" />
+                        android:textSize="20sp" />
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
@@ -344,7 +345,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="15dp"
+            android:layout_margin="20dp"
             android:layout_weight="1"
             android:background="@drawable/bg_stadium_page4">
 
@@ -352,17 +353,17 @@
                 android:id="@+id/tv_locker_state"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
                 android:text="储物柜使用状态"
                 android:textColor="#4D4D4D"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/tv_locker_state"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="10dp">
 
                 <LinearLayout
                     android:id="@+id/ll_locker_state"
@@ -380,46 +381,43 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
-                            android:layout_marginTop="15dp"
                             android:text="空闲中"
                             android:textColor="#67BCFF"
-                            android:textSize="10sp" />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tv_locker_unused_number"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
-                            android:layout_marginTop="15dp"
                             android:text=""
                             android:textColor="#67BCFF"
-                            android:textSize="30sp"
+                            android:textSize="40sp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="45dp"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
-                            android:layout_marginTop="15dp"
                             android:text="租赁中"
                             android:textColor="#FEBF7C"
-                            android:textSize="10sp" />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tv_locker_used_number"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
-                            android:layout_marginTop="15dp"
                             android:text=""
                             android:textColor="#FEBF7C"
-                            android:textSize="30sp"
+                            android:textSize="40sp"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
