@@ -9,8 +9,8 @@
         android:background="@drawable/bg_item_stadium"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingTop="24dp"
-        android:paddingBottom="24dp">
+        android:paddingTop="32dp"
+        android:paddingBottom="32dp">
 
         <TextView
             android:id="@+id/tv_stadium_name"
@@ -18,24 +18,25 @@
             android:layout_height="wrap_content"
             android:text=""
             android:textColor="#323232"
-            android:textSize="12sp" />
+            android:textSize="16sp" />
 
 
         <TextView
-            android:layout_width="30dp"
-            android:layout_height="18dp"
-            android:layout_marginTop="18dp"
+            android:layout_width="40dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/btn_login"
             android:gravity="center"
             android:text="进入"
             android:textColor="#ffffff"
-            android:textSize="8sp" />
+            android:textSize="10sp" />
     </LinearLayout>
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="96dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
+        android:adjustViewBounds="true"
         android:src="@mipmap/ic_stadium_image" />
 
 </FrameLayout>

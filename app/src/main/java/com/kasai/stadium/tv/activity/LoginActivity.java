@@ -74,8 +74,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
         showLoadingDialog();
         Map<String, String> body = new HashMap<>();
-        body.put("username", "screen01");
-        body.put("password", "a12345678");
+        body.put("username", userName);
+        body.put("password", password);
+//        body.put("username", "screen01");
+//        body.put("password", "a12345678");
 //        body.put("username", "ping01");
 //        body.put("password", "a12345678");
         HttpHelper.post(Api.HOST + Api.API_LOGIN, body, new HttpCallback<LoginBean>() {

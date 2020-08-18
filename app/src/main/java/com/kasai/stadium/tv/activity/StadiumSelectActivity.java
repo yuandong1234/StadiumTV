@@ -46,8 +46,8 @@ public class StadiumSelectActivity extends BaseActivity implements StadiumListAd
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, 4);
         rvStadium.setLayoutManager(layoutManager);
-        rvStadium.addItemDecoration(new VerticalGridSpaceItemDecoration(4, DensityUtil.dip2px(this, 10),
-                DensityUtil.dip2px(this, 10), false));
+        rvStadium.addItemDecoration(new VerticalGridSpaceItemDecoration(4, DensityUtil.dip2px(this, 12),
+                DensityUtil.dip2px(this, 12), false));
         adapter = new StadiumListAdapter(this);
         adapter.setListener(this);
         rvStadium.setAdapter(adapter);
