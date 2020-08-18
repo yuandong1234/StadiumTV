@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingTop="30dp"
-    android:paddingBottom="30dp">
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
     <TextView
         android:id="@+id/tv_file_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="文件1下载进度："
+        android:text=""
         android:textColor="#2D2D2D"
-        android:textSize="20sp" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_file_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="80%"
+        android:text=""
         android:textColor="#2D2D2D"
-        android:textSize="20sp" />
+        android:textSize="14sp" />
 
 </LinearLayout>
