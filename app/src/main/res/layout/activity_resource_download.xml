@@ -8,24 +8,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="14dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="18dp"
         android:background="@drawable/bg_stadium_page2"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp">
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="20dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="20dp"
+                android:adjustViewBounds="true"
                 android:src="@mipmap/ic_kasai_company_logo" />
 
             <TextView
@@ -35,7 +36,7 @@
                 android:layout_centerInParent="true"
                 android:text=""
                 android:textColor="#4D4D4D"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -44,10 +45,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="12dp"
+                android:layout_marginRight="20dp"
                 android:text=""
                 android:textColor="#666666"
-                android:textSize="12sp" />
+                android:textSize="16sp" />
         </RelativeLayout>
 
         <View
@@ -72,28 +73,26 @@
                     android:id="@+id/tv_stadium_name2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="大运中心体育馆"
+                    android:text=""
                     android:textColor="#4D4D4D"
-                    android:textSize="30sp"
+                    android:textSize="40sp"
                     android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/btn_down"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="100dp"
+                    android:layout_width="160dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="140dp"
                     android:background="@drawable/btn_login"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
                     android:text="资源下载"
                     android:textColor="#ffffff"
-                    android:textSize="15sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_downloading"
-                android:layout_width="290dp"
+                android:layout_width="386dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:background="@drawable/bg_download"
@@ -105,11 +104,11 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_download2"
                     android:gravity="center"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
                     android:text="资源下载"
                     android:textColor="#ffffff"
-                    android:textSize="15sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
 
@@ -121,20 +120,20 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
+                        android:layout_marginLeft="40dp"
                         android:gravity="center"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
                         android:text="资源下载中，完成后自动开启播放"
                         android:textColor="#4D4D4D"
-                        android:textSize="12sp"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rv_downing"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp" />
+                        android:layout_marginLeft="40dp" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -142,7 +141,7 @@
 
             <LinearLayout
                 android:id="@+id/ll_download_none"
-                android:layout_width="290dp"
+                android:layout_width="386dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:background="@drawable/bg_download"
@@ -154,25 +153,25 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_download2"
                     android:gravity="center"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
                     android:text="资源下载"
                     android:textColor="#ffffff"
-                    android:textSize="15sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="45dp"
-                    android:layout_marginBottom="45dp"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginBottom="60dp"
                     android:gravity="center"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:text="当前没有资源可以下载，3秒后自动开启播放"
                     android:textColor="#4D4D4D"
-                    android:textSize="12sp" />
+                    android:textSize="16sp" />
 
             </LinearLayout>
         </RelativeLayout>

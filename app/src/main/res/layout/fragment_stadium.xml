@@ -357,7 +357,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_stadium_page4"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -455,7 +455,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_stadium_page4"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
