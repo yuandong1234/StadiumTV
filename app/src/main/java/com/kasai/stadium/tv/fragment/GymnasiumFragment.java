@@ -350,11 +350,11 @@ public class GymnasiumFragment extends BaseFragment {
             case "4028f0ce5551abf3015561b53b48001f"://高尔夫
                 imageView.setBackgroundResource(R.mipmap.ic_golf);
                 break;
-            case "2c91808263d9db2f0163edd7f5950007"://潜水 TODO 图片暂时未提供
+            case "2c91808263d9db2f0163edd7f5950007"://潜水
                 imageView.setBackgroundResource(R.mipmap.ic_swim);
                 break;
-            case "2c9180835b60be34015b610f798801e7"://水上乐园 TODO 图片暂时未提供
-                imageView.setBackgroundResource(R.mipmap.ic_swim);
+            case "2c9180835b60be34015b610f798801e7"://水上乐园
+                imageView.setBackgroundResource(R.mipmap.ic_aqualand);
                 break;
 //            case "297edff8565431fc01566801fdc40047"://全场通用 TODO 图片暂时未提供
 //                break;
