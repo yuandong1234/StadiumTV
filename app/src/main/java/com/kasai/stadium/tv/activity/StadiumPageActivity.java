@@ -106,7 +106,7 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
     }
 
     /**
-     * 京东万象天气
+     * 京东万象天气  https://wx.jdcloud.com/market/api/10610
      */
     public void getWeatherData() {
         Map<String, String> body = new HashMap<>();
