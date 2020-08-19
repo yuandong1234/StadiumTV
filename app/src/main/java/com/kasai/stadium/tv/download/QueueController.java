@@ -19,7 +19,7 @@ public class QueueController {
     public final static String TAG = QueueController.class.getSimpleName();
 
     public void initTasks(Context context, DownloadContextListener listener, DownloadListener4 downloadListener) {
-        String parentPath = FileUtil.getVideoRootDirectory(context);
+        String parentPath = FileUtil.getFileRootDirectory(context);
         DownloadContext.QueueSet queueSet = new DownloadContext.QueueSet();
         queueSet.setParentPath(parentPath);
         queueSet.setMinIntervalMillisCallbackProcess(200);
@@ -50,7 +50,7 @@ public class QueueController {
 
 
     public void initTasks(Context context, List<String> urls, DownloadContextListener listener) {
-        String parentPath = FileUtil.getVideoRootDirectory(context);
+        String parentPath = FileUtil.getFileRootDirectory(context);
         DownloadContext.QueueSet queueSet = new DownloadContext.QueueSet();
         queueSet.setParentPath(parentPath);
         queueSet.setMinIntervalMillisCallbackProcess(200);
@@ -67,7 +67,7 @@ public class QueueController {
     }
 
     public void initTasks(Context context, List<String> urls, DownloadContextListener listener, DownloadListener3 downloadListener) {
-        String parentPath = FileUtil.getVideoRootDirectory(context);
+        String parentPath = FileUtil.getFileRootDirectory(context);
         DownloadContext.QueueSet queueSet = new DownloadContext.QueueSet();
         queueSet.setParentPath(parentPath);
         queueSet.setMinIntervalMillisCallbackProcess(200);

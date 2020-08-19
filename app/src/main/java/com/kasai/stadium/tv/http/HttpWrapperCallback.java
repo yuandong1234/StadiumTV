@@ -27,8 +27,8 @@ public class HttpWrapperCallback {
     public void onSuccess(Response response) {
         try {
             String content = response.body().string();
-            final Object object = gson.fromJson(content, getType());
             Log.e("onSuccess", "response data : " + content);
+            final Object object = gson.fromJson(content, getType());
             if (callBack != null) {
                 handler.post(new Runnable() {
                     @Override

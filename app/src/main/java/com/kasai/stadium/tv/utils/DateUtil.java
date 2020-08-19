@@ -47,4 +47,24 @@ public class DateUtil {
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.ENGLISH);
         return sdf.format(new Date());
     }
+
+    /**
+     * @param startDate 较小的日期
+     * @param endDate   较大的日期
+     * @return 相差天数
+     */
+    public static int daysBetween(String startDate, String endDate, String format) {
+        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.ENGLISH);
+        Date date1 = null;
+        Date date2 = null;
+        long betweenDays = 0;
+        try {
+            date1 = sdf.parse(startDate);
+            date2 = sdf.parse(endDate);
+            betweenDays = (date2.getTime() - date1.getTime()) / (1000 * 3600 * 24);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return (int) betweenDays;
+    }
 }

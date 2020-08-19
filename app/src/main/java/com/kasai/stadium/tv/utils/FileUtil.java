@@ -5,7 +5,6 @@ import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
-import java.io.IOException;
 
 public class FileUtil {
     private final static String TAG = FileUtil.class.getSimpleName();
@@ -14,7 +13,7 @@ public class FileUtil {
         return android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
     }
 
-    public static String getVideoRootDirectory(Context context) {
+    public static String getFileRootDirectory(Context context) {
         String path = null;
         if (isExistSDCard()) {
             path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + AppUtil.getAppName(context);
@@ -28,5 +27,22 @@ public class FileUtil {
         }
         Log.i(TAG, "path : " + path);
         return file.getAbsolutePath();
+    }
+
+
+    public static void deleteFile(File file, boolean isDeleteDirectory) {
+        if (file == null || !file.exists())
+            return;
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            for (File f : files) {
+                deleteFile(f, isDeleteDirectory);
+            }
+            if (isDeleteDirectory) {
+                file.delete();
+            }
+        } else if (file.exists()) {
+            file.delete();
+        }
     }
 }

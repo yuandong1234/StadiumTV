@@ -36,6 +36,11 @@ public class LoadingDialog extends Dialog {
         }
     }
 
+    public void setCanCancel(boolean enable) {
+        setCancelable(enable);
+        setCanceledOnTouchOutside(enable);
+    }
+
 
     /**
      * dp转px

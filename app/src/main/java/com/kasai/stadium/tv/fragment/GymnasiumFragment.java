@@ -29,6 +29,9 @@ public class GymnasiumFragment extends BaseFragment {
     private TextView tvGymnasiumName;
     private TextView tvGymnasiumWelcome;
     private ImageView ivGymnasiumImage;
+    private ImageView ivCond;
+    private TextView tvCondTemp;
+    private TextView tvCondDesc;
     private TextView tvDate;
     private TextView tvWeek;
     private TextView tvLunarCalendar;
@@ -87,6 +90,9 @@ public class GymnasiumFragment extends BaseFragment {
         tvGymnasiumName = view.findViewById(R.id.tv_gymnasium_name);
         tvGymnasiumWelcome = view.findViewById(R.id.tv_gymnasium_welcome);
         ivGymnasiumImage = view.findViewById(R.id.iv_gymnasium_image);
+        ivCond = view.findViewById(R.id.iv_cond);
+        tvCondTemp = view.findViewById(R.id.tv_cond_temp);
+        tvCondDesc = view.findViewById(R.id.tv_cond_desc);
         tvDate = view.findViewById(R.id.tv_date);
         tvWeek = view.findViewById(R.id.tv_week);
         tvLunarCalendar = view.findViewById(R.id.tv_lunar_calendar);
@@ -140,6 +146,7 @@ public class GymnasiumFragment extends BaseFragment {
         if (gymnasiumBean != null) {
             tvGymnasiumName.setText(gymnasiumBean.getMerchantName());
             tvGymnasiumWelcome.setText(gymnasiumBean.getMerchantName() + "欢迎您!");
+            setWeatherData();
             tvDate.setText(gymnasiumBean.getDate());
             tvWeek.setText(gymnasiumBean.getWeek());
             tvLunarCalendar.setText(gymnasiumBean.getChinaDate());
@@ -163,6 +170,28 @@ public class GymnasiumFragment extends BaseFragment {
                 }
             }
             setOnlyLoadOnce(true);
+        }
+    }
+
+    private void setWeatherData() {
+        if (StadiumPageActivity.weatherBean != null) {
+            tvCondTemp.setText(StadiumPageActivity.weatherBean.tmp + "℃");
+            if (StadiumPageActivity.weatherBean.cond != null) {
+                String desc = StadiumPageActivity.weatherBean.cond.txt;
+                tvCondDesc.setVisibility(View.VISIBLE);
+                ivCond.setVisibility(View.VISIBLE);
+                tvCondDesc.setText(desc);
+                if (desc.contains("晴")) {
+                    ivCond.setImageResource(R.mipmap.ic_sunny);
+                } else if (desc.contains("云") || desc.contains("阴")) {
+                    ivCond.setImageResource(R.mipmap.ic_cloudy);
+                } else if (desc.contains("雨")) {
+                    ivCond.setImageResource(R.mipmap.ic_rainy);
+                }
+            } else {
+                tvCondDesc.setVisibility(View.GONE);
+                ivCond.setVisibility(View.GONE);
+            }
         }
     }
 

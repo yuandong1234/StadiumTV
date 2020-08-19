@@ -19,6 +19,7 @@ import com.kasai.stadium.tv.bean.StadiumBean;
 import com.kasai.stadium.tv.bean.StadiumNoticeBean;
 import com.kasai.stadium.tv.bean.SwimmingStadiumBean;
 import com.kasai.stadium.tv.bean.VideoInfoBean;
+import com.kasai.stadium.tv.bean.WeatherBean;
 import com.kasai.stadium.tv.constants.Api;
 import com.kasai.stadium.tv.constants.Constants;
 import com.kasai.stadium.tv.fragment.BaseFragment;
@@ -47,6 +48,7 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
     private int index;
     private List<AdvertInfoBean.Data> dataList;
     public final static boolean IS_AUTO_PLAY = true;
+    public static WeatherBean.Data.Weather.Now weatherBean;
 
 
     private Runnable runnable = new Runnable() {
@@ -63,6 +65,7 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
         setContentView(R.layout.activity_stadium);
         initView();
         loadData();
+        getWeatherData();
     }
 
     private void initView() {
@@ -91,6 +94,34 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
                     setPages(data.getData());
                 } else {
                     ToastUtil.showShortCenter(data.getMsg());
+                }
+            }
+
+            @Override
+            protected void onFailure(String error) {
+                hideLoadingDialog();
+                ToastUtil.showShortCenter(error);
+            }
+        });
+    }
+
+    /**
+     * 京东万象天气
+     */
+    public void getWeatherData() {
+        Map<String, String> body = new HashMap<>();
+        body.put("city", "shenzhen");
+        body.put("appkey", "3e33050146f17496ec581cac8c719e5c");
+        showLoadingDialog();
+        HttpHelper.post("https://way.jd.com/he/freeweather", body, new HttpCallback<WeatherBean>() {
+            @Override
+            protected void onSuccess(WeatherBean data) {
+                hideLoadingDialog();
+                Log.e("StadiumPageActivity", " weather data : " + data.toString());
+                if (data.isSuccessful() && data.getResult() != null) {
+                    if (data.getResult().HeWeather5 != null && data.getResult().HeWeather5.size() > 0) {
+                        weatherBean = data.getResult().HeWeather5.get(0).now;
+                    }
                 }
             }
 
@@ -238,6 +269,7 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
             OnlineServiceBean serviceBean = new OnlineServiceBean();
             serviceBean.setVenueName(data.venueName);
             serviceBean.setMerchantName(data.merchantName);
+            serviceBean.setTeamInfo(data.teamInfo);
             serviceBean.setServiceList(servicesList);
             serviceBeans.add(serviceBean);
         }

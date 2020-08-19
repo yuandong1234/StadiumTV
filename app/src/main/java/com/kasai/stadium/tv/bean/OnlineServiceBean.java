@@ -8,6 +8,7 @@ public class OnlineServiceBean implements Serializable {
     private List<Service> serviceList;
     private String venueName;
     public String merchantName;
+    public String teamInfo;
 
     public List<Service> getServiceList() {
         return serviceList;
@@ -31,6 +32,14 @@ public class OnlineServiceBean implements Serializable {
 
     public void setMerchantName(String merchantName) {
         this.merchantName = merchantName;
+    }
+
+    public String getTeamInfo() {
+        return teamInfo;
+    }
+
+    public void setTeamInfo(String teamInfo) {
+        this.teamInfo = teamInfo;
     }
 
     public static class Service implements Serializable {

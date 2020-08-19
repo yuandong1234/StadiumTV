@@ -111,4 +111,20 @@ public class LockerDao {
         }
         return lockers;
     }
+
+    public void deleteAll() {
+        SQLiteDatabase db = openDatabase();
+        try {
+            db.beginTransaction();
+            String sql = "delete from " + TABLE_LOCKER;
+            db.execSQL(sql);
+            db.setTransactionSuccessful();
+            Log.e(TAG, " 清空租柜使用记录");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.endTransaction();
+            closeDatabase();
+        }
+    }
 }

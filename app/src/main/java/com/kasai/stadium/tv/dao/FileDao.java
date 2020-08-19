@@ -107,4 +107,21 @@ public class FileDao {
         }
         return bean;
     }
+
+
+    public void deleteAll() {
+        SQLiteDatabase db = openDatabase();
+        try {
+            db.beginTransaction();
+            String sql = "delete from " + TABLE_VIDEO;
+            db.execSQL(sql);
+            db.setTransactionSuccessful();
+            Log.e(TAG, " 清空文件下载记录");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.endTransaction();
+            closeDatabase();
+        }
+    }
 }

@@ -89,6 +89,7 @@ public class OnlineServiceFragment extends BaseFragment {
         if (serviceBean != null) {
             tvStadiumName.setText(serviceBean.getMerchantName());
             tvStadiumWelcome.setText(serviceBean.getMerchantName() + "欢迎您!");
+            tvOnlineService.setText(serviceBean.getTeamInfo());
             List<OnlineServiceBean.Service> serviceList = serviceBean.getServiceList();
             if (serviceList != null && serviceList.size() > 0) {
                 adapter.setData(serviceList);

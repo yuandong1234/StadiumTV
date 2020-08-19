@@ -1,9 +1,12 @@
 package com.kasai.stadium.tv.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
@@ -14,10 +17,13 @@ import android.widget.EditText;
 
 import com.kasai.stadium.tv.R;
 import com.kasai.stadium.tv.bean.LoginBean;
+import com.kasai.stadium.tv.bean.WeatherBean;
 import com.kasai.stadium.tv.constants.Api;
 import com.kasai.stadium.tv.constants.Constants;
+import com.kasai.stadium.tv.download.DownloadManager;
 import com.kasai.stadium.tv.http.HttpCallback;
 import com.kasai.stadium.tv.http.HttpHelper;
+import com.kasai.stadium.tv.utils.PermissionUtil;
 import com.kasai.stadium.tv.utils.ToastUtil;
 import com.kasai.stadium.tv.utils.UserInfoUtil;
 
@@ -31,12 +37,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
 
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    hideLoadingDialog();
+                    break;
+            }
+
+        }
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initView();
         applyPermissions();
+        deleteHistory();
     }
 
     private void initView() {
@@ -104,4 +125,44 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
         });
     }
+
+    private void deleteHistory() {
+        if (PermissionUtil.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) &&
+                PermissionUtil.hasPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            showLoadingDialog(true);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    new DownloadManager(LoginActivity.this).deleteAllHistory();
+                    handler.sendEmptyMessage(0);
+                }
+            }).start();
+
+        }
+    }
+
+//    public void getWeatherData() {
+//        Map<String, String> body = new HashMap<>();
+//        body.put("city", "shenzhen");
+//        body.put("appkey", "3e33050146f17496ec581cac8c719e5c");
+//        showLoadingDialog();
+//        HttpHelper.post("https://way.jd.com/he/freeweather", body, new HttpCallback<WeatherBean>() {
+//            @Override
+//            protected void onSuccess(WeatherBean data) {
+//                hideLoadingDialog();
+//                Log.e("StadiumPageActivity", " weather data : " + data.toString());
+////                if (data.isSuccessful() && data.getData() != null) {
+////                    setPages(data.getData());
+////                } else {
+////                    ToastUtil.showShortCenter(data.getMsg());
+////                }
+//            }
+//
+//            @Override
+//            protected void onFailure(String error) {
+//                hideLoadingDialog();
+//                ToastUtil.showShortCenter(error);
+//            }
+//        });
+//    }
 }

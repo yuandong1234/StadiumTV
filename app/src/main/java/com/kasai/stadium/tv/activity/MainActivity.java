@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_resource_download);
+        setContentView(R.layout.fragment_swimming_stadium);
         // initView();
         // initData();
 //        initStadiumView();

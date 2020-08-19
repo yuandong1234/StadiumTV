@@ -68,7 +68,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     private void startTask() {
         String fileName = MD5Util.getMD5(url) + ".mp4";
         Log.e(TAG, "url : " + url);
-        task = new DownloadTask.Builder(url, FileUtil.getVideoRootDirectory(this), fileName)
+        task = new DownloadTask.Builder(url, FileUtil.getFileRootDirectory(this), fileName)
                 .setMinIntervalMillisCallbackProcess(30)
                 .setPassIfAlreadyCompleted(false)
                 .setFilenameFromResponse(false)

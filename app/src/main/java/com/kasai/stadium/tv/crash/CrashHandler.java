@@ -98,7 +98,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                 @Override
                 public void run() {
                     Looper.prepare();
-                    String path = FileUtil.getVideoRootDirectory(App.getContext());
+                    String path = FileUtil.getFileRootDirectory(App.getContext());
                     Toast.makeText(mContext, path + "很抱歉,程序出现异常,即将重启.", Toast.LENGTH_LONG).show();
                     Looper.loop();
                 }
@@ -184,7 +184,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     private void writeFile(String sb) throws Exception {
         String time = formatter.format(new Date());
         String fileName = "crash-" + time + ".txt";
-        String path = FileUtil.getVideoRootDirectory(App.getContext());
+        String path = FileUtil.getFileRootDirectory(App.getContext());
 
         FileOutputStream fos = new FileOutputStream(path + File.separator + fileName, true);
         fos.write(sb.getBytes());
