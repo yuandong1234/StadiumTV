@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 //                builder.append(temp).append("\n");
 //                tvDownloadStatus.setText(builder.toString());
 //                if (cause == EndCause.COMPLETED) {
-//                    saveVideo(task.getFile().getName(), task.getFile().getAbsolutePath());
+//                    saveFile(task.getFile().getName(), task.getFile().getAbsolutePath());
 //                }
 //            }
 //
@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         bean.setStatus(1);
         bean.setName(name);
         bean.setPath(path);
-        FileDao.getInstance(MainActivity.this).saveVideo(bean);
+        FileDao.getInstance(MainActivity.this).saveFile(bean);
     }
 
     private List<String> checkLocalVideo(Context context, List<String> urls) {

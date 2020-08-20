@@ -47,7 +47,7 @@ public class FileDao {
     }
 
 
-    public void saveVideo(FileBean bean) {
+    public void saveFile(FileBean bean) {
         SQLiteDatabase db = openDatabase();
         db.beginTransaction();
         Cursor cursor = null;

@@ -112,11 +112,9 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
         Map<String, String> body = new HashMap<>();
         body.put("city", "shenzhen");
         body.put("appkey", "3e33050146f17496ec581cac8c719e5c");
-        showLoadingDialog();
         HttpHelper.post("https://way.jd.com/he/freeweather", body, new HttpCallback<WeatherBean>() {
             @Override
             protected void onSuccess(WeatherBean data) {
-                hideLoadingDialog();
                 Log.e("StadiumPageActivity", " weather data : " + data.toString());
                 if (data.isSuccessful() && data.getResult() != null) {
                     if (data.getResult().HeWeather5 != null && data.getResult().HeWeather5.size() > 0) {
@@ -127,8 +125,6 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
 
             @Override
             protected void onFailure(String error) {
-                hideLoadingDialog();
-                ToastUtil.showShortCenter(error);
             }
         });
     }

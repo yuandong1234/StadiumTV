@@ -327,6 +327,6 @@ public class ResourceDownloadActivity extends BaseActivity {
         bean.setStatus(1);
         bean.setName(name);
         bean.setPath(path);
-        FileDao.getInstance(this).saveVideo(bean);
+        FileDao.getInstance(this).saveFile(bean);
     }
 }
