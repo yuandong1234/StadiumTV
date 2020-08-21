@@ -62,6 +62,7 @@ public class StadiumFragment extends BaseFragment {
 
     private StadiumBean stadiumBean;
     private int disPlayNumber;
+    private boolean isCountDowning;
 
     public static StadiumFragment newInstance(StadiumBean stadiumBean) {
         StadiumFragment fragment = new StadiumFragment();
@@ -356,10 +357,12 @@ public class StadiumFragment extends BaseFragment {
         this.handler = handler;
     }
 
-    private void nextPage() {
+    private synchronized void nextPage() {
         if (handler != null && StadiumPageActivity.IS_AUTO_PLAY) {
-            handler.removeCallbacks(runnable);
-            handler.postDelayed(runnable, 8000);
+            if (!isCountDowning) {
+                isCountDowning = true;
+                handler.postDelayed(runnable, 8000);
+            }
         }
     }
 
@@ -368,7 +371,8 @@ public class StadiumFragment extends BaseFragment {
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            if (listener != null) {
+            if (listener != null && isCountDowning) {
+                isCountDowning = false;
                 listener.onNext();
             }
         }
@@ -378,5 +382,6 @@ public class StadiumFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         setOnlyLoadOnce(false);
+        isCountDowning = false;
     }
 }

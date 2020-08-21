@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.WindowManager;
 
 import com.kasai.stadium.tv.R;
 import com.kasai.stadium.tv.adapter.SectionsPagerAdapter;
@@ -38,6 +39,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPageChangeListener, BaseFragment.FragmentChangeListener {
 
@@ -50,8 +53,8 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
     public final static boolean IS_AUTO_PLAY = true;
     public static WeatherBean.Data.Weather.Now weatherBean;
 
-
-    private Runnable runnable = new Runnable() {
+    private final Timer timer = new Timer();
+    private TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
             startActivity(new Intent(StadiumPageActivity.this, ResourceDownloadActivity.class));
@@ -62,6 +65,7 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_stadium);
         initView();
         loadData();
@@ -136,7 +140,8 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
 
     @Override
     public void onPageSelected(int position) {
-//        Log.e("******************", "position : " + position + "  : " + System.currentTimeMillis());
+        Log.e("******************", "position : " + position);
+        getWindow().setFormat(PixelFormat.TRANSLUCENT);
         index = position;
     }
 
@@ -155,7 +160,7 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(1);
 
-        startUpdateCountDown();
+        startTimer();
     }
 
     private void convertData(AdvertInfoBean.Data data) {
@@ -179,7 +184,6 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
                 videoBean.setVenueName(data.venueName);
                 videoBean.setMerchantName(data.merchantName);
                 VideoFragment videoFragment = VideoFragment.newInstance(videoBean);
-                videoFragment.bindHandler(handler);
                 fragments.add(videoFragment);
                 break;
             case 4:
@@ -363,16 +367,24 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
         return gymnasiumBean;
     }
 
+    //TODO 测试
+    long lastTimeMillis = 0;
+
     @Override
     public void onNext() {
-        Log.e("******************", "切换下一页: " + System.currentTimeMillis());
+        getWindow().setFormat(PixelFormat.TRANSLUCENT);
+        long currentTimeMillis = System.currentTimeMillis();
+        if (lastTimeMillis == 0) {
+            lastTimeMillis = currentTimeMillis;
+        }
+        Log.e("******************", "切换时间间隔: " + ((currentTimeMillis - lastTimeMillis) / 1000));
+        lastTimeMillis = currentTimeMillis;
         index++;
         if (index > fragments.size() - 1) {
             index = 0;
         }
         try {
             viewPager.setCurrentItem(index, false);
-            getWindow().setFormat(PixelFormat.TRANSLUCENT);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -384,9 +396,19 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
         if (handler != null) {
             handler.removeCallbacksAndMessages(null);
         }
+        stopTimer();
     }
 
-    private void startUpdateCountDown() {
-        handler.postDelayed(runnable, 15 * 60 * 1000);
+    private void startTimer() {
+        timer.schedule(timerTask, 15 * 60 * 1000);
+    }
+
+    private void stopTimer() {
+        if (timer != null) {
+            timer.cancel();
+        }
+        if (timerTask != null) {
+            timerTask.cancel();
+        }
     }
 }

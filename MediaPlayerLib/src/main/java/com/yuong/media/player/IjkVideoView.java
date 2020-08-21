@@ -223,11 +223,11 @@ public class IjkVideoView extends FrameLayout implements IRenderCallback {
             ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "http-detect-range-support", 0);
             ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "start-on-prepared", 0);// 需要准备好后自动播放
             ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_CODEC, "skip_loop_filter", 48);//设置是否开启环路过滤: 0开启，画面质量高，解码开销大，48关闭，画面质量差点，解码开销小
-            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "framedrop", 1);//视频帧处理不过来的时候丢弃一些帧达到同步的效果
+            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "framedrop", 5);//视频帧处理不过来的时候丢弃一些帧达到同步的效果
             ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_CODEC, "skip_frame", 8);// 跳过帧数
             ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "flush_packets", 1);//每处理一个packet之后刷新io上下文
 
-            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "packet-buffering", 1);//是否开启预缓冲，一般直播项目会开启，达到秒开的效果，不过带来了播放丢帧卡顿的体验
+            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "packet-buffering", 1);//是否开启预缓冲，1:开启 0：关闭（一般直播项目会开启，达到秒开的效果，不过带来了播放丢帧卡顿的体验）
 
             ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "probesize", 1024 * 100);//播放前的探测Size，默认是1M, 改小一点会出画面更快
             ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "analyzemaxduration", 100);//设置播放前的最大探测时间 （100未测试是否是最佳值
@@ -464,7 +464,7 @@ public class IjkVideoView extends FrameLayout implements IRenderCallback {
 
     private IMediaPlayer.OnCompletionListener mCompletionListener = new IMediaPlayer.OnCompletionListener() {
         public void onCompletion(IMediaPlayer mp) {
-            Log.i(TAG, "############# onCompletion ##################");
+            Log.e(TAG, "############# onCompletion ##################");
             mCurrentState = STATE_PLAYBACK_COMPLETED;
             mTargetState = STATE_PLAYBACK_COMPLETED;
 
@@ -545,7 +545,7 @@ public class IjkVideoView extends FrameLayout implements IRenderCallback {
 
     IMediaPlayer.OnVideoSizeChangedListener mSizeChangedListener = new IMediaPlayer.OnVideoSizeChangedListener() {
         public void onVideoSizeChanged(IMediaPlayer mp, int width, int height, int sarNum, int sarDen) {
-            Log.i(TAG, "############# onVideoSizeChanged ##################");
+            Log.e(TAG, "############# onVideoSizeChanged ##################");
             mVideoWidth = mp.getVideoWidth();
             mVideoHeight = mp.getVideoHeight();
             mVideoSarNum = mp.getVideoSarNum();
@@ -563,12 +563,12 @@ public class IjkVideoView extends FrameLayout implements IRenderCallback {
     };
 
 
-    public void setErrorListener(IMediaPlayer.OnErrorListener mErrorListener) {
-        this.mErrorListener = mErrorListener;
+    public void setErrorListener(IMediaPlayer.OnErrorListener errorListener) {
+        this.mOnErrorListener = errorListener;
     }
 
-    public void setCompletionListener(IMediaPlayer.OnCompletionListener mCompletionListener) {
-        this.mCompletionListener = mCompletionListener;
+    public void setCompletionListener(IMediaPlayer.OnCompletionListener completionListener) {
+        this.mOnCompletionListener = completionListener;
     }
 
     public void setRenderViewVisible(boolean visible) {

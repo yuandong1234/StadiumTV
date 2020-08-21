@@ -59,6 +59,7 @@ public class GymnasiumFragment extends BaseFragment {
 
     private GymnasiumBean gymnasiumBean;
     private int disPlayNumber;
+    private boolean isCountDowning;
 
     public static GymnasiumFragment newInstance(GymnasiumBean gymnasiumBean) {
         GymnasiumFragment fragment = new GymnasiumFragment();
@@ -368,10 +369,12 @@ public class GymnasiumFragment extends BaseFragment {
         this.handler = handler;
     }
 
-    private void nextPage() {
+    private synchronized void nextPage() {
         if (handler != null && StadiumPageActivity.IS_AUTO_PLAY) {
-            handler.removeCallbacks(runnable);
-            handler.postDelayed(runnable, 8000);
+            if (!isCountDowning) {
+                isCountDowning = true;
+                handler.postDelayed(runnable, 8000);
+            }
         }
     }
 
@@ -380,7 +383,8 @@ public class GymnasiumFragment extends BaseFragment {
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            if (listener != null) {
+            if (listener != null && isCountDowning) {
+                isCountDowning = false;
                 listener.onNext();
             }
         }
@@ -390,5 +394,6 @@ public class GymnasiumFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         setOnlyLoadOnce(false);
+        isCountDowning = false;
     }
 }

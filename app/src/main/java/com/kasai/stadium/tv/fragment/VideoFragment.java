@@ -3,7 +3,6 @@ package com.kasai.stadium.tv.fragment;
 import android.app.Activity;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -25,18 +24,8 @@ public class VideoFragment extends BaseFragment {
 
     private IjkVideoView videoView;
     private FragmentChangeListener listener;
-    private Handler handler;
     private String url;
     private VideoInfoBean videoInfoBean;
-
-    private Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            if (listener != null) {
-                listener.onNext();
-            }
-        }
-    };
 
     public static VideoFragment newInstance(VideoInfoBean videoBean) {
         VideoFragment fragment = new VideoFragment();
@@ -69,8 +58,6 @@ public class VideoFragment extends BaseFragment {
     @Override
     public void intView() {
         videoView = view.findViewById(R.id.video_view);
-        videoView.initPlayer();
-        initListener();
     }
 
     private void initListener() {
@@ -79,7 +66,7 @@ public class VideoFragment extends BaseFragment {
             public boolean onError(IMediaPlayer iMediaPlayer, int i, int i1) {
                 destroyPlayView();
                 nextPage();
-                return false;
+                return true;
             }
         });
         videoView.setCompletionListener(new IMediaPlayer.OnCompletionListener() {
@@ -108,23 +95,10 @@ public class VideoFragment extends BaseFragment {
     }
 
     @Override
-    public void onDestroy() {
-        if (videoView != null) {
-            videoView.stop();
-            videoView.release();
-            videoView.destroyPlayer();
-        }
-        super.onDestroy();
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         setOnlyLoadOnce(false);
-    }
-
-    public void bindHandler(Handler handler) {
-        this.handler = handler;
+        destroyPlayView();
     }
 
     private void nextPage() {
@@ -133,9 +107,19 @@ public class VideoFragment extends BaseFragment {
         }
     }
 
+    private void initPlayView() {
+        videoView.initPlayer();
+        initListener();
+    }
+
     private void destroyPlayView() {
-        videoView.setVisibility(View.GONE);
-        videoView.setRenderViewVisible(false);
+        if (videoView != null) {
+            videoView.setVisibility(View.GONE);
+            videoView.setRenderViewVisible(false);
+            videoView.stop();
+            videoView.release();
+            videoView.destroyPlayer();
+        }
     }
 
 
@@ -152,6 +136,7 @@ public class VideoFragment extends BaseFragment {
                 Log.e(TAG, "加载网络视频.....");
                 videoView.setVideoPath(newUrl);
             }
+            initPlayView();
             videoView.setVisibility(View.VISIBLE);
             videoView.setRenderViewVisible(true);
             videoView.start();

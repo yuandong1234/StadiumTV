@@ -26,6 +26,7 @@ public class OnlineServiceFragment extends BaseFragment {
     private OnlineServiceAdapter adapter;
 
     private OnlineServiceBean serviceBean;
+    private boolean isCountDowning;
 
     public static OnlineServiceFragment newInstance(OnlineServiceBean serviceBean) {
         OnlineServiceFragment fragment = new OnlineServiceFragment();
@@ -102,10 +103,12 @@ public class OnlineServiceFragment extends BaseFragment {
         this.handler = handler;
     }
 
-    private void nextPage() {
+    private synchronized void nextPage() {
         if (handler != null && StadiumPageActivity.IS_AUTO_PLAY) {
-            handler.removeCallbacks(runnable);
-            handler.postDelayed(runnable, 8000);
+            if (!isCountDowning) {
+                isCountDowning = true;
+                handler.postDelayed(runnable, 8000);
+            }
         }
     }
 
@@ -114,7 +117,8 @@ public class OnlineServiceFragment extends BaseFragment {
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            if (listener != null) {
+            if (listener != null && isCountDowning) {
+                isCountDowning = false;
                 listener.onNext();
             }
         }
@@ -124,5 +128,6 @@ public class OnlineServiceFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         setOnlyLoadOnce(false);
+        isCountDowning = false;
     }
 }

@@ -87,7 +87,6 @@ public class ImageFragment extends BaseFragment {
     public void onUserVisible() {
         super.onUserVisible();
         Log.e(TAG, "*****onUserVisible*****");
-        //nextPage();
     }
 
     private void loadImage(ImageView imageView, String url) {
@@ -117,7 +116,6 @@ public class ImageFragment extends BaseFragment {
 
     private void nextPage() {
         if (handler != null && StadiumPageActivity.IS_AUTO_PLAY) {
-            handler.removeCallbacks(runnable);
             handler.postDelayed(runnable, 8000);
         }
     }

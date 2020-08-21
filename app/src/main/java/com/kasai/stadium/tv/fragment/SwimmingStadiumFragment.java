@@ -38,6 +38,7 @@ public class SwimmingStadiumFragment extends BaseFragment {
     private LineChartView chartView;
 
     private SwimmingStadiumBean swimmingStadiumBean;
+    private boolean isCountDowning;
 
     public static SwimmingStadiumFragment newInstance(SwimmingStadiumBean swimmingStadiumBean) {
         SwimmingStadiumFragment fragment = new SwimmingStadiumFragment();
@@ -210,10 +211,12 @@ public class SwimmingStadiumFragment extends BaseFragment {
         this.handler = handler;
     }
 
-    private void nextPage() {
+    private synchronized void nextPage() {
         if (handler != null && StadiumPageActivity.IS_AUTO_PLAY) {
-            handler.removeCallbacks(runnable);
-            handler.postDelayed(runnable, 8000);
+            if (!isCountDowning) {
+                isCountDowning = true;
+                handler.postDelayed(runnable, 8000);
+            }
         }
     }
 
@@ -222,7 +225,8 @@ public class SwimmingStadiumFragment extends BaseFragment {
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            if (listener != null) {
+            if (listener != null && isCountDowning) {
+                isCountDowning = false;
                 listener.onNext();
             }
         }
@@ -232,5 +236,6 @@ public class SwimmingStadiumFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         setOnlyLoadOnce(false);
+        isCountDowning = false;
     }
 }
