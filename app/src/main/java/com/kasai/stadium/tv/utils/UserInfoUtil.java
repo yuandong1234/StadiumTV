@@ -20,6 +20,13 @@ public class UserInfoUtil extends BaseSharePreferences {
         return SingletonHolder.INSTANCE;
     }
 
+    public String getUserAccount() {
+        return getString(Constants.SP_KEY_USER_ACCOUNT, "");
+    }
+
+    public String getUserPassword() {
+        return getString(Constants.SP_KEY_USER_PASSWORD, "");
+    }
 
     public String getUserToken() {
         return getString(Constants.SP_KEY_USER_TOKEN, "");

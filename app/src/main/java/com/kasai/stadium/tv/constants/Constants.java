@@ -2,6 +2,8 @@ package com.kasai.stadium.tv.constants;
 
 public class Constants {
     public final static String SP_USER_INFO = "userInfo";
+    public final static String SP_KEY_USER_ACCOUNT = "userAccount";
+    public final static String SP_KEY_USER_PASSWORD = "userPassword";
     public final static String SP_KEY_USER_TOKEN = "Authorization";
     public final static String STADIUM_DATA = "stadium_data";
     public final static String SP_DOWNLOAD_INFO = "downloadInfo";

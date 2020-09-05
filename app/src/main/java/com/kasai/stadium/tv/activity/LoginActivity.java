@@ -17,7 +17,6 @@ import android.widget.EditText;
 
 import com.kasai.stadium.tv.R;
 import com.kasai.stadium.tv.bean.LoginBean;
-import com.kasai.stadium.tv.bean.WeatherBean;
 import com.kasai.stadium.tv.constants.Api;
 import com.kasai.stadium.tv.constants.Constants;
 import com.kasai.stadium.tv.download.DownloadManager;
@@ -47,7 +46,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     hideLoadingDialog();
                     break;
             }
-
         }
     };
 
@@ -65,6 +63,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         edtPassword = findViewById(R.id.edt_password);
         btnLogin = findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(this);
+        String userName = UserInfoUtil.getInstance().getUserAccount();
+        String userPassword = UserInfoUtil.getInstance().getUserPassword();
+        if (!TextUtils.isEmpty(userName)) {
+            edtName.setText(userName);
+        }
+        if (!TextUtils.isEmpty(userPassword)) {
+            edtPassword.setText(userPassword);
+        }
     }
 
     @Override
@@ -83,8 +89,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void login() {
-        String userName = edtName.getText().toString().trim();
-        String password = edtPassword.getText().toString().trim();
+        final String userName = edtName.getText().toString().trim();
+        final String password = edtPassword.getText().toString().trim();
         if (TextUtils.isEmpty(userName)) {
             ToastUtil.showShortCenter("请输入账号");
             return;
@@ -107,6 +113,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 hideLoadingDialog();
                 Log.e("LoginActivity", " data : " + data.toString());
                 if (data.isSuccessful() && data.getData() != null) {
+                    UserInfoUtil.getInstance().putValue(Constants.SP_KEY_USER_ACCOUNT, userName);
+                    UserInfoUtil.getInstance().putValue(Constants.SP_KEY_USER_PASSWORD, password);
                     UserInfoUtil.getInstance().putValue(Constants.SP_KEY_USER_TOKEN, data.getData().token);
                     if (data.getData().isShowVenueList) {
                         startActivity(new Intent(LoginActivity.this, StadiumSelectActivity.class));
