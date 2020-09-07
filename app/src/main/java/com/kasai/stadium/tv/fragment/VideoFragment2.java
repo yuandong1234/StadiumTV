@@ -15,25 +15,20 @@ import com.kasai.stadium.tv.dao.bean.FileBean;
 import com.kasai.stadium.tv.utils.MD5Util;
 import com.yuong.media.player.IjkVideoView;
 
-import java.util.List;
-
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 /**
  * 视频
  */
-public class VideoFragment extends BaseFragment {
+public class VideoFragment2 extends BaseFragment {
 
     private IjkVideoView videoView;
     private FragmentChangeListener listener;
+    private String url;
     private VideoInfoBean videoInfoBean;
-    //    private String url;
-    private List<String> urls;
-    private int index;
 
-
-    public static VideoFragment newInstance(VideoInfoBean videoBean) {
-        VideoFragment fragment = new VideoFragment();
+    public static VideoFragment2 newInstance(VideoInfoBean videoBean) {
+        VideoFragment2 fragment = new VideoFragment2();
         Bundle args = new Bundle();
         args.putSerializable("video", videoBean);
         fragment.setArguments(args);
@@ -46,7 +41,7 @@ public class VideoFragment extends BaseFragment {
         listener = (FragmentChangeListener) activity;
         videoInfoBean = (VideoInfoBean) getArguments().getSerializable("video");
         if (videoInfoBean != null) {
-            urls = videoInfoBean.getVideos();
+            url = videoInfoBean.getVideo();
         }
     }
 
@@ -96,8 +91,7 @@ public class VideoFragment extends BaseFragment {
         super.loadData();
         Log.e(TAG, "*****loadData*****");
         getActivity().getWindow().setFormat(PixelFormat.TRANSLUCENT);
-        index = 0;
-        loadVideo(index);
+        loadVideo();
     }
 
     @Override
@@ -108,11 +102,6 @@ public class VideoFragment extends BaseFragment {
     }
 
     private void nextPage() {
-        if (index < (urls.size() - 1)) {
-            index++;
-            loadVideo(index);
-            return;
-        }
         if (listener != null && StadiumPageActivity.IS_AUTO_PLAY) {
             listener.onNext();
         }
@@ -134,8 +123,7 @@ public class VideoFragment extends BaseFragment {
     }
 
 
-    private void loadVideo(int index) {
-        String url = urls.get(index);
+    private void loadVideo() {
         if (!TextUtils.isEmpty(url)) {
             String newUrl = convertVideoUrl(url);
             String fileName = MD5Util.getMD5(newUrl) + ".mp4";

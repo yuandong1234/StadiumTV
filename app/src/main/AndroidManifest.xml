@@ -65,5 +65,9 @@
             android:name=".activity.ResourceDownloadActivity"
             android:screenOrientation="landscape"
             android:theme="@style/FullScreenTheme" />
+        <activity
+            android:name=".activity.VideoPlayActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/FullScreenTheme" />/>
     </application>
 </manifest>

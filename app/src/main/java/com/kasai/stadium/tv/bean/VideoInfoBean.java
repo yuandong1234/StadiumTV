@@ -1,14 +1,24 @@
 package com.kasai.stadium.tv.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class VideoInfoBean implements Serializable {
-    public String video;
     public String venueName;
     public String merchantName;
+    public String video;
+    public List<String> videos;
 
     public String getVideo() {
         return video;
+    }
+
+    public List<String> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(List<String> videos) {
+        this.videos = videos;
     }
 
     public void setVideo(String video) {

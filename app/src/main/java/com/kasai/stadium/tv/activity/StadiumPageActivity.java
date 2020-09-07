@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
 
@@ -50,8 +51,9 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
     private Handler handler = new Handler();
     private int index;
     private List<AdvertInfoBean.Data> dataList;
-    public final static boolean IS_AUTO_PLAY = true;
+    public List<String> videoUrls = new ArrayList<>();
     public static WeatherBean.Data.Weather.Now weatherBean;
+    public final static boolean IS_AUTO_PLAY = true;
 
     private final Timer timer = new Timer();
     private TimerTask timerTask = new TimerTask() {
@@ -151,11 +153,17 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
     }
 
     private void setPages(List<AdvertInfoBean.Data> dataList) {
-        if (dataList == null || dataList.size() == 0) return;
         fragments.clear();
+        videoUrls.clear();
+        if (dataList == null || dataList.size() == 0) return;
+
         for (AdvertInfoBean.Data temp : dataList) {
             convertData(temp);
         }
+
+        //TODO : 单独处理视频
+        convertVideos();
+
         SectionsPagerAdapter pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(1);
@@ -179,12 +187,16 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
                 fragments.add(imageFragment);
                 break;
             case 2:
-                VideoInfoBean videoBean = new VideoInfoBean();
-                videoBean.setVideo(data.video);
-                videoBean.setVenueName(data.venueName);
-                videoBean.setMerchantName(data.merchantName);
-                VideoFragment videoFragment = VideoFragment.newInstance(videoBean);
-                fragments.add(videoFragment);
+                //TODO 视频优化: 所有的视频放在一个fragment中播放
+//                VideoInfoBean videoBean = new VideoInfoBean();
+//                videoBean.setVideo(data.video);
+//                videoBean.setVenueName(data.venueName);
+//                videoBean.setMerchantName(data.merchantName);
+//                VideoFragment videoFragment = VideoFragment.newInstance(videoBean);
+//                fragments.add(videoFragment);
+                if (!TextUtils.isEmpty(data.video)) {
+                    videoUrls.add(data.video);
+                }
                 break;
             case 4:
                 StadiumNoticeBean noticeBean = new StadiumNoticeBean();
@@ -232,6 +244,15 @@ public class StadiumPageActivity extends BaseActivity implements ViewPager.OnPag
                         break;
                 }
                 break;
+        }
+    }
+
+    private void convertVideos() {
+        if (videoUrls.size() > 0) {
+            VideoInfoBean videoBean = new VideoInfoBean();
+            videoBean.setVideos(videoUrls);
+            VideoFragment videoFragment = VideoFragment.newInstance(videoBean);
+            fragments.add(videoFragment);
         }
     }
 
