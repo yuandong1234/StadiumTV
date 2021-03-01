@@ -92,7 +92,8 @@ public class ImageFragment extends BaseFragment {
     private void loadImage(ImageView imageView, String url) {
         Log.e(TAG, "*****loadImage*****");
         String fileType = getFileType(url);
-        String fileName = MD5Util.getMD5(url) + "." + fileType;
+        String newUrl = convertUrl(url);
+        String fileName = MD5Util.getMD5(newUrl) + "." + fileType;
         FileBean fileBean = FileDao.getInstance(getActivity()).getFile(fileName);
         if (fileBean != null) {
             File file = new File(fileBean.path);
@@ -102,11 +103,11 @@ public class ImageFragment extends BaseFragment {
                 Glide.with(this).load(file).into(imageView);
             } else {
                 Log.e(TAG, "加载网络图片..... ");
-                Glide.with(this).load(url).into(imageView);
+                Glide.with(this).load(newUrl).into(imageView);
             }
         } else {
             Log.e(TAG, "加载网络图片..... ");
-            Glide.with(this).load(url).into(imageView);
+            Glide.with(this).load(newUrl).into(imageView);
         }
     }
 
@@ -128,5 +129,14 @@ public class ImageFragment extends BaseFragment {
 
     private String getFileType(String url) {
         return url.substring(url.lastIndexOf(".") + 1);
+    }
+
+    private String convertUrl(String url) {
+        if (TextUtils.isEmpty(url)) return null;
+        String flag = "http://saas-resources.52jiayundong.com";
+        if (url.startsWith(flag)) {
+            return url.replace(flag, "https://venue-saas.oss-cn-shenzhen.aliyuncs.com");
+        }
+        return null;
     }
 }

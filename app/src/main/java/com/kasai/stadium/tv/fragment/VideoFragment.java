@@ -137,7 +137,7 @@ public class VideoFragment extends BaseFragment {
     private void loadVideo(int index) {
         String url = urls.get(index);
         if (!TextUtils.isEmpty(url)) {
-            String newUrl = convertVideoUrl(url);
+            String newUrl = convertUrl(url);
             String fileName = MD5Util.getMD5(newUrl) + ".mp4";
             FileBean file = FileDao.getInstance(getActivity()).getFile(fileName);
             if (file != null && !TextUtils.isEmpty(file.path)) {
@@ -161,7 +161,7 @@ public class VideoFragment extends BaseFragment {
 //        videoView.start();
     }
 
-    private String convertVideoUrl(String url) {
+    private String convertUrl(String url) {
         if (TextUtils.isEmpty(url)) return null;
         String flag = "http://saas-resources.52jiayundong.com";
         if (url.startsWith(flag)) {

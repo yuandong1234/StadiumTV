@@ -131,13 +131,14 @@ public class ResourceDownloadActivity extends BaseActivity {
 
         for (AdvertInfoBean.Data temp : dataList) {
             if (temp.advertType == 2) {//视频
-                String url = convertVideoUrl(temp.video);
+                String url = convertUrl(temp.video);
                 if (!TextUtils.isEmpty(url)) {
                     downLoadUrls.add(url);
                 }
             } else if (temp.advertType == 1) {//图片
-                if (!TextUtils.isEmpty(temp.image)) {
-                    downLoadUrls.add(temp.image);
+                String url = convertUrl(temp.image);
+                if (!TextUtils.isEmpty(url)) {
+                    downLoadUrls.add(url);
                 }
             }
         }
@@ -180,7 +181,7 @@ public class ResourceDownloadActivity extends BaseActivity {
         finish();
     }
 
-    private String convertVideoUrl(String url) {
+    private String convertUrl(String url) {
         if (TextUtils.isEmpty(url)) return null;
         String flag = "http://saas-resources.52jiayundong.com";
         if (url.startsWith(flag)) {
@@ -273,6 +274,7 @@ public class ResourceDownloadActivity extends BaseActivity {
         @Override
         protected void error(@NonNull DownloadTask task, @NonNull Exception e) {
             Log.e(TAG, "error .....");
+            Log.e(TAG, task.getUrl() + " download error : " + e.getMessage());
             adapter.setProgress(task.getUrl(), "下载失败");
         }
 
