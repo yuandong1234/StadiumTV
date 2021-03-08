@@ -1,7 +1,7 @@
 package com.kasai.stadium.tv.constants;
 
 public class Api {
-//    public final static String HOST = "http://172.29.8.45:8201";
+    //    public final static String HOST = "http://192.168.112.101:8201";
     public final static String HOST = "https://api.guanjiasport.com";
 
 

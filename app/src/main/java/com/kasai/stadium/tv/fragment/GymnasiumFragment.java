@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -40,9 +39,9 @@ public class GymnasiumFragment extends BaseFragment {
     private TextView tvWeek;
     private TextView tvLunarCalendar;
     private TextView tvPersonalNum;
-    private LinearLayout rlIndoorTemperature;
+    private RelativeLayout rlIndoorTemperature;
     private TextView tvIndoorTemperature;
-    private LinearLayout rlTemperature;
+    private RelativeLayout rlTemperature;
     private TextView tvTemperature;
     private RelativeLayout rlSport1;
     private ImageView ivSport1;
