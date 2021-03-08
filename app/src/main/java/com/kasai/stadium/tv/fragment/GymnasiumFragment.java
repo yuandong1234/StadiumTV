@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,6 +26,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * 体育馆
+ */
 public class GymnasiumFragment extends BaseFragment {
     private TextView tvGymnasiumName;
     private TextView tvGymnasiumWelcome;
@@ -36,7 +40,9 @@ public class GymnasiumFragment extends BaseFragment {
     private TextView tvWeek;
     private TextView tvLunarCalendar;
     private TextView tvPersonalNum;
+    private LinearLayout rlIndoorTemperature;
     private TextView tvIndoorTemperature;
+    private LinearLayout rlTemperature;
     private TextView tvTemperature;
     private RelativeLayout rlSport1;
     private ImageView ivSport1;
@@ -98,7 +104,9 @@ public class GymnasiumFragment extends BaseFragment {
         tvWeek = view.findViewById(R.id.tv_week);
         tvLunarCalendar = view.findViewById(R.id.tv_lunar_calendar);
         tvPersonalNum = view.findViewById(R.id.tv_personal_num);
+        rlIndoorTemperature = view.findViewById(R.id.rl_indoor_temperature);
         tvIndoorTemperature = view.findViewById(R.id.tv_indoor_temperature);
+        rlTemperature = view.findViewById(R.id.rl_temperature);
         tvTemperature = view.findViewById(R.id.tv_temperature);
         rlSport1 = view.findViewById(R.id.rl_sport1);
         ivSport1 = view.findViewById(R.id.iv_sport1);
@@ -152,7 +160,9 @@ public class GymnasiumFragment extends BaseFragment {
             tvWeek.setText(gymnasiumBean.getWeek());
             tvLunarCalendar.setText(gymnasiumBean.getChinaDate());
             tvPersonalNum.setText(gymnasiumBean.getPeopleNumber());
+            rlIndoorTemperature.setVisibility(TextUtils.isEmpty(gymnasiumBean.getIndoorTemperature()) ? View.GONE : View.VISIBLE);
             tvIndoorTemperature.setText(gymnasiumBean.getIndoorTemperature());
+            rlTemperature.setVisibility(TextUtils.isEmpty(gymnasiumBean.getOutdoorTemperature()) ? View.GONE : View.VISIBLE);
             tvTemperature.setText(gymnasiumBean.getOutdoorTemperature());
             List<GymnasiumBean.Sport> sports = gymnasiumBean.getSportList();
             if (sports != null) {

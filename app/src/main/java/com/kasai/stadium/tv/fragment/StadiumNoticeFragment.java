@@ -13,6 +13,9 @@ import com.kasai.stadium.tv.activity.StadiumPageActivity;
 import com.kasai.stadium.tv.bean.StadiumNoticeBean;
 import com.kasai.stadium.tv.widget.HtmlView;
 
+/**
+ * 通告
+ */
 public class StadiumNoticeFragment extends BaseFragment {
     private TextView tvStadiumName;
     private TextView tvStadiumWelcome;

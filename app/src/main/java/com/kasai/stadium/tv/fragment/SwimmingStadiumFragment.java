@@ -19,6 +19,9 @@ import com.kasai.stadium.tv.widget.LineChartView;
 
 import java.util.List;
 
+/**
+ * 游泳馆
+ */
 public class SwimmingStadiumFragment extends BaseFragment {
     private TextView tvStadiumName;
     private TextView tvStadiumWelcome;

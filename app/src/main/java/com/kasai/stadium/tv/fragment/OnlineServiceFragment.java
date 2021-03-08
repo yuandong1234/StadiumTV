@@ -18,6 +18,9 @@ import com.kasai.stadium.tv.widget.VerticalGridSpaceItemDecoration;
 
 import java.util.List;
 
+/**
+ * 客服
+ */
 public class OnlineServiceFragment extends BaseFragment {
     private TextView tvStadiumName;
     private TextView tvStadiumWelcome;
