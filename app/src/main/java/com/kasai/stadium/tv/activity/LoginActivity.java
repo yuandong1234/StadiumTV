@@ -103,10 +103,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         Map<String, String> body = new HashMap<>();
         body.put("username", userName);
         body.put("password", password);
-//        body.put("username", "screen01");
-//        body.put("password", "a12345678");
-//        body.put("username", "ping01");
-//        body.put("password", "a12345678");
+
+        Log.e("LoginActivity", " Url : " + Api.HOST + Api.API_LOGIN);
         HttpHelper.post(Api.HOST + Api.API_LOGIN, body, new HttpCallback<LoginBean>() {
             @Override
             protected void onSuccess(LoginBean data) {

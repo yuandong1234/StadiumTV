@@ -137,6 +137,6 @@ public class ImageFragment extends BaseFragment {
         if (url.startsWith(flag)) {
             return url.replace(flag, "https://venue-saas.oss-cn-shenzhen.aliyuncs.com");
         }
-        return null;
+        return url;
     }
 }

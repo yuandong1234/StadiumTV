@@ -98,6 +98,7 @@ public class ResourceDownloadActivity extends BaseActivity {
     private void getData() {
         Map<String, String> body = new HashMap<>();
         showLoadingDialog();
+        Log.e(TAG, " Url : " + Api.HOST + Api.API_ADVERT_INFO);
         HttpHelper.get(Api.HOST + Api.API_ADVERT_INFO, body, new HttpCallback<AdvertInfoBean>() {
             @Override
             protected void onSuccess(AdvertInfoBean data) {
@@ -187,7 +188,7 @@ public class ResourceDownloadActivity extends BaseActivity {
         if (url.startsWith(flag)) {
             return url.replace(flag, "https://venue-saas.oss-cn-shenzhen.aliyuncs.com");
         }
-        return null;
+        return url;
     }
 
     private boolean checkLocalFile(String url) {
